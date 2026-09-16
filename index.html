@@ -117,6 +117,14 @@
             margin-left: auto;
         }
 
+        /* Smaller Garage Spaces dropdown */
+        #garage_val {
+            width: 145px;
+            max-width: 145px;
+            font-size: 0.78rem;
+            padding: 2px 4px;
+        }
+
         select.form-control, input[type="text"] {
             width: 100%;
             padding: 10px;
@@ -181,42 +189,61 @@
         }
 
         .copy-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            min-width: 88px;
+            height: 36px;
+            padding: 0 13px;
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            color: #fff;
+            border: 1px solid rgba(167, 139, 250, .55);
+            border-radius: 8px;
             cursor: pointer;
             font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            min-width: 75px;
+            font-weight: 700;
+            line-height: 1;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, .22);
+            transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
         }
 
         .copy-btn:hover {
-            background: var(--primary-hover);
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, .30);
         }
 
         /* Smooth Copied State Style */
         .copy-btn.copied-state {
-            background: var(--success);
+            background: linear-gradient(135deg, #dc2626, #ef4444);
             color: white;
         }
 
         .reset-btn {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            min-width: 92px;
+            height: 36px;
+            padding: 0 13px;
+            background: rgba(127, 29, 54, .24);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, .42);
+            border-radius: 8px;
             cursor: pointer;
             font-size: 0.85rem;
-            font-weight: 600;
-            transition: background 0.2s;
+            font-weight: 700;
+            line-height: 1;
+            box-shadow: inset 0 0 12px rgba(239, 68, 68, .04);
+            transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
         }
 
         .reset-btn:hover {
-            background: var(--danger-hover);
+            background: rgba(127, 29, 54, .40);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(127, 29, 54, .20);
         }
 
         .hidden {
@@ -383,18 +410,50 @@ select.form-control:focus,input[type="text"]:focus{
     overflow-wrap:anywhere;
 }
 
-/* Buttons */
-.copy-btn{
-    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+/* Buttons - match requested compact design */
+.btn-group{
+    display:flex;
+    align-items:center;
+    gap:8px;
 }
-.copy-btn:hover{
-    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+.reset-btn,
+.copy-btn{
+    width:103px;
+    min-width:103px;
+    height:30px;
+    min-height:30px;
+    padding:0;
+    border-radius:5px;
+    border:0;
+    box-sizing:border-box;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:0;
+    font-size:13px;
+    font-weight:700;
+    line-height:1;
+    cursor:pointer;
 }
 .reset-btn{
-    background:linear-gradient(135deg,#dc2626,#ef4444);
+    background:#ef3030;
+    color:#fff;
 }
 .reset-btn:hover{
-    background:linear-gradient(135deg,#b91c1c,#dc2626);
+    background:#dc2626;
+}
+.copy-btn{
+    background:#7c5ce6;
+    color:#fff;
+    width:103px;
+    min-width:103px;
+    height:30px;
+    min-height:30px;
+    padding:0;
+    font-size:13px;
+}
+.copy-btn:hover{
+    background:#6d4ddd;
 }
 
 /* Small section icons */
@@ -429,6 +488,7 @@ select.form-control:focus,input[type="text"]:focus{
 .others-edit-picker input:focus{border-color:#94a3b8;box-shadow:0 0 0 3px rgba(148,163,184,.08);}
 .others-edit-picker button{flex:0 0 42px;min-width:42px;border:1px solid #475569;border-radius:7px;background:#1e293b;color:#e2e8f0;cursor:pointer;font-size:16px;transition:.18s ease;}
 .others-edit-picker button:hover{background:#334155;border-color:#94a3b8;}
+.others-item-compact #othersSpecialGenderWrap{margin-bottom:10px;}
 .others-item-compact label{font-size:12px;}
 .others-item-compact .others-edit-picker input{min-height:34px;font-size:12px;padding:7px 9px;}
 .others-item-compact .others-edit-picker button{min-height:34px;flex-basis:36px;min-width:36px;font-size:14px;}
@@ -620,8 +680,9 @@ select.form-control:focus,input[type="text"]:focus{
         <div class="features-grid">
             <label id="feature1" class="feature-item"><input type="checkbox" id="feat_garden" value="garden" onchange="updateAd()"> 1. Garden</label>
             <div class="feature-item">
-                <label><input type="checkbox" id="feat_garage" value="garage" onchange="updateAd()"> 2. Garage Spaces</label>
+                <label for="garage_val">2. G.S</label>
                 <select id="garage_val" onchange="updateAd()">
+                    <option value="">-- Select G.S --</option>
                     <option value="2 g.s.">2 g.s.</option>
                     <option value="5 g.s.">5 g.s.</option>
                     <option value="9 g.s.">9 g.s.</option>
@@ -842,20 +903,20 @@ select.form-control:focus,input[type="text"]:focus{
                         </div>
                     </div>
 
-                    <div id="othersSpecialGenderWrap">
-                        <label for="othersSpecialGender">For</label>
-                        <select id="othersSpecialGender" class="form-control" onchange="updateOthersSpecialFields(); updateAd()">
-                            <option value="">Men / Women</option>
-                            <option value="men">men</option>
-                            <option value="women">women</option>
-                        </select>
-                    </div>
                 </div>
                 <select id="othersTemplateSelect" class="form-control" style="display:none" onchange="selectOthersTemplate()">
                     <option value="">-- Search and select an ad --</option>
                 </select>
             </div>
             <div class="others-item-compact">
+                <div id="othersSpecialGenderWrap" class="hidden">
+                    <label for="othersSpecialGender">Gender</label>
+                    <select id="othersSpecialGender" class="form-control" onchange="updateOthersSpecialFields(); updateAd()">
+                        <option value="">Men / Women</option>
+                        <option value="men">men</option>
+                        <option value="women">women</option>
+                    </select>
+                </div>
                 <label for="othersCustomText2">Item 2 (Optional • Editable)</label>
                 <div class="others-edit-picker">
                     <input type="text" id="othersCustomText2" placeholder="Add another item..." value="" oninput="syncOthersPickerText(); updateAd()">
@@ -1948,6 +2009,21 @@ function openOthersTemplatePopup(targetInputId = "othersCustomText") {
     setTimeout(() => search.focus(), 0);
 }
 
+function handleOthersPopupSearchKeydown(event) {
+    if (!event || event.key !== "Enter") return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const search = document.getElementById("othersPopupSearch");
+    const items = getOthersPopupItems(search?.value || "");
+
+    // Pressing Enter selects the first matching search result automatically.
+    if (items.length) {
+        chooseOthersPopupItem(items[0]);
+    }
+}
+
 function closeOthersTemplatePopup() {
     const popup = document.getElementById("othersTemplatePopup");
     if (!popup) return;
@@ -1999,6 +2075,8 @@ function chooseOthersPopupItem(item) {
         const type = document.getElementById("othersSpecialType");
         if (color) color.value = "";
         if (type) type.value = "";
+        const gender = document.getElementById("othersSpecialGender");
+        if (gender) gender.value = "";
         updateOthersSpecialFields();
     }
     updateAd();
@@ -2119,6 +2197,8 @@ function selectOthersTemplate() {
     if (!template) return;
     const cleanText = normalizeOthersAction(stripOthersPrice(template));
     document.getElementById("othersCustomText").value = cleanText;
+    const gender = document.getElementById("othersSpecialGender");
+    if (gender) gender.value = "";
     updateOthersSpecialFields();
     syncOthersPickerText();
     document.getElementById("othersCustomText2").value = "";
@@ -2244,6 +2324,7 @@ const OTHERS_QUANTITY_ITEMS = new Set([
     "seeds",
     "resource miners ticket", "resource miners tickets", "a resource miners ticket",
     "royal artifacts ticket", "royal artifacts tickets", "a royal artifacts ticket",
+    "rare lottery ticket", "rare lottery tickets", "a rare lottery ticket",
     "secret ticket", "secret tickets", "a secret ticket",
     "cayo perico ticket", "cayo perico tickets", "a cayo perico ticket",
     "car ticket", "car tickets", "a car ticket",
@@ -2415,6 +2496,12 @@ const OTHERS_TYPE_1_10_ITEMS = new Set([
 const OTHERS_COLOR_TYPE_1_10_ITEMS = new Set([
     "scrap marks"
 ]);
+// Every shoe/footwear item gets a Gender selector.
+function isOthersShoeItem(item) {
+    const value = String(item || "").trim().toLowerCase();
+    return /(?:\bshoes?\b|\bsneakers?\b|\bboots?\b|\bbooties\b|\bflip-flops?\b|\bheels?\b|\bhuarache\b)/i.test(value);
+}
+
 const OTHERS_SHOE_COLOR_TYPE_ITEMS = new Set([
     'abibas marquee boost lows shoes',
     'abibas pezy boost 700 v3 alvah shoes',
@@ -2559,7 +2646,7 @@ const OTHERS_GENDER_ITEMS = new Set([
     'six tailed fox on shoulder accessory',
     'snowflake glasses',
     'strong chicken on shoulder accessory',
-    'satanic wings',
+    'Satanic Wings',
     'toothless dragon on shoulder accessory',
     'wristband accessory',
     'black voron on shoulder accessory',
@@ -2608,6 +2695,7 @@ function updateOthersSpecialFields() {
     const isGrandTicket = isOthersQuantityItem(base);
 
     const isShoeColorType = OTHERS_SHOE_COLOR_TYPE_ITEMS.has(base);
+    const isShoeItem = isOthersShoeItem(base);
     const isPantsColorType = OTHERS_PANTS_COLOR_TYPE_ITEMS.has(base);
     const isPantsTypeOnly = OTHERS_PANTS_TYPE_1_25_ITEMS.has(base) ||
             OTHERS_WATCH_TYPE_ITEMS.has(base);
@@ -2617,18 +2705,21 @@ function updateOthersSpecialFields() {
     const isGenderItem = OTHERS_GENDER_ITEMS.has(base);
     const isWatchTypeGenderItem = isOthersWatchTypeGenderItem(base);
     const isColorGenderItem = OTHERS_COLOR_GENDER_ITEMS.has(base);
-    const isColorType = !isGenderItem && !isColorGenderItem && !isColorOnly && (OTHERS_COLOR_AND_TYPE_ITEMS.has(base) || OTHERS_COLOR_TYPE_1_10_ITEMS.has(base) || isShoeColorType || isPantsColorType);
+    // Footwear uses Colour + Type + Gender. Keep the rule based on the
+    // actual selected item text so it also works for footwear added later.
+    const isShoeOptions = isShoeItem;
+    const isColorType = !isGenderItem && !isColorGenderItem && !isColorOnly && (OTHERS_COLOR_AND_TYPE_ITEMS.has(base) || OTHERS_COLOR_TYPE_1_10_ITEMS.has(base) || isShoeColorType || isPantsColorType || isShoeOptions);
     const isTypeOnly = !isColorGenderItem && !isColorOnly && (isWatchTypeGenderItem || (!isGenderItem && (OTHERS_TYPE_ONLY_ITEMS.has(base) || OTHERS_COLOR_TYPE_1_10_ITEMS.has(base) || OTHERS_SHOE_COLOR_TYPE_ITEMS.has(base) || isPantsTypeOnly || isPrimeTypeOnly)));
 
     if (!controls || !color || !type || !gender || !input) return;
 
     // Show the special row only when this item has special options.
-    controls.classList.toggle("hidden", !(isColorType || isColorOnly || isTypeOnly || isGenderItem || isColorGenderItem || isQualityItem || isGrandTicket || isWatchTypeGenderItem));
+    controls.classList.toggle("hidden", !(isColorType || isColorOnly || isTypeOnly || isGenderItem || isColorGenderItem || isQualityItem || isGrandTicket || isWatchTypeGenderItem || isShoeItem));
 
     // Gender-only accessories: show Men/Women only.
     colorWrap?.classList.toggle("hidden", isGrandTicket || !(isColorType || isColorOnly || isColorGenderItem));
     typeWrap?.classList.toggle("hidden", isGrandTicket || isQualityItem || isColorOnly || isColorGenderItem || (isGenderItem && !isColorType && !isTypeOnly && !isWatchTypeGenderItem));
-    genderWrap?.classList.toggle("hidden", isGrandTicket || !(isGenderItem || isColorGenderItem));
+    genderWrap?.classList.toggle("hidden", isGrandTicket || !(isGenderItem || isColorGenderItem || isShoeItem));
     qualityWrap?.classList.toggle("hidden", isGrandTicket || !isQualityItem);
     grandWrap?.classList.toggle("hidden", !isGrandTicket);
     // Quantity/bulk items (including seeds and juices) keep their controls enabled.
@@ -2645,7 +2736,7 @@ function updateOthersSpecialFields() {
 
     if (!isColorType && !isColorOnly && !isColorGenderItem) color.value = "";
     if (isColorGenderItem || (isGenderItem && !isColorType && !isTypeOnly)) type.value = "";
-    if (!isGenderItem && !isColorGenderItem) gender.value = "";
+    if (!isGenderItem && !isColorGenderItem && !isShoeItem) gender.value = "";
     if (!isQualityItem && quality) quality.value = "";
 
     // Limit the type list to the exact requested types for Prime / Prime Platinum.
@@ -2793,7 +2884,10 @@ function isOthersContainerItem(text) {
 
 function isOthersQuantityItem(raw) {
     const key = String(raw || "").trim().toLowerCase();
-    return OTHERS_QUANTITY_ITEMS.has(key);
+    // Every ticket item gets Quantity + In bulk controls, including ticket
+    // variants that are added to the database later.
+    const isTicketItem = /(?:^|\s)tickets?$/.test(key);
+    return OTHERS_QUANTITY_ITEMS.has(key) || isTicketItem;
 }
 
 function updateQuantityItemControls() {
@@ -2977,7 +3071,11 @@ function getOthersItems() {
     // here so the selected type is never lost between the selector and output.
     if (values.length > 0) {
         const typeEl = document.getElementById("othersSpecialType");
+        const colorEl = document.getElementById("othersSpecialColor");
+        const genderEl = document.getElementById("othersSpecialGender");
         const selectedType = typeEl?.value || "";
+        const selectedColor = colorEl?.value || "";
+        const selectedGender = genderEl?.value || "";
         const rawItem1 = (document.getElementById("othersCustomText")?.value || "").trim();
         const base = getOthersSpecialBaseItem();
         const isPrime = OTHERS_PRIME_TYPE_ONLY_ITEMS.has(base);
@@ -2994,6 +3092,16 @@ function getOthersItems() {
         const alreadyHasType = /\b(?:of\s+)?type\s*#?\s*\d+\b/i.test(values[0]);
         if (supportsType && selectedType && !alreadyHasType) {
             values[0] = `${values[0]} of type ${selectedType}`;
+        }
+
+        // Safety-net for footwear: always reflect the live Colour and Gender
+        // selectors in the generated ad, even if the editable text was changed.
+        if (isOthersShoeItem(base)) {
+            values[0] = values[0]
+                .replace(/^(?:white|black|pink|purple|grey|gray|yellow|green|brown|red|blue)\s+/i, "")
+                .replace(/\s+for\s+(?:men|women)\s*$/i, "");
+            if (selectedColor) values[0] = `${selectedColor} ${values[0]}`;
+            if (selectedGender) values[0] = `${values[0]} for ${selectedGender}`;
         }
 
         // Preserve the exact database capitalization for Prime / Prime Platinum.
@@ -3125,7 +3233,6 @@ syncOthersPickerText();
     closeOthersTemplatePopup();
 
     document.getElementById("feat_garden").checked = false;
-    document.getElementById("feat_garage").checked = false;
     document.getElementById("feat_custom").checked = false;
     document.getElementById("feat_insurance").checked = false;
     document.getElementById("feat_pool").checked = false;
@@ -3207,8 +3314,11 @@ function parsePriceRules(rawPrice, intent, allowEach = false) {
     }
     if (/[0-9.]+[kK]\b/.test(clean)) {
         let numPart = clean.match(/[0-9.]+/)[0];
-        if (!numPart.includes('.')) numPart = numPart + ".000";
-        return { value: "$" + numPart, isNumeric: true, each };
+        const num = parseFloat(numPart);
+        if (!Number.isFinite(num)) return { value: clean, isNumeric: false, each };
+        // K means thousand: 1.3k -> $1.300, 2k -> $2.000
+        const formatted = Math.round(num * 1000).toLocaleString('de-DE');
+        return { value: "$" + formatted, isNumeric: true, each };
     }
 
     if (clean.toLowerCase().includes("billion")) return { value: "Negotiable", isNumeric: false, each };
@@ -3320,7 +3430,8 @@ function updateAd() {
         }
 
         if (document.getElementById('feat_garden').checked) featuresList.push("garden");
-        if (document.getElementById('feat_garage').checked) featuresList.push(document.getElementById('garage_val').value);
+        const garageValue = document.getElementById('garage_val')?.value;
+        if (garageValue) featuresList.push(garageValue);
         if (document.getElementById('feat_custom').checked) featuresList.push("custom interior");
         if (document.getElementById('feat_insurance').checked) featuresList.push("insurance");
         if (document.getElementById('feat_pool').checked) featuresList.push("swimming pool");
@@ -3608,7 +3719,7 @@ updateAd = function() {
             </div>
             <button type="button" class="others-popup-close" onclick="closeOthersTemplatePopup()" aria-label="Close">×</button>
         </div>
-        <input type="text" id="othersPopupSearch" class="form-control" placeholder="Search items..." oninput="renderOthersPopupList()" autocomplete="off">
+        <input type="text" id="othersPopupSearch" class="form-control" placeholder="Search items..." oninput="renderOthersPopupList()" onkeydown="handleOthersPopupSearchKeydown(event)" autocomplete="off">
         <div id="othersPopupList" class="others-popup-list"></div>
     </div>
 </div>
