@@ -614,6 +614,7 @@ select.form-control:focus,input[type="text"]:focus{
 <div id="othersPriceGuideOverlay" aria-hidden="true">
   <div class="others-price-guide-popup" role="dialog" aria-modal="true" aria-labelledby="othersPriceGuideTitle">
     <button id="othersPriceGuideClose" type="button" aria-label="Close price guide">×</button>
+    <div class="bangii-price-guide-credit">Made by Bangii Team</div>
     <h3 id="othersPriceGuideTitle">Others — Price Guide</h3>
     <p class="sub">Price you type → output</p>
     <div class="row"><span>1m</span><b>= $1 Million.</b></div>
@@ -781,7 +782,7 @@ select.form-control:focus,input[type="text"]:focus{
         <div class="grid-layout section">
             <div>
                 <label for="vehSearch">Search Database</label>
-                <input type="text" id="vehSearch" placeholder="Type to filter list..." oninput="filterVehicles()">
+                <input type="text" id="vehSearch" placeholder="Type to filter list..." oninput="filterVehicles()" onkeydown="handleVehicleSearchKeydown(event)">
             </div>
             <div>
                 <label for="vehSelectDropdown">Select Found Model</label>
@@ -879,6 +880,7 @@ select.form-control:focus,input[type="text"]:focus{
                 <select id="plantationBeds" class="form-control" onchange="updateAd()">
                     <option value="">-- No Beds Indicated --</option>
                     <option value="with 10 beds">10 beds</option>
+                    <option value="with 15 beds">15 beds</option>
                     <option value="with 20 beds">20 beds</option>
                 </select>
             </div>
@@ -898,7 +900,7 @@ select.form-control:focus,input[type="text"]:focus{
             </div>
             <div>
                 <label for="othersCustomText">Ad Text / Item 1 (Editable)</label>
-                <input type="text" id="othersCustomText" class="form-control others-item-output" placeholder="Selected item will appear here — edit if needed" value="" oninput="syncOthersPickerText(); updateAd()">
+                <input type="text" id="othersCustomText" class="form-control others-item-output" placeholder="Selected item will appear here — edit if needed" value="" oninput="syncOthersPickerText(); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText')">
                 <div id="othersSpecialControls" class="others-special-controls hidden">
                     <div id="othersSpecialColorWrap">
                         <label for="othersSpecialColor">Colour</label>
@@ -977,7 +979,7 @@ select.form-control:focus,input[type="text"]:focus{
             <div class="others-item-compact">
                 <label for="othersCustomText2">Item 2 (Optional • Editable)</label>
                 <div class="others-edit-picker">
-                    <input type="text" id="othersCustomText2" placeholder="Add another item..." value="" oninput="syncOthersPickerText(); updateAd()">
+                    <input type="text" id="othersCustomText2" placeholder="Add another item..." value="" oninput="syncOthersPickerText(); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText2')">
                     <button type="button" onclick="openOthersTemplatePopup('othersCustomText2')" title="Search Item 2" aria-label="Search Item 2">⌕</button>
                 </div>
             </div>
@@ -1654,7 +1656,7 @@ const OTHERS_AD_TEMPLATES = [
   'resources containers',
   'gardeners containers',
   'wheels containers',
-  'Grand ticket',
+  'a Grand ticket',
   'Grand tickets',
   'unskinned medium quality backpack',
   'high quality bear backpack',
@@ -2158,6 +2160,73 @@ const item2 = document.getElementById("othersCustomText2")?.value.trim();
 if (item2Text) item2Text.textContent = item2 || "+ Select Item 2";
 }
 
+// Press Enter while typing an Others item to automatically select the best
+// matching database item. This also activates its Colour/Type/Gender/etc.
+// selectors exactly as if the item had been chosen from the picker.
+function handleOthersDirectItemKeydown(event, targetId = "othersCustomText") {
+    if (!event || event.key !== "Enter") return;
+    event.preventDefault();
+    event.stopPropagation();
+
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    const query = String(target.value || "").trim().toLowerCase();
+    if (!query) return;
+
+    const items = getOthersPopupItems("");
+    let best = null;
+
+    function subsequenceScore(name, q) {
+        let qi = 0;
+        for (let i = 0; i < name.length && qi < q.length; i++) {
+            if (name[i] === q[qi]) qi++;
+        }
+        return qi === q.length ? q.length / Math.max(name.length, 1) : 0;
+    }
+
+    items.forEach(item => {
+        const name = String(item);
+        const lower = name.toLowerCase();
+        let score = 0;
+        if (lower === query) score = 10000;
+        else if (lower.startsWith(query)) score = 9000 - lower.length;
+        else if (lower.split(/[^a-z0-9]+/).some(word => word.startsWith(query))) score = 8000 - lower.length;
+        else if (lower.includes(query)) score = 7000 - lower.indexOf(query) - lower.length * 0.01;
+        else {
+            const sub = subsequenceScore(lower, query);
+            if (sub > 0.5) score = 5000 + sub * 1000 - lower.length * 0.01;
+        }
+        if (!best || score > best.score) best = { item: name, score };
+    });
+
+    if (!best || best.score <= 0) return;
+    target.value = best.item;
+
+    // For Item 1, sync the database selection and rebuild special selectors.
+    if (targetId === "othersCustomText") {
+        const select = document.getElementById("othersTemplateSelect");
+        if (select) {
+            let option = Array.from(select.options).find(o => o.value === best.item);
+            if (!option) {
+                option = document.createElement("option");
+                option.value = best.item;
+                option.textContent = best.item;
+                select.appendChild(option);
+            }
+            select.value = best.item;
+        }
+        const color = document.getElementById("othersSpecialColor");
+        const type = document.getElementById("othersSpecialType");
+        const gender = document.getElementById("othersSpecialGender");
+        if (color) color.value = "";
+        if (type) type.value = "";
+        if (gender) gender.value = "";
+        updateOthersSpecialFields();
+    }
+
+    updateAd();
+}
+
 function extractOthersPrice(template) {
     if (!template) return { price: "", each: false };
     const m = template.match(/(?:Price|Budget|Rent|Salary):\s*\$?([^.]*(?:\.[^.]*)?)\s*\.?$/i);
@@ -2318,7 +2387,7 @@ function buildOthersSubject(template, intent) {
 }
 
 
-const OTHERS_GRAND_TICKET_ITEMS = new Set(["grand ticket", "grand tickets"]);
+const OTHERS_GRAND_TICKET_ITEMS = new Set(["grand tickets"]);
 const OTHERS_RESOURCE_MINER_TICKET_ITEMS = new Set(["resource miners ticket", "resource miners tickets", "a resource miners ticket"]);
 const OTHERS_ROYAL_ARTIFACTS_TICKET_ITEMS = new Set(["royal artifacts ticket", "royal artifacts tickets", "a royal artifacts ticket"]);
 const OTHERS_RARE_LOTTERY_TICKET_ITEMS = new Set(["rare lottery ticket", "rare lottery tickets", "a rare lottery ticket"]);
@@ -2424,7 +2493,7 @@ function isOthersMaterialQuantityItem(raw) {
 }
 
 const OTHERS_QUANTITY_ITEMS = new Set([
-    "grand ticket", "grand tickets",
+    "a grand ticket",
     "seeds",
     "resource miners ticket", "resource miners tickets", "a resource miners ticket",
     "royal artifacts ticket", "royal artifacts tickets", "a royal artifacts ticket",
@@ -2927,7 +2996,7 @@ function updateOthersSpecialFields() {
 
 function isOthersGrandTicketItem(text) {
     const v = (text || "").toLowerCase().trim();
-    return /^(?:a\s+)?(?:\d+\s+)?grand tickets?$/.test(v) || OTHERS_GRAND_TICKET_ITEMS.has(v);
+    return /^(?:\d+\s+)?grand tickets$/.test(v) || OTHERS_GRAND_TICKET_ITEMS.has(v);
 }
 
 function isOthersResourceMinerTicketItem(text) {
@@ -3143,10 +3212,8 @@ function getQuantityItemSubject() {
     }
 
     if (isOthersGrandTicketItem(raw)) {
-        const pluralSelected = /\bgrand tickets\b/.test(raw);
         if (bulk) return `${bulkQtyPrefix} Grand tickets in bulk`;
-        if (qty === 1 && !pluralSelected) return "a Grand ticket";
-        if (qty === 1 && pluralSelected) return "Grand tickets";
+        if (qty <= 1) return "Grand tickets";
         return `${qty} Grand tickets`;
     }
 
@@ -3239,9 +3306,20 @@ function getSelectedAutoType() {
 }
 
 function onAutoTypeChange() {
-    document.getElementById("vehSearch").value = "";
-    document.getElementById("carName").value = "";
+    // Keep the user's search text when switching Car/Motorcycle/Helicopter/Plane/Boat
+    // or when returning to the Auto section. Only rebuild the results for the new type.
+    // Do not wipe the search field or custom vehicle target here.
+    const search = document.getElementById("vehSearch");
+    const target = document.getElementById("carName");
+    const previousSearch = search ? search.value : "";
+    const previousTarget = target ? target.value : "";
+
     filterVehicles();
+
+    // If the new vehicle type has no matching model, preserve the user's typed
+    // search/custom target instead of unexpectedly resetting their work.
+    if (search && search.value === "" && previousSearch) search.value = previousSearch;
+    if (target && target.value === "" && previousTarget) target.value = previousTarget;
 }
 
 function filterVehicles() {
@@ -3276,6 +3354,67 @@ function filterVehicles() {
     updateAd();
 }
 
+function handleVehicleSearchKeydown(event) {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+
+    const search = document.getElementById("vehSearch");
+    const query = (search?.value || "").trim().toLowerCase();
+    if (!query) return;
+
+    // Search ALL vehicle classifications, not only the currently selected one.
+    // Ranking: exact match > starts with > word starts with > contains > fuzzy subsequence.
+    let best = null;
+    const currentType = getSelectedAutoType();
+
+    function subsequenceScore(name, q) {
+        let qi = 0;
+        for (let i = 0; i < name.length && qi < q.length; i++) {
+            if (name[i] === q[qi]) qi++;
+        }
+        return qi === q.length ? (q.length / Math.max(name.length, 1)) : 0;
+    }
+
+    Object.entries(MASTER_VEHICLE_DB || {}).forEach(([type, list]) => {
+        (list || []).forEach(item => {
+            const name = String(item || "");
+            const lower = name.toLowerCase();
+            let score = 0;
+
+            if (lower === query) score = 10000;
+            else if (lower.startsWith(query)) score = 9000 - lower.length;
+            else if (lower.split(/[^a-z0-9]+/).some(word => word.startsWith(query))) score = 8000 - lower.length;
+            else if (lower.includes(query)) score = 7000 - lower.indexOf(query) - lower.length * 0.01;
+            else {
+                const sub = subsequenceScore(lower, query);
+                if (sub > 0.5) score = 5000 + sub * 1000 - lower.length * 0.01;
+            }
+
+            // If scores are otherwise equal, prefer the currently selected vehicle type.
+            if (score > 0 && type === currentType) score += 5;
+
+            if (!best || score > best.score) best = { type, item: name, score };
+        });
+    });
+
+    if (!best) return;
+
+    // Automatically switch to the classification containing the best match.
+    const typeRadio = document.querySelector(`input[name="autoType"][value="${best.type}"]`);
+    if (typeRadio) typeRadio.checked = true;
+
+    const dropdown = document.getElementById("vehSelectDropdown");
+    const target = document.getElementById("carName");
+
+    // Build the dropdown for the newly selected classification, then select the match.
+    filterVehicles();
+    if (dropdown) dropdown.value = best.item;
+    if (target) target.value = best.item;
+    if (search) search.value = best.item;
+
+    updateAd();
+}
+
 function selectVehicleFromDropdown() {
     const selectedValue = document.getElementById("vehSelectDropdown").value;
     if (selectedValue) {
@@ -3301,6 +3440,20 @@ function syncAutoVehicleTarget() {
         dropdown.value = match;
     }
     updateAd();
+}
+
+function updateBusinessBuyingRules() {
+    const categoryEl = document.querySelector('input[name="category"]:checked');
+    const intentEl = document.querySelector('input[name="intent"]:checked');
+    const numberInput = document.getElementById("businessNumber");
+    if (!categoryEl || !intentEl || !numberInput) return;
+
+    const numberField = numberInput.closest("div");
+    const isBusinessBuying = categoryEl.value === "business" && intentEl.value === "Buying";
+
+    // Like Real Estate: Business № is not used for Buying ads.
+    if (numberField) numberField.style.display = isBusinessBuying ? "none" : "";
+    if (isBusinessBuying) numberInput.value = "";
 }
 
 function toggleBusinessOptions() {
@@ -3855,8 +4008,10 @@ const _oldUpdateAd = updateAd;
 updateAd = function() {
     _oldUpdateAd();
     updatePropertyBuyingRules();
+    updateBusinessBuyingRules();
 };
 updateOthersPriceWarningVisibility();
+updateBusinessBuyingRules();
 </script>
 
 
@@ -3875,5 +4030,19 @@ updateOthersPriceWarningVisibility();
         <div id="othersPopupList" class="others-popup-list"></div>
     </div>
 </div>
+
+<style>
+.bangii-price-guide-credit {
+    width: 100%;
+    text-align: center;
+    margin: 0 0 10px;
+    color: #fff;
+    font-family: "Arial Rounded MT Bold", "Trebuchet MS", Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: .2px;
+}
+</style>
 </body>
 </html>
