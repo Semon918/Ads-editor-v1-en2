@@ -2258,6 +2258,29 @@ function isOthersNoEachItem(itemText) {
     // Example: "a Resource miners ticket" -> "$100", not "$100 each".
     if (/^a\s+/i.test(base)) return true;
 
+    // Any item that uses the special Colour / Type / Gender / Quality
+    // selectors must NOT receive an "each" suffix. The selector describes
+    // the variant of the item; it does not make the price a per-item price.
+    if (typeof getOthersSpecialBaseItem === "function" && getOthersSpecialBaseItem()) {
+        const specialBase = getOthersSpecialBaseItem();
+        if (OTHERS_COLOR_AND_TYPE_ITEMS.has(specialBase) ||
+            OTHERS_COLOR_TYPE_1_10_ITEMS.has(specialBase) ||
+            OTHERS_TYPE_ONLY_ITEMS.has(specialBase) ||
+            OTHERS_TYPE_1_10_ITEMS.has(specialBase) ||
+            OTHERS_PRIME_TYPE_ONLY_ITEMS.has(specialBase) ||
+            OTHERS_QUALITY_ITEMS.has(specialBase) ||
+            OTHERS_LEVEL_QUALITY_ITEMS.has(specialBase) ||
+            OTHERS_GENDER_ITEMS.has(specialBase) ||
+            OTHERS_COLOR_GENDER_ITEMS.has(specialBase) ||
+            OTHERS_COLOR_ONLY_ITEMS.has(specialBase) ||
+            OTHERS_SHOE_COLOR_TYPE_ITEMS.has(specialBase) ||
+            OTHERS_PANTS_COLOR_TYPE_ITEMS.has(specialBase) ||
+            OTHERS_PANTS_TYPE_1_25_ITEMS.has(specialBase) ||
+            OTHERS_WATCH_TYPE_ITEMS.has(specialBase) ||
+            isOthersWatchTypeGenderItem(specialBase) ||
+            isOthersShoeItem(specialBase)) return true;
+    }
+
     // Satanic Horns, Satanic Wings, and all glasses items are never
     // priced with an "each" suffix.
     return base === "satanic horns" || base === "satanic wings" || base === "unicorn wings" || base === "licence plates" || /\bglasses\b/i.test(base) || /\b(?:pants|shorts)\b/i.test(base) || /\b(?:shirt|shirts|t-shirt|t-shirts|hoodie|hoodies|jacket|jackets|coat|coats|sweatshirt|sweatshirts|sweater|sweaters|top|tops|dress|dresses|skirt|skirts|suit|suits|trousers|jeans|joggers|leggings|bra|bras|underwear|swimwear|swimsuit|swimming trunks|boots|booties|sneakers|shoes|heels|flip-flops|sandals)\b/i.test(base);
@@ -3466,6 +3489,30 @@ function isOthersAlwaysEachItem(itemText) {
     return base === "timber" || base === "biospark";
 }
 
+// Items with special selectors (Colour / Type / Gender / Quality) must still
+// allow the price `E` suffix. The selector text is part of the displayed item,
+// so checking only isOthersPluralItem() would incorrectly disable `each`.
+function isOthersSpecialSelectorItemForEach(itemText) {
+    const base = getOthersSpecialBaseItem();
+    if (!base) return false;
+    return OTHERS_COLOR_AND_TYPE_ITEMS.has(base) ||
+        OTHERS_COLOR_TYPE_1_10_ITEMS.has(base) ||
+        OTHERS_TYPE_ONLY_ITEMS.has(base) ||
+        OTHERS_TYPE_1_10_ITEMS.has(base) ||
+        OTHERS_PRIME_TYPE_ONLY_ITEMS.has(base) ||
+        OTHERS_QUALITY_ITEMS.has(base) ||
+        OTHERS_LEVEL_QUALITY_ITEMS.has(base) ||
+        OTHERS_GENDER_ITEMS.has(base) ||
+        OTHERS_COLOR_GENDER_ITEMS.has(base) ||
+        OTHERS_COLOR_ONLY_ITEMS.has(base) ||
+        OTHERS_SHOE_COLOR_TYPE_ITEMS.has(base) ||
+        OTHERS_PANTS_COLOR_TYPE_ITEMS.has(base) ||
+        OTHERS_PANTS_TYPE_1_25_ITEMS.has(base) ||
+        OTHERS_WATCH_TYPE_ITEMS.has(base) ||
+        isOthersWatchTypeGenderItem(base) ||
+        isOthersShoeItem(base);
+}
+
 function isOthersTuningItem(itemText) {
     const base = (itemText || "").trim().toLowerCase().replace(/\b(?:low|medium|high)\s+quality\s+/i, "").trim();
     return new Set([
@@ -3677,7 +3724,10 @@ function updateAd() {
 
     let outputAdSentence = "";
     const firstOthersForEach = category === "others" ? (getOthersItems()[0] || "") : "";
-    const allowOthersEach = category === "others" && !isOthersNoEachItem(firstOthersForEach) && (isOthersTuningItem(firstOthersForEach) || isOthersPluralItem(firstOthersForEach));
+    const allowOthersEach = category === "others" &&
+        !isOthersNoEachItem(firstOthersForEach) &&
+        (isOthersTuningItem(firstOthersForEach) ||
+         isOthersPluralItem(firstOthersForEach));
     const quantityRawItemForPrice = category === "others" ? (document.getElementById("othersCustomText")?.value || "") : "";
     const isQuantityItemForPrice = category === "others" && (isOthersQuantityItem(quantityRawItemForPrice) || isOthersPluralItem(quantityRawItemForPrice));
     // Quantity ticket items do not accept E; E is reserved for tuning parts.
