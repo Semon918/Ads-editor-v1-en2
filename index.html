@@ -615,7 +615,7 @@ select.form-control:focus,input[type="text"]:focus{
   <div class="others-price-guide-popup" role="dialog" aria-modal="true" aria-labelledby="othersPriceGuideTitle">
     <button id="othersPriceGuideClose" type="button" aria-label="Close price guide">×</button>
     <div class="bangii-price-guide-credit">Made by Bangii Team</div>
-    <h3 id="othersPriceGuideTitle">Others — Price Guide</h3>
+    <h3 id="othersPriceGuideTitle">📢 Price Guide</h3>
     <p class="sub">Price you type → output</p>
     <div class="row"><span>1m</span><b>= $1 Million.</b></div>
     <div class="row"><span>20.5m</span><b>= $20.5 Million.</b></div>
@@ -3229,6 +3229,7 @@ function getOthersItems() {
     const values = [item1, item2]
         .map(v => normalizeOthersAction(stripOthersPrice(v)))
         .map(v => v.replace(/[.\s]+$/, "").trim())
+        .map(preserveOthersItemCapitalization)
         .map(formatOthersDisplayName)
         .filter(Boolean);
 
@@ -3575,6 +3576,20 @@ function formatOthersDisplayName(str) {
     value = value.replace(/\bkolex\b/gi, "Kolex");
     value = value.replace(/\babibas\b/gi, "Abibas");
     return value;
+}
+
+// Preserve the exact capitalization used by the Others item database.
+// Matching is case-insensitive only for lookup; the returned text keeps the
+// original spelling/capitalization. This prevents item names such as
+// "Unicorn Aura" from becoming "unicorn aura" in the generated output.
+function preserveOthersItemCapitalization(str) {
+    const value = String(str || "").trim();
+    if (!value) return value;
+    const exact = OTHERS_AD_TEMPLATES.find(item =>
+        String(item || "").trim().replace(/[.\s]+$/, "").toLowerCase() ===
+        value.replace(/[.\s]+$/, "").toLowerCase()
+    );
+    return exact ? String(exact).trim().replace(/[.\s]+$/, "") : value;
 }
 
 function capitalizeWords(str) {
