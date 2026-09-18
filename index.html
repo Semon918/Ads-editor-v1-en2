@@ -977,7 +977,7 @@ select.form-control:focus,input[type="text"]:focus{
                 </select>
             </div>
             <div class="others-item-compact">
-                <label for="othersCustomText2">Item 2 (Optional • Editable)</label>
+                <label for="othersCustomText2" id="othersItem2Label">Item 2 (Optional • Editable)</label>
                 <div class="others-edit-picker">
                     <input type="text" id="othersCustomText2" placeholder="Add another item..." value="" oninput="syncOthersPickerText(); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText2')">
                     <button type="button" onclick="openOthersTemplatePopup('othersCustomText2')" title="Search Item 2" aria-label="Search Item 2">⌕</button>
@@ -2335,6 +2335,7 @@ function isOthersNoEachItem(itemText) {
         if (OTHERS_COLOR_AND_TYPE_ITEMS.has(specialBase) ||
             OTHERS_COLOR_TYPE_1_10_ITEMS.has(specialBase) ||
             OTHERS_TYPE_ONLY_ITEMS.has(specialBase) ||
+            OTHERS_TYPE_1_25_ITEMS.has(specialBase) ||
             OTHERS_TYPE_1_10_ITEMS.has(specialBase) ||
             OTHERS_PRIME_TYPE_ONLY_ITEMS.has(specialBase) ||
             OTHERS_QUALITY_ITEMS.has(specialBase) ||
@@ -2661,6 +2662,10 @@ const OTHERS_MAX_QUALITY_ITEMS = new Set([
     "pickaxe"
 ]);
 
+const OTHERS_TYPE_1_25_ITEMS = new Set([
+    "exotic mask"
+]);
+
 const OTHERS_TYPE_1_10_ITEMS = new Set([
     "toothy mask",
     "shamanic mask"
@@ -2898,7 +2903,7 @@ function updateOthersSpecialFields() {
     // actual selected item text so it also works for footwear added later.
     const isShoeOptions = isShoeItem;
     const isColorType = !isGenderItem && !isColorGenderItem && !isColorOnly && (OTHERS_COLOR_AND_TYPE_ITEMS.has(base) || OTHERS_COLOR_TYPE_1_10_ITEMS.has(base) || isShoeColorType || isPantsColorType || isShoeOptions);
-    const isTypeOnly = !isColorGenderItem && !isColorOnly && (isWatchTypeGenderItem || (!isGenderItem && (OTHERS_TYPE_ONLY_ITEMS.has(base) || OTHERS_COLOR_TYPE_1_10_ITEMS.has(base) || OTHERS_SHOE_COLOR_TYPE_ITEMS.has(base) || isPantsTypeOnly || isPrimeTypeOnly)));
+    const isTypeOnly = !isColorGenderItem && !isColorOnly && (isWatchTypeGenderItem || (!isGenderItem && (OTHERS_TYPE_ONLY_ITEMS.has(base) || OTHERS_TYPE_1_25_ITEMS.has(base) || OTHERS_COLOR_TYPE_1_10_ITEMS.has(base) || OTHERS_SHOE_COLOR_TYPE_ITEMS.has(base) || isPantsTypeOnly || isPrimeTypeOnly)));
 
     if (!controls || !color || !type || !gender || !input) return;
 
@@ -2932,13 +2937,14 @@ function updateOthersSpecialFields() {
     const primeTypeOnly = OTHERS_PRIME_TYPE_ONLY_ITEMS.has(base);
     // Limit the type list to 1-10 for the requested 1-10 items.
     const type10Only = OTHERS_TYPE_1_10_ITEMS.has(base) && !isShoeColorType && !isPantsColorType && !isPantsTypeOnly;
+    const type25Only = OTHERS_TYPE_1_25_ITEMS.has(base);
     Array.from(type.options).forEach(opt => {
         if (!opt.value) {
             opt.hidden = false;
         } else if (primeTypeOnly) {
             opt.hidden = ![7, 15, 21, 30].includes(Number(opt.value));
         } else {
-            opt.hidden = type10Only && Number(opt.value) > 10;
+            opt.hidden = (type10Only && Number(opt.value) > 10) || (type25Only && Number(opt.value) > 25);
         }
     });
 
@@ -2963,6 +2969,7 @@ function updateOthersSpecialFields() {
     }
     if (primeTypeOnly && !["7", "15", "21", "30", ""].includes(type.value)) type.value = "";
     if (type10Only && Number(type.value) > 10) type.value = "";
+    if (type25Only && Number(type.value) > 25) type.value = "";
 
     // Rebuild the editable item text without losing current selections.
     if (isColorType || isColorOnly || isTypeOnly || isGenderItem || isColorGenderItem || isQualityItem) {
@@ -2978,6 +2985,7 @@ function updateOthersSpecialFields() {
             ...OTHERS_COLOR_AND_TYPE_ITEMS,
             ...OTHERS_COLOR_TYPE_1_10_ITEMS,
             ...OTHERS_TYPE_ONLY_ITEMS,
+            ...OTHERS_TYPE_1_25_ITEMS,
             ...OTHERS_PRIME_TYPE_ONLY_ITEMS,
             ...OTHERS_QUALITY_ITEMS,
             ...OTHERS_LEVEL_QUALITY_ITEMS,
@@ -3274,6 +3282,7 @@ function getOthersItems() {
         const isPrime = OTHERS_PRIME_TYPE_ONLY_ITEMS.has(base);
         const supportsType = isOthersWatchTypeGenderItem(base) || isPrime || (!OTHERS_COLOR_GENDER_ITEMS.has(base) && (
             OTHERS_TYPE_ONLY_ITEMS.has(base) ||
+            OTHERS_TYPE_1_25_ITEMS.has(base) ||
             OTHERS_TYPE_1_10_ITEMS.has(base) ||
             OTHERS_COLOR_TYPE_1_10_ITEMS.has(base) ||
             OTHERS_COLOR_AND_TYPE_ITEMS.has(base) ||
@@ -3723,6 +3732,15 @@ function updateAd() {
     const adPreview = document.getElementById('adPreview');
     const copyBtn = document.getElementById('copyBtn');
 
+    // In Others, Trading uses Item 2 as the thing being traded FOR.
+    // Keep the normal Item 2 label for every other intent.
+    const othersItem2Label = document.getElementById('othersItem2Label');
+    if (othersItem2Label) {
+        othersItem2Label.textContent = (category === "others" && intent === "Trading")
+            ? "For (Optional • Editable)"
+            : "Item 2 (Optional • Editable)";
+    }
+
     resultCard.classList.remove('error-box');
     adPreview.classList.remove('error-text');
     copyBtn.classList.remove('hidden');
@@ -3824,7 +3842,12 @@ function updateAd() {
             const lower = clean.toLowerCase();
             return OTHERS_PET_ITEMS.has(lower) ? `a pet ${clean}` : clean;
         });
-        coreSubjectText = joinOthersItems(displayOthersItems);
+        if (intent === "Trading" && displayOthersItems.length >= 2) {
+            // Trading syntax in Others: first item FOR second item.
+            coreSubjectText = `${displayOthersItems[0]} for ${displayOthersItems[1]}`;
+        } else {
+            coreSubjectText = joinOthersItems(displayOthersItems);
+        }
         // More than one item is always a bundle/list ad, so its price is not
         // treated as an item price. The output must remain Negotiable.
 
