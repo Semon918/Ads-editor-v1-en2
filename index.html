@@ -2040,23 +2040,70 @@ function normalizeOthersRawItem(text) {
     return value;
 }
 
+const OTHERS_USAGE_STORAGE_KEY = "bangii_others_item_usage_v1";
+
+function getOthersItemUsage() {
+    try {
+        const raw = localStorage.getItem(OTHERS_USAGE_STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return parsed && typeof parsed === "object" ? parsed : {};
+    } catch (e) { return {}; }
+}
+
+function normalizeOthersUsageKey(text) {
+    return String(text || "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function recordOthersItemUsage(item) {
+    const key = normalizeOthersUsageKey(item);
+    if (!key) return;
+    try {
+        const usage = getOthersItemUsage();
+        usage[key] = (Number(usage[key]) || 0) + 1;
+        localStorage.setItem(OTHERS_USAGE_STORAGE_KEY, JSON.stringify(usage));
+    } catch (e) {}
+}
+
 function getOthersPopupItems(query = "") {
     const q = String(query || "").toLowerCase().trim();
     const target = othersPopupTarget || "othersCustomText";
     const useRawItem = target === "othersCustomText2";
+    const usage = getOthersItemUsage();
     const seen = new Set();
     const items = [];
-    OTHERS_AD_TEMPLATES.forEach(template => {
+    OTHERS_AD_TEMPLATES.forEach((template, originalIndex) => {
         const base = normalizeOthersAction(stripOthersPrice(template));
         const clean = useRawItem ? normalizeOthersRawItem(base) : base;
         if (!clean) return;
-        if (q && !clean.toLowerCase().includes(q)) return;
-        const key = clean.toLowerCase().replace(/\s+/g, " ").trim();
+        const lowerClean = clean.toLowerCase();
+        if (q && !lowerClean.includes(q)) return;
+        const key = lowerClean.replace(/\s+/g, " ").trim();
         if (seen.has(key)) return;
         seen.add(key);
-        items.push(clean);
+
+        let score = 0;
+        if (q) {
+            if (lowerClean === q) score = 0;
+            else if (lowerClean === "gloves" && q === "gl") score = 1;
+            else if (lowerClean === "pixel glasses" && q === "gl") score = 2;
+            else if (lowerClean === "grand tickets" && q === "gr") score = 1;
+            else if (lowerClean === "a grand ticket" && q === "gr") score = 2;
+            else {
+                const words = lowerClean.split(/[^a-z0-9]+/).filter(Boolean);
+                const startsWithQuery = words.findIndex(word => word.startsWith(q));
+                const containsAt = lowerClean.indexOf(q);
+                score = startsWithQuery >= 0 ? 100 + startsWithQuery * 10 + words[startsWithQuery].length : 500 + Math.max(containsAt, 0);
+            }
+        }
+
+        const useCount = Number(usage[normalizeOthersUsageKey(clean)]) || 0;
+        items.push({ text: clean, score, useCount, originalIndex });
     });
-    return items;
+
+    // Most-used matching item always comes first. If usage is tied, keep the
+    // existing search relevance, including the custom gl/gr ordering.
+    items.sort((a, b) => b.useCount - a.useCount || a.score - b.score || a.originalIndex - b.originalIndex);
+    return items.map(item => item.text);
 }
 
 let othersPopupTarget = "othersCustomText";
@@ -2127,6 +2174,7 @@ function renderOthersPopupList() {
 }
 
 function chooseOthersPopupItem(item) {
+    recordOthersItemUsage(item);
     const target = document.getElementById(othersPopupTarget) || document.getElementById("othersCustomText");
     const select = document.getElementById("othersTemplateSelect");
     if (target) target.value = item;
@@ -3670,7 +3718,7 @@ function parsePriceRules(rawPrice, intent, allowEach = false) {
 
 function isOthersAlwaysEachItem(itemText) {
     const base = (itemText || "").trim().toLowerCase();
-    return base === "timber" || base === "biospark";
+    return base === "timber" || base === "biospark" || base === "fuel for resource extraction";
 }
 
 // Items with special selectors (Colour / Type / Gender / Quality) must still
