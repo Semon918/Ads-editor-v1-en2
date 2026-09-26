@@ -491,49 +491,10 @@ select.form-control:focus,input[type="text"]:focus{
 .others-edit-picker input:focus{border-color:#94a3b8;box-shadow:0 0 0 3px rgba(148,163,184,.08);}
 .others-edit-picker button{flex:0 0 42px;min-width:42px;min-height:52px;border:1px solid #475569;border-radius:7px;background:#1e293b;color:#e2e8f0;cursor:pointer;font-size:16px;transition:.18s ease;}
 .others-edit-picker button:hover{background:#334155;border-color:#94a3b8;}
-.others-item-compact{
-    grid-column:1 / -1;
-    width:100%;
-    margin-top:4px;
-    margin-bottom:2px;
-}
-.others-item-compact + .others-item-compact{
-    margin-top:4px;
-}
-.others-item-compact #othersSpecialGenderWrap{margin-bottom:6px;}
-.others-item-compact label{
-    display:block;
-    font-size:12px;
-    line-height:1.2;
-    margin:0 0 5px 0;
-}
-.others-item-compact .others-edit-picker{
-    width:100%;
-    height:34px;
-    display:flex;
-    align-items:stretch;
-    gap:7px;
-}
-.others-item-compact .others-edit-picker input{
-    flex:1;
-    min-width:0;
-    width:auto;
-    height:34px;
-    min-height:34px;
-    font-size:12px;
-    padding:7px 9px;
-    box-sizing:border-box;
-}
-.others-item-compact .others-edit-picker button{
-    flex:0 0 36px;
-    width:36px;
-    height:34px;
-    min-height:34px;
-    min-width:36px;
-    padding:0;
-    font-size:14px;
-    line-height:1;
-}
+.others-item-compact #othersSpecialGenderWrap{margin-bottom:10px;}
+.others-item-compact label{font-size:12px;}
+.others-item-compact .others-edit-picker input{min-height:34px;font-size:12px;padding:7px 9px;}
+.others-item-compact .others-edit-picker button{min-height:34px;flex-basis:36px;min-width:36px;font-size:14px;}
 .others-popup{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:20px;}
 .others-popup.hidden{display:none;}
 .others-popup-backdrop{position:absolute;inset:0;background:rgba(2,6,23,.74);backdrop-filter:blur(4px);}
@@ -633,654 +594,6 @@ select.form-control:focus,input[type="text"]:focus{
 .others-price-guide-popup .warn{margin-top:14px;padding:9px 10px;border-radius:8px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#f5d77a;font-size:13px;line-height:1.5;}
 #othersPriceGuideClose{position:absolute;top:14px;right:14px;width:38px;height:38px;border:1px solid #475569;border-radius:8px;background:#1e293b;color:#fff;font-size:23px;line-height:28px;cursor:pointer;}
 #othersPriceGuideClose:hover{background:#dc2626;}
-</style>
-
-
-<style>
-/* ===== Others item 1/2/3 progressive layout ===== */
-#othersWorkspace .others-controls-grid{
-    grid-template-columns:minmax(0,1fr) minmax(0,1.65fr);
-    column-gap:14px;
-    row-gap:8px;
-}
-#othersWorkspace .others-search-wrap{
-    grid-column:1;
-    grid-row:1 / span 3;
-}
-#othersWorkspace .others-controls-grid > div:not(.others-search-wrap){
-    grid-column:2;
-}
-#othersWorkspace .others-item-compact{
-    margin:0;
-    width:100%;
-}
-#othersWorkspace .others-item-compact.hidden,
-#othersItem2Wrap.hidden,
-#othersItem3Wrap.hidden{
-    display:none !important;
-}
-#othersWorkspace .others-item-compact label{
-    margin-bottom:5px;
-    line-height:1.2;
-}
-#othersWorkspace .others-edit-picker{
-    width:100%;
-    height:34px;
-    display:flex;
-    gap:7px;
-}
-#othersWorkspace .others-edit-picker input{
-    flex:1;
-    width:auto;
-    min-width:0;
-    height:34px;
-    min-height:34px;
-    box-sizing:border-box;
-}
-#othersWorkspace .others-edit-picker button{
-    flex:0 0 36px;
-    width:36px;
-    min-width:36px;
-    height:34px;
-    min-height:34px;
-    padding:0;
-}
-@media (max-width:760px){
-    #othersWorkspace .others-controls-grid{
-        grid-template-columns:1fr;
-    }
-    #othersWorkspace .others-search-wrap,
-    #othersWorkspace .others-controls-grid > div:not(.others-search-wrap){
-        grid-column:1;
-        grid-row:auto;
-    }
-}
-</style>
-
-<style id="others-progressive-layout-final">
-#othersWorkspace .others-controls-grid{
-    grid-template-columns:minmax(0,1fr) minmax(0,1.65fr);
-    grid-auto-flow:row;
-    column-gap:14px;
-    row-gap:8px;
-    align-items:start;
-}
-#othersWorkspace .others-search-wrap{
-    grid-column:1 !important;
-    grid-row:1 / span 3 !important;
-}
-#othersWorkspace .others-controls-grid > div:not(.others-search-wrap){
-    grid-column:2 !important;
-    grid-row:auto !important;
-    min-width:0;
-}
-#othersWorkspace .others-item-compact{
-    grid-column:2 !important;
-    width:100%;
-    min-width:0;
-    margin:0;
-}
-#othersWorkspace .others-item-compact.hidden{
-    display:none !important;
-}
-#othersWorkspace .others-edit-picker{
-    width:100%;
-    min-width:0;
-    height:34px;
-    display:flex;
-    gap:7px;
-}
-#othersWorkspace .others-edit-picker input{
-    flex:1 1 auto;
-    width:100%;
-    min-width:0;
-    height:34px;
-    min-height:34px;
-    box-sizing:border-box;
-}
-#othersWorkspace .others-edit-picker button{
-    flex:0 0 36px;
-    width:36px;
-    min-width:36px;
-    height:34px;
-    min-height:34px;
-    padding:0;
-}
-@media (max-width:760px){
-    #othersWorkspace .others-controls-grid{
-        grid-template-columns:1fr !important;
-    }
-    #othersWorkspace .others-search-wrap,
-    #othersWorkspace .others-controls-grid > div:not(.others-search-wrap),
-    #othersWorkspace .others-item-compact{
-        grid-column:1 !important;
-        grid-row:auto !important;
-    }
-}
-</style>
-
-
-<style id="others-professional-polish">
-/* =========================================================
-   OTHERS CATEGORY — PROFESSIONAL UI POLISH
-   Visual-only: keeps the existing controls and JS behavior.
-   ========================================================= */
-
-#othersWorkspace{
-    position:relative;
-    margin-top:10px;
-    padding:0 0 2px;
-}
-
-/* Main two-column control area */
-#othersWorkspace .others-controls-grid{
-    display:grid;
-    /* Equal halves: Item 2 and Item 3 get the same width. */
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-    gap:0;
-    width:100%;
-    padding:0;
-    overflow:hidden;
-    border:1px solid rgba(245,158,11,.30);
-    border-radius:12px;
-    background:
-        linear-gradient(180deg,rgba(30,41,59,.72),rgba(15,23,42,.86));
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.20),
-        inset 0 1px 0 rgba(255,255,255,.025);
-}
-
-/* Left column */
-#othersWorkspace .others-search-wrap{
-    grid-column:1 !important;
-    grid-row:1 / span 3 !important;
-    min-width:0;
-    padding:16px;
-    border-right:1px solid rgba(148,163,184,.18);
-    background:linear-gradient(180deg,rgba(15,23,42,.35),rgba(2,6,23,.18));
-}
-
-/* Right column rows */
-#othersWorkspace .others-controls-grid > div:not(.others-search-wrap){
-    grid-column:2 !important;
-    min-width:0;
-    padding:13px 14px;
-    margin:0;
-    border-bottom:1px solid rgba(148,163,184,.13);
-}
-
-#othersWorkspace .others-controls-grid > div:not(.others-search-wrap):last-child{
-    border-bottom:0;
-}
-
-/* Item 1 */
-#othersWorkspace .others-controls-grid > div:has(#othersCustomText){
-    background:rgba(30,41,59,.20);
-}
-
-/* Item 2 + Item 3 */
-#othersWorkspace .others-item-compact{
-    width:100%;
-    box-sizing:border-box;
-    background:rgba(15,23,42,.18);
-    transition:background .18s ease,border-color .18s ease;
-}
-
-#othersWorkspace .others-item-compact:hover{
-    background:rgba(51,65,85,.18);
-}
-
-#othersWorkspace .others-item-compact.hidden{
-    display:none !important;
-}
-
-/* Labels */
-#othersWorkspace .others-controls-grid label{
-    color:#e5e7eb;
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:.01em;
-    margin-bottom:6px;
-}
-
-#othersWorkspace .others-item-compact label{
-    display:block;
-    line-height:1.2;
-    margin:0 0 6px;
-}
-
-/* Search card */
-#othersWorkspace .others-search-btn{
-    min-height:62px;
-    border:1px solid #475569;
-    border-radius:9px;
-    background:linear-gradient(135deg,#111827,#0f172a);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
-}
-
-#othersWorkspace .others-search-btn:hover{
-    border-color:#94a3b8;
-    background:linear-gradient(135deg,#172033,#111827);
-    box-shadow:0 5px 18px rgba(0,0,0,.18);
-}
-
-#othersWorkspace .others-search-main{
-    min-width:0;
-}
-
-#othersWorkspace .others-search-main strong{
-    font-size:13px;
-    color:#f8fafc;
-}
-
-#othersWorkspace .others-search-main small{
-    color:#94a3b8;
-    line-height:1.3;
-}
-
-/* All editable fields */
-#othersWorkspace input.form-control,
-#othersWorkspace .others-edit-picker input,
-#othersWorkspace select.form-control{
-    background:#0b1220;
-    color:#f8fafc;
-    border:1px solid #3f4e67;
-    border-radius:7px;
-    box-shadow:inset 0 1px 2px rgba(0,0,0,.22);
-    transition:border-color .16s ease,box-shadow .16s ease,background .16s ease;
-}
-
-#othersWorkspace input.form-control:focus,
-#othersWorkspace .others-edit-picker input:focus,
-#othersWorkspace select.form-control:focus{
-    border-color:#a78bfa;
-    background:#0d1627;
-    box-shadow:0 0 0 3px rgba(124,58,237,.14);
-    outline:none;
-}
-
-/* Item 1 */
-#othersWorkspace #othersCustomText{
-    min-height:42px;
-    height:42px;
-    font-size:13px;
-    padding:9px 11px;
-}
-
-/* Item 2 / 3 */
-#othersWorkspace .others-edit-picker{
-    width:100%;
-    height:36px;
-    display:flex;
-    align-items:stretch;
-    gap:7px;
-}
-
-#othersWorkspace .others-edit-picker input{
-    flex:1 1 auto;
-    width:auto;
-    min-width:0;
-    height:36px;
-    min-height:36px;
-    padding:8px 10px;
-    font-size:12px;
-    box-sizing:border-box;
-}
-
-#othersWorkspace .others-edit-picker button{
-    flex:0 0 38px;
-    width:38px;
-    min-width:38px;
-    height:36px;
-    min-height:36px;
-    padding:0;
-    border:1px solid #475569;
-    border-radius:7px;
-    background:#172033;
-    color:#e2e8f0;
-    font-size:15px;
-    box-shadow:none;
-}
-
-#othersWorkspace .others-edit-picker button:hover{
-    background:#25334a;
-    border-color:#94a3b8;
-    transform:none;
-}
-
-/* Special option controls under Item 1 */
-#othersWorkspace #othersSpecialControls{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:9px;
-    margin-top:10px;
-    padding-top:10px;
-    border-top:1px solid rgba(148,163,184,.13);
-}
-
-#othersWorkspace #othersSpecialControls.hidden{
-    display:none !important;
-}
-
-#othersWorkspace .others-special-controls > div{
-    min-width:0;
-}
-
-#othersWorkspace .others-special-controls .form-control{
-    min-height:34px;
-    height:34px;
-    padding:6px 9px;
-    font-size:12px;
-}
-
-/* Quantity / bulk row stays visually at the bottom of the options */
-#othersWorkspace #othersQuantityItemWrap{
-    grid-column:1 / -1 !important;
-    display:grid;
-    grid-template-columns:120px 120px;
-    gap:10px;
-    margin-top:2px;
-    padding-top:10px;
-    border-top:1px solid rgba(148,163,184,.13);
-}
-
-#othersWorkspace #othersQuantityItemWrap.hidden{
-    display:none !important;
-}
-
-#othersWorkspace #othersQuantityItemWrap .others-quantity-box{
-    min-width:0;
-}
-
-#othersWorkspace #othersQuantityItemWrap .form-control{
-    width:120px;
-    height:34px;
-    min-height:34px;
-    padding:6px 8px;
-    font-size:12px;
-}
-
-#othersWorkspace #othersQuantityItemWrap .others-bulk-check{
-    width:120px;
-    height:34px;
-    min-height:34px;
-    box-sizing:border-box;
-    border:1px solid #40516d;
-    border-radius:7px;
-    background:#111a2d;
-    color:#f8fafc;
-    transition:.16s ease;
-}
-
-#othersWorkspace #othersQuantityItemWrap .others-bulk-check:hover{
-    border-color:#8b5cf6;
-    background:#172033;
-}
-
-#othersWorkspace #othersQuantityItemWrap .others-bulk-check input:checked{
-    background:#7c3aed;
-    border-color:#a78bfa;
-}
-
-/* Warning block */
-#othersWorkspace + #othersPriceWarning,
-#othersPriceWarning{
-    margin-top:10px;
-    border-radius:9px;
-    border:1px solid rgba(245,158,11,.38);
-    background:linear-gradient(90deg,rgba(120,53,15,.30),rgba(36,31,18,.72));
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
-}
-
-/* Mobile: turn the professional two-column panel into clean stacked rows */
-@media (max-width:760px){
-    #othersWorkspace .others-controls-grid{
-        grid-template-columns:1fr !important;
-    }
-
-    #othersWorkspace .others-search-wrap,
-    #othersWorkspace .others-controls-grid > div:not(.others-search-wrap),
-    #othersWorkspace .others-item-compact{
-        grid-column:1 !important;
-        grid-row:auto !important;
-    }
-
-    #othersWorkspace .others-search-wrap{
-        border-right:0;
-        border-bottom:1px solid rgba(148,163,184,.18);
-    }
-}
-
-@media (max-width:500px){
-    #othersWorkspace #othersSpecialControls{
-        grid-template-columns:1fr;
-    }
-
-    #othersWorkspace #othersQuantityItemWrap{
-        grid-template-columns:120px 120px;
-    }
-}
-</style>
-
-
-<style id="others-quantity-bulk-position-final">
-/* Quantity + Bulk always stay side-by-side under Item 1. */
-#othersWorkspace #othersQuantityItemWrap{
-    display:grid !important;
-    grid-template-columns:120px 120px !important;
-    gap:10px !important;
-    width:max-content !important;
-    max-width:100%;
-    margin-top:10px;
-    padding-top:10px;
-    border-top:1px solid rgba(148,163,184,.13);
-    box-sizing:border-box;
-}
-#othersWorkspace #othersQuantityItemWrap.hidden{
-    display:none !important;
-}
-#othersWorkspace #othersQuantityItemWrap .quantity-box,
-#othersWorkspace #othersQuantityItemWrap .bulk-box{
-    width:120px !important;
-    min-width:120px;
-}
-#othersWorkspace #othersQuantityItemWrap .bulk-box{
-    display:block !important;
-}
-#othersWorkspace #othersBulkLastWrap{
-    display:none !important;
-}
-@media(max-width:760px){
-    #othersWorkspace #othersQuantityItemWrap{
-        grid-template-columns:120px 120px !important;
-    }
-}
-</style>
-
-<style id="others-item-two-column-layout">
-/* ===== Others: compact Item 2 / Item 3 layout ===== */
-@media (min-width:761px){
-    /* Item 1 stays on the right, aligned with Search & Select. */
-    #othersWorkspace .others-controls-grid > div:has(#othersCustomText){
-        grid-column:2 !important;
-        grid-row:1 !important;
-    }
-
-    /* Item 2 goes directly under Search & Select. */
-    #othersWorkspace #othersItem2Wrap{
-        grid-column:1 !important;
-        grid-row:2 !important;
-    }
-
-    /* Item 3 goes directly under Item 1. */
-    #othersWorkspace #othersItem3Wrap{
-        grid-column:2 !important;
-        grid-row:2 !important;
-    }
-
-    /* Keep the separate final Bulk row at the bottom when it is shown. */
-    #othersWorkspace #othersBulkLastWrap{
-        grid-column:1 / -1 !important;
-        grid-row:3 !important;
-    }
-}
-</style>
-
-<style id="others-optional-item-popups">
-/* Optional Item 2 / Item 3: compact add buttons, fields appear only after selection */
-.others-optional-add-wrap{
-    min-width:0;
-}
-.others-optional-add-wrap.hidden{display:none !important;}
-.others-optional-add-btn{
-    width:100%;
-    height:36px;
-    min-height:36px;
-    border:1px dashed #64748b;
-    border-radius:7px;
-    background:rgba(15,23,42,.72);
-    color:#cbd5e1;
-    font-size:12px;
-    font-weight:700;
-    cursor:pointer;
-    text-align:left;
-    padding:0 11px;
-    transition:.16s ease;
-}
-.others-optional-add-btn:hover{
-    border-color:#a78bfa;
-    background:rgba(124,58,237,.12);
-    color:#fff;
-}
-@media (min-width:761px){
-    #othersWorkspace #othersItem2AddWrap{
-        grid-column:1 !important;
-        grid-row:2 !important;
-        padding:13px 14px;
-        margin:0;
-        border-bottom:1px solid rgba(148,163,184,.13);
-    }
-    #othersWorkspace #othersItem3AddWrap{
-        grid-column:2 !important;
-        grid-row:2 !important;
-        padding:13px 14px;
-        margin:0;
-        border-bottom:1px solid rgba(148,163,184,.13);
-    }
-    #othersWorkspace #othersItem2Wrap,
-    #othersWorkspace #othersItem3Wrap{
-        grid-row:2 !important;
-    }
-}
-</style>
-
-<style id="others-item-stack-left-final">
-/* Final Others layout: Search -> Item 2 -> Item 3 on the left; Item 1 + Quantity/Bulk on the right. */
-@media (min-width:761px){
-    #othersWorkspace .others-controls-grid{
-        grid-template-columns:minmax(210px,.78fr) minmax(0,1.62fr) !important;
-        grid-auto-flow:row !important;
-        align-items:start;
-    }
-
-    /* Search & Select occupies only the first row. */
-    #othersWorkspace .others-search-wrap{
-        grid-column:1 !important;
-        grid-row:1 !important;
-    }
-
-    /* Item 1 stays on the right; Quantity + Bulk remain inside it. */
-    #othersWorkspace .others-controls-grid > div:has(#othersCustomText){
-        grid-column:2 !important;
-        grid-row:1 !important;
-    }
-
-    /* Item 2 directly below Search & Select. */
-    #othersWorkspace #othersItem2AddWrap,
-    #othersWorkspace #othersItem2Wrap{
-        grid-column:1 !important;
-        grid-row:2 !important;
-    }
-
-    /* Item 3 directly below Item 2. */
-    #othersWorkspace #othersItem3AddWrap,
-    #othersWorkspace #othersItem3Wrap{
-        grid-column:1 !important;
-        grid-row:3 !important;
-    }
-
-    /* Do not create any extra full-width Bulk row. */
-    #othersWorkspace #othersBulkLastWrap{
-        display:none !important;
-    }
-}
-</style>
-
-<style id="others-compact-spacing-final">
-/* ===== FINAL COMPACT SPACING =====
-   Reduce unused vertical space in the Others editor without changing behavior.
-*/
-@media (min-width:761px){
-    #othersWorkspace .others-controls-grid{
-        row-gap:0 !important;
-        align-items:start !important;
-    }
-
-    #othersWorkspace .others-search-wrap{
-        grid-row:1 !important;
-        padding:10px 12px !important;
-    }
-
-    #othersWorkspace .others-search-wrap label{
-        margin-bottom:4px !important;
-    }
-
-    #othersWorkspace .others-search-btn{
-        min-height:52px !important;
-        height:52px !important;
-    }
-
-    #othersWorkspace .others-controls-grid > div:not(.others-search-wrap){
-        padding:7px 10px !important;
-    }
-
-    #othersWorkspace .others-controls-grid > div:has(#othersCustomText){
-        padding-top:7px !important;
-        padding-bottom:7px !important;
-    }
-
-    #othersWorkspace .others-item-compact{
-        padding-top:7px !important;
-        padding-bottom:7px !important;
-    }
-
-    #othersWorkspace .others-item-compact label{
-        margin-bottom:4px !important;
-    }
-
-    #othersWorkspace .others-edit-picker,
-    #othersWorkspace .others-edit-picker input,
-    #othersWorkspace .others-edit-picker button{
-        height:32px !important;
-        min-height:32px !important;
-    }
-
-    #othersWorkspace #othersCustomText{
-        height:38px !important;
-        min-height:38px !important;
-        padding:7px 10px !important;
-    }
-
-    #othersWorkspace #othersSpecialControls{
-        margin-top:7px !important;
-        padding-top:7px !important;
-    }
-
-    #othersWorkspace #othersQuantityItemWrap{
-        margin-top:7px !important;
-        padding-top:7px !important;
-    }
-}
 </style>
 
 </head>
@@ -1662,27 +975,13 @@ select.form-control:focus,input[type="text"]:focus{
                     <option value="">-- Search and select an ad --</option>
                 </select>
             </div>
-            <div id="othersItem2AddWrap" class="others-optional-add-wrap hidden">
-                <button type="button" class="others-optional-add-btn" onclick="openOthersTemplatePopup('othersCustomText2')" title="Add Item 2" aria-label="Add Item 2">＋ Add Item 2</button>
-            </div>
-            <div id="othersItem2Wrap" class="others-item-compact hidden">
+            <div class="others-item-compact">
                 <label for="othersCustomText2" id="othersItem2Label">Item 2 (Optional • Editable)</label>
                 <div class="others-edit-picker">
-                    <input type="text" id="othersCustomText2" placeholder="Add another item..." value="" oninput="syncOthersPickerText(); updateQuantityItemControls(); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText2')">
+                    <input type="text" id="othersCustomText2" placeholder="Add another item..." value="" oninput="syncOthersPickerText(); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText2')">
                     <button type="button" onclick="openOthersTemplatePopup('othersCustomText2')" title="Search Item 2" aria-label="Search Item 2">⌕</button>
                 </div>
             </div>
-            <div id="othersItem3AddWrap" class="others-optional-add-wrap hidden">
-                <button type="button" class="others-optional-add-btn" onclick="openOthersTemplatePopup('othersCustomText3')" title="Add Item 3" aria-label="Add Item 3">＋ Add Item 3</button>
-            </div>
-            <div id="othersItem3Wrap" class="others-item-compact hidden">
-                <label for="othersCustomText3" id="othersItem3Label">Item 3 (Optional • Editable)</label>
-                <div class="others-edit-picker">
-                    <input type="text" id="othersCustomText3" placeholder="Add another item..." value="" oninput="syncOthersPickerText(); updateQuantityItemControls(); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText3')">
-                    <button type="button" onclick="openOthersTemplatePopup('othersCustomText3')" title="Search Item 3" aria-label="Search Item 3">⌕</button>
-                </div>
-            </div>
-            <div id="othersBulkLastWrap" aria-label="Quantity type"></div>
             
             </div>
         </div>
@@ -2632,6 +1931,15 @@ const OTHERS_AD_TEMPLATES = [
   'Lion cub',
   'Prime Platinum',
   'Prime',
+  'Fire Ring',
+  'Unicorn Tail',
+  'Wizard Cat',
+  'Macaque with pacifier',
+  'Chick on shoulder accessory',
+  'Toy Fish',
+  'Piglet on bread',
+  'Mister Seal',
+  'Hero S Cape',
   'tuning parts',
   'tires tuning',
   'brakes tuning',
@@ -2767,7 +2075,7 @@ function recordOthersItemUsage(item) {
 function getOthersPopupItems(query = "") {
     const q = String(query || "").toLowerCase().trim();
     const target = othersPopupTarget || "othersCustomText";
-    const useRawItem = target !== "othersCustomText";
+    const useRawItem = target === "othersCustomText2";
     const usage = getOthersItemUsage();
     const seen = new Set();
     const items = [];
@@ -2818,7 +2126,6 @@ function openOthersTemplatePopup(targetInputId = "othersCustomText") {
     const titles = {
         othersCustomText: "Select Item 1",
         othersCustomText2: "Select Item 2",
-        othersCustomText3: "Select Item 3",
     };
     const title = document.getElementById("othersPopupTitle");
     if (title) title.textContent = titles[othersPopupTarget] || "Select Others Ad";
@@ -2890,8 +2197,6 @@ function chooseOthersPopupItem(item) {
         select.value = item;
     }
     closeOthersTemplatePopup();
-    if (target) target.dispatchEvent(new Event("input", { bubbles: true }));
-    updateOthersItemVisibility();
     if (target && target.id === "othersCustomText") {
         const color = document.getElementById("othersSpecialColor");
         const type = document.getElementById("othersSpecialType");
@@ -2908,10 +2213,7 @@ function syncOthersPickerText() {
     const item1 = document.getElementById("othersCustomText")?.value.trim();
     const item2Text = document.getElementById("othersItem2PickerText");
 const item2 = document.getElementById("othersCustomText2")?.value.trim();
-const item3 = document.getElementById("othersCustomText3")?.value.trim();
 if (item2Text) item2Text.textContent = item2 || "+ Select Item 2";
-const item3Text = document.getElementById("othersItem3PickerText");
-if (item3Text) item3Text.textContent = item3 || "+ Select Item 3";
 }
 
 // Press Enter while typing an Others item to automatically select the best
@@ -3131,7 +2433,6 @@ function selectOthersTemplate() {
     updateOthersSpecialFields();
     syncOthersPickerText();
     document.getElementById("othersCustomText2").value = "";
-    document.getElementById("othersCustomText3").value = "";
 // Others templates never carry an item price. Price/Budget is controlled
     // only by the main price field, just like Real Estate, Auto and Business.
     document.getElementById("price").value = "";
@@ -3852,40 +3153,19 @@ function updateQuantityItemControls() {
     const wrap = document.getElementById("othersQuantityItemWrap");
     const qty = document.getElementById("othersQuantityItemQuantity");
     const bulk = document.getElementById("othersQuantityItemBulk");
-    const bulkBox = bulk?.closest(".bulk-box");
     if (!wrap) return;
-
-    const item1 = (document.getElementById("othersCustomText")?.value || "").trim();
-    const item2 = (document.getElementById("othersCustomText2")?.value || "").trim();
-    const item3 = (document.getElementById("othersCustomText3")?.value || "").trim();
-
-    const isQuantity = isOthersQuantityItem(item1);
-    const itemCount = [item1, item2, item3].filter(Boolean).length;
-    const multiItem = isQuantity && itemCount >= 2;
-
+    const raw = (document.getElementById("othersCustomText")?.value || "").trim();
+    const isQuantity = isOthersQuantityItem(raw);
     wrap.classList.toggle("hidden", !isQuantity);
-    wrap.classList.toggle("others-quantity-multi", multiItem);
-
-    // Bulk always stays beside Quantity. Never move it to a separate row.
-    if (bulkBox && bulkBox.parentElement !== wrap) {
-        wrap.appendChild(bulkBox);
-    }
-    wrap.classList.remove("others-quantity-multi");
-
     if (!isQuantity) {
         if (qty) qty.value = "";
-        if (bulk) {
-            bulk.checked = false;
-            bulk.disabled = true;
-        }
+        if (bulk) { bulk.checked = false; bulk.disabled = true; }
         return;
     }
-
     const qtyText = String(qty?.value || "").trim();
     const n = parseInt(qtyText || "1", 10) || 1;
-
-    // Bulk remains available when Quantity is blank or greater than 1.
-    // Quantity=1 disables bulk, as before.
+    // Bulk is available even when Quantity is blank. If a quantity is entered,
+    // bulk remains available for 2+; quantity 1 disables bulk.
     const canBulk = !qtyText || n > 1;
     if (bulk) {
         bulk.disabled = !canBulk;
@@ -4031,9 +3311,8 @@ function getQuantityItemSubject() {
 function getOthersItems() {
     const item1 = (document.getElementById("othersCustomText")?.value || "").trim();
     const item2 = (document.getElementById("othersCustomText2")?.value || "").trim();
-    const item3 = (document.getElementById("othersCustomText3")?.value || "").trim();
     // Item 1 is authoritative. Never resurrect an old item from the hidden template select.
-    const values = [item1, item2, item3]
+    const values = [item1, item2]
         .map(v => normalizeOthersAction(stripOthersPrice(v)))
         .map(v => v.replace(/[.\s]+$/, "").trim())
         .map(formatOthersDisplayName)
@@ -4094,37 +3373,19 @@ function getOthersItems() {
 
     // Do not repeat the same item if it was entered twice.
     const seen = new Set();
-    const uniqueValues = values.filter(v => {
+    return values.filter(v => {
         const key = v.toLowerCase().replace(/\s+/g, " ").trim();
         if (seen.has(key)) return false;
         seen.add(key);
         return true;
     });
-
-    // When 2 or 3 items are listed, keep "in bulk" at the very end of the
-    // complete item list instead of attaching it to Item 1.
-    const bulkChecked = document.getElementById("othersQuantityItemBulk")?.checked === true;
-    if (uniqueValues.length >= 2 && bulkChecked && isOthersQuantityItem(item1)) {
-        uniqueValues[0] = uniqueValues[0].replace(/\s+in bulk\s*$/i, "").trim();
-        uniqueValues.push("__OTHERS_BULK_SUFFIX__");
-    }
-
-    return uniqueValues;
 }
 
 function joinOthersItems(items) {
     if (items.length === 0) return "";
-
-    const bulkAtEnd = items.includes("__OTHERS_BULK_SUFFIX__");
-    const cleanItems = items.filter(v => v !== "__OTHERS_BULK_SUFFIX__");
-
-    let result = "";
-    if (cleanItems.length === 0) return bulkAtEnd ? "in bulk" : "";
-    if (cleanItems.length === 1) result = cleanItems[0];
-    else if (cleanItems.length === 2) result = `${cleanItems[0]} and ${cleanItems[1]}`;
-    else result = `${cleanItems[0]}, ${cleanItems[1]} and ${cleanItems[2]}`;
-
-    return bulkAtEnd ? `${result} in bulk` : result;
+    if (items.length === 1) return items[0];
+    if (items.length === 2) return `${items[0]} and ${items[1]}`;
+    return `${items[0]}, ${items[1]} and ${items[2]}`;
 }
 
 function getSelectedAutoType() {
@@ -4340,7 +3601,6 @@ function switchCategory() {
 }
 
 function resetForm() {
-    updateOthersItemVisibility();
     document.getElementById("propNumber").value = "";
     document.getElementById("locationSelect").selectedIndex = 0;
     document.getElementById("vehSearch").value = "";
@@ -4354,8 +3614,6 @@ function resetForm() {
     document.getElementById("othersTemplateSelect").selectedIndex = 0;
     document.getElementById("othersCustomText").value = "";
     document.getElementById("othersCustomText2").value = "";
-    document.getElementById("othersCustomText3").value = "";
-    updateOthersItemVisibility();
     if (document.getElementById("othersSpecialColor")) document.getElementById("othersSpecialColor").value = "";
     if (document.getElementById("othersSpecialType")) document.getElementById("othersSpecialType").value = "";
     if (document.getElementById("othersSpecialGender")) document.getElementById("othersSpecialGender").value = "";
@@ -4522,72 +3780,7 @@ function updateOthersPriceVisibility() {
     wrapper.style.display = noPrice ? "none" : "";
 }
 
-
-function updateOthersItemVisibility() {
-    const item1El = document.getElementById("othersCustomText");
-    const item2El = document.getElementById("othersCustomText2");
-    const item3El = document.getElementById("othersCustomText3");
-    const item2Wrap = document.getElementById("othersItem2Wrap");
-    const item3Wrap = document.getElementById("othersItem3Wrap");
-    const item2AddWrap = document.getElementById("othersItem2AddWrap");
-    const item3AddWrap = document.getElementById("othersItem3AddWrap");
-
-    if (!item1El || !item2El || !item3El || !item2Wrap || !item3Wrap) return;
-
-    const hasItem1 = item1El.value.trim() !== "";
-    const hasItem2 = item2El.value.trim() !== "";
-    const hasItem3 = item3El.value.trim() !== "";
-
-    // Item 2 is optional: show only the Add Item 2 popup trigger until an item is selected.
-    item2Wrap.classList.toggle("hidden", !hasItem2);
-    if (item2AddWrap) item2AddWrap.classList.toggle("hidden", !hasItem1 || hasItem2);
-
-    // Item 3 is optional: its Add Item 3 popup trigger appears only after Item 2 exists.
-    item3Wrap.classList.toggle("hidden", !hasItem3);
-    if (item3AddWrap) item3AddWrap.classList.toggle("hidden", !hasItem2 || hasItem3);
-
-    // If a parent item is removed, don't leave hidden child items active.
-    if (!hasItem1) {
-        item2El.value = "";
-        item3El.value = "";
-    } else if (!hasItem2) {
-        item3El.value = "";
-    }
-}
-
-function initOthersProgressiveItems() {
-    const item1 = document.getElementById("othersCustomText");
-    const item2 = document.getElementById("othersCustomText2");
-    if (!item1 || !item2) return;
-
-    // Show/hide immediately while typing, without waiting for any other form logic.
-    const refresh = () => {
-        const item2Wrap = document.getElementById("othersItem2Wrap");
-        const item3Wrap = document.getElementById("othersItem3Wrap");
-        const item2AddWrap = document.getElementById("othersItem2AddWrap");
-        const item3AddWrap = document.getElementById("othersItem3AddWrap");
-        const item3 = document.getElementById("othersCustomText3");
-        const has1 = item1.value.trim().length > 0;
-        const has2 = item2.value.trim().length > 0;
-        const has3 = item3 ? item3.value.trim().length > 0 : false;
-        if (item2Wrap) item2Wrap.classList.toggle("hidden", !has2);
-        if (item3Wrap) item3Wrap.classList.toggle("hidden", !has3);
-        if (item2AddWrap) item2AddWrap.classList.toggle("hidden", !has1 || has2);
-        if (item3AddWrap) item3AddWrap.classList.toggle("hidden", !has2 || has3);
-        if (!has1 && item2.value) item2.value = "";
-        if (!has2 && item3 && item3.value) item3.value = "";
-    };
-
-    item1.addEventListener("input", refresh);
-    item1.addEventListener("change", refresh);
-    item2.addEventListener("input", refresh);
-    item2.addEventListener("change", refresh);
-    refresh();
-}
-
 function updateAd() {
-    updateOthersItemVisibility();
-    updateQuantityItemControls();
     const category = document.querySelector('input[name="category"]:checked').value;
     const intent = document.querySelector('input[name="intent"]:checked').value;
     const rawPrice = document.getElementById('price').value;
@@ -4603,8 +3796,6 @@ function updateAd() {
             ? "For (Optional • Editable)"
             : "Item 2 (Optional • Editable)";
     }
-    const othersItem3Label = document.getElementById('othersItem3Label');
-    if (othersItem3Label) othersItem3Label.textContent = "Item 3 (Optional • Editable)";
 
     resultCard.classList.remove('error-box');
     adPreview.classList.remove('error-text');
@@ -4804,11 +3995,12 @@ function updateAd() {
         priceObj.each = true;
     }
 
-    // Only timber and biospark append "each." after a real price.
-    // Negotiable never gets "each.".
+    // Some Others items are always priced per item.
+    // Tuning Parts must ALWAYS append "each." when a real price is entered;
+    // the user does not need to type E. Negotiable never gets "each.".
     if (category === "others" && getOthersItems().length === 1 &&
         !isOthersNoEachItem(getOthersItems()[0]) &&
-        isOthersAlwaysEachItem(getOthersItems()[0]) &&
+        (isOthersAlwaysEachItem(getOthersItems()[0]) || isOthersTuningItem(getOthersItems()[0])) &&
         priceObj.value !== "Negotiable") {
         priceObj.each = true;
     }
@@ -4855,7 +4047,8 @@ function updateAd() {
             const quantityRawForSuffix = (document.getElementById("othersCustomText")?.value || "").trim();
             const quantityPluralSelected = isQuantityItemForPrice && isOthersPluralItem(quantityRawForSuffix);
             const quantityNeedsEach = isQuantityItemForPrice && !isOthersNoEachItem(quantityRawForSuffix) && (quantityQtyForPrice > 1 || quantityBulkForPrice || quantityPluralSelected);
-            const eachSuffix = !multipleOthersItems && !/^Negotiable$/i.test(parsedPriceText.trim()) && (priceObj.each || quantityNeedsEach) ? " each." : "";
+            const tuningPartsNeedsEach = category === "others" && !multipleOthersItems && isOthersTuningItem((document.getElementById("othersCustomText")?.value || "").trim()) && !/^Negotiable$/i.test(parsedPriceText.trim());
+            const eachSuffix = !multipleOthersItems && !/^Negotiable$/i.test(parsedPriceText.trim()) && (priceObj.each || quantityNeedsEach || tuningPartsNeedsEach) ? " each." : "";
             // Negotiable always ends with a period for both Price and Budget.
             const negotiableSuffix = !priceObj.each && /^Negotiable$/i.test(parsedPriceText.trim()) ? "." : "";
             // A plain Million amount ends with a period too (e.g. "$3 Million.").
@@ -4954,11 +4147,5 @@ updateBusinessBuyingRules();
     letter-spacing: .2px;
 }
 </style>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-    initOthersProgressiveItems();
-    updateOthersItemVisibility();
-});
-</script>
 </body>
 </html>
