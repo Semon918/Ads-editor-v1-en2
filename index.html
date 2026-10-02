@@ -36,6 +36,42 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&display=swap');
+
+        .bangii-heading {
+            font-family: 'Orbitron', 'Segoe UI', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #ffffff;
+            background: linear-gradient(90deg, #a855f7, #60a5fa, #22d3ee, #a855f7);
+            background-size: 250% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 18px rgba(99, 102, 241, 0.28);
+            animation: bangiiGradient 5s linear infinite;
+        }
+
+        .bangii-icon {
+            -webkit-text-fill-color: initial;
+            display: inline-block;
+            filter: drop-shadow(0 0 7px rgba(96, 165, 250, 0.7));
+            animation: bangiiPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes bangiiGradient {
+            0% { background-position: 0% center; }
+            100% { background-position: 250% center; }
+        }
+
+        @keyframes bangiiPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
         h1 {
             font-size: 1.6rem;
             margin-bottom: 20px;
@@ -118,11 +154,13 @@
         }
 
         /* Smaller Garage Spaces dropdown */
-        #garage_val {
-            width: 145px;
-            max-width: 145px;
-            font-size: 0.78rem;
-            padding: 2px 4px;
+        #garage_val,
+        #view_val {
+            width: 100%;
+            max-width: none;
+            margin-left: 0;
+            font-size: 0.9rem;
+            padding: 4px 8px;
         }
 
         select.form-control, input[type="text"] {
@@ -292,6 +330,7 @@ body{
 }
 
 .container{
+    position:relative;
     background:rgba(15,23,42,.96);
     border:1px solid rgba(148,163,184,.25);
     box-shadow:0 20px 55px rgba(0,0,0,.45);
@@ -492,6 +531,15 @@ select.form-control:focus,input[type="text"]:focus{
 .others-edit-picker button{flex:0 0 42px;min-width:42px;min-height:52px;border:1px solid #475569;border-radius:7px;background:#1e293b;color:#e2e8f0;cursor:pointer;font-size:16px;transition:.18s ease;}
 .others-edit-picker button:hover{background:#334155;border-color:#94a3b8;}
 .others-item-compact #othersSpecialGenderWrap{margin-bottom:10px;}
+.others-extra-items{display:contents;}
+/* Desktop layout: three independent columns - Item 1 | Item 2 | Item 3 .
+   Each column grows downward on its own, so boxes never overlap and nothing is pushed by another column. */
+@media (min-width:761px){
+  .others-controls-grid{grid-template-rows:auto;row-gap:12px;}
+  .others-controls-grid .others-item1-col{grid-column:1;grid-row:1;}
+  .others-controls-grid .others-item2-col{grid-column:2;grid-row:1;}
+  .others-controls-grid .others-item3-col{grid-column:3;grid-row:1;}
+}
 .others-item-compact label{font-size:12px;}
 .others-item-compact .others-edit-picker input{min-height:34px;font-size:12px;padding:7px 9px;}
 .others-item-compact .others-edit-picker button{min-height:34px;flex-basis:36px;min-width:36px;font-size:14px;}
@@ -537,6 +585,25 @@ select.form-control:focus,input[type="text"]:focus{
     width: 120px;
     height: 34px;
     box-sizing: border-box;
+    background: #f5f7fb;
+    color: #111827;
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+    caret-color: #4f46e5;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.28), 0 1px 4px rgba(0,0,0,.18);
+    transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+#othersQuantityItemWrap .quantity-box .form-control:hover {
+    background: #ffffff;
+}
+#othersQuantityItemWrap .quantity-box .form-control:focus {
+    outline: none;
+    background: #ffffff;
+    border-color: #a5b4fc;
+    box-shadow: 0 0 0 2px rgba(99,102,241,.25), 0 2px 8px rgba(0,0,0,.22);
 }
 #othersQuantityItemWrap .bulk-box .others-bulk-check {
     width: 120px;
@@ -575,6 +642,52 @@ select.form-control:focus,input[type="text"]:focus{
 .others-price-warning strong{color:#ffd45c;}
 </style>
 
+<style id="contactWarningStyle">
+.others-contact-warning{
+    margin:12px 0 0;
+    padding:9px 10px;
+    border:1px solid rgba(245,158,11,.25);
+    border-radius:8px;
+    background:rgba(245,158,11,.08);
+    color:#f5d77a;
+    font-size:13px;
+    line-height:1.5;
+    text-align:center;
+    box-sizing:border-box;
+}
+.others-contact-warning strong{color:#ffd45c;}
+</style>
+<style id="contactUsButtonStyle">
+.others-contact-us{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    min-height:42px;
+    margin-top:14px;
+    padding:0 16px;
+    box-sizing:border-box;
+    border:1px solid #5865F2;
+    border-radius:8px;
+    background:linear-gradient(135deg,#5865F2,#7289DA);
+    color:#fff!important;
+    font-size:14px;
+    font-weight:700;
+    text-decoration:none;
+    cursor:pointer;
+    box-shadow:0 6px 18px rgba(88,101,242,.25);
+    transition:transform .18s ease,filter .18s ease,box-shadow .18s ease;
+}
+.others-contact-us:hover{
+    filter:brightness(1.08);
+    transform:translateY(-1px);
+    box-shadow:0 8px 22px rgba(88,101,242,.35);
+}
+.others-contact-us:active{
+    transform:translateY(0);
+}
+</style>
 <style id="othersPriceGuideStyle">
 #othersWorkspace{position:relative;}
 #othersWorkspace > .others-price-guide{position:absolute;top:10px;right:10px;width:300px;box-sizing:border-box;padding:16px 17px;border:1px solid rgba(245,158,11,.32);border-radius:12px;background:linear-gradient(145deg,rgba(30,41,59,.97),rgba(15,23,42,.97));box-shadow:0 10px 28px rgba(0,0,0,.18);color:#e5e7eb;z-index:2;}
@@ -592,10 +705,47 @@ select.form-control:focus,input[type="text"]:focus{
 .others-price-guide-popup .row span{font-weight:700;color:#cbd5e1;}
 .others-price-guide-popup .row b{color:#fff;}
 .others-price-guide-popup .warn{margin-top:14px;padding:9px 10px;border-radius:8px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#f5d77a;font-size:13px;line-height:1.5;}
+.others-price-guide-popup img{display:block;margin:10px auto 8px;max-width:100%;height:auto;}
+.others-price-guide-popup p:last-child{text-align:center;margin-left:auto;margin-right:auto;}
+.zoom-tip{text-align:center;margin:10px auto 0!important;}
 #othersPriceGuideClose{position:absolute;top:14px;right:14px;width:38px;height:38px;border:1px solid #475569;border-radius:8px;background:#1e293b;color:#fff;font-size:23px;line-height:28px;cursor:pointer;}
 #othersPriceGuideClose:hover{background:#dc2626;}
 </style>
 
+
+<style>
+.bangii-tagline{
+    text-align:center;
+    margin-top:-12px;
+    margin-bottom:18px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.4px;
+    color:#94a3b8;
+    opacity:.9;
+}
+</style>
+
+
+<style id="quantity-box-uniform-size">
+#othersQuantityItemWrap.others-quantity-two-boxes .quantity-box .form-control,
+#othersQuantityItemWrap2.others-quantity-two-boxes .quantity-box .form-control,
+#othersQuantityItemWrap3.others-quantity-two-boxes .quantity-box .form-control {
+    width:120px !important;
+    min-width:120px !important;
+    max-width:120px !important;
+    height:34px !important;
+    min-height:34px !important;
+    max-height:34px !important;
+    box-sizing:border-box;
+}
+#othersQuantityItemWrap2.others-quantity-two-boxes,
+#othersQuantityItemWrap3.others-quantity-two-boxes {
+    grid-template-columns:120px 120px !important;
+    width:auto !important;
+    gap:16px;
+}
+</style>
 </head>
 <body>
 
@@ -621,7 +771,17 @@ select.form-control:focus,input[type="text"]:focus{
     <div class="row"><span>20.5m</span><b>= $20.5 Million.</b></div>
     <div class="row"><span>1.5k</span><b>= $1.500</b></div>
     <div class="row"><span>300k</span><b>= $300.000</b></div>
-    <div class="warn"><strong>⚠ Check twice before posting.</strong> Some items need <b>each</b>; some don't. If you find a price/each issue, let us know.</div>
+    
+    <div class="others-zoom-tip">
+      
+      <p class="zoom-tip">Use this website with 90% zoom for better experience.</p>
+      <div class="others-contact-warning"><strong>⚠ Check twice before posting.</strong> Some items need <strong>each</strong>; some don't. If you find a price/each issue, let us know.</div>
+      <a class="others-contact-us"
+         href="https://discord.com/users/1067810657128415242"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Contact Us on Discord">💬 Contact Us</a>
+    </div>
   </div>
 </div>
 
@@ -655,7 +815,13 @@ select.form-control:focus,input[type="text"]:focus{
 })();
 </script>
 <div class="container">
-    <h1>🏠 GTA 5 Marketplace Ad Editor Pro 🚗</h1>
+    <div id="quickLinksRow">
+        <a class="quick-link-btn" href="https://docs.google.com/document/d/15LHqc0fDUX-t_3PboS84DWZhGOS-6wwjFc1a0vAioCg/edit?tab=t.0" target="_blank" rel="noopener noreferrer">Policy</a>
+        <a class="quick-link-btn" href="https://docs.google.com/spreadsheets/d/1gFMyVagMZyoj-7JP7zMFb02EzZFnd9yhQMFhzWh3aEo/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">Cars&amp;Cloth_list</a>
+    </div>
+    <div id="themeToggleRow"><button type="button" id="themeToggleBtn" onclick="toggleTheme()">🌙 Night</button></div>
+    <h1 class="bangii-heading"><span class="bangii-icon">⚡</span> Bangii Team <span class="bangii-icon">⚡</span></h1>
+    <div class="bangii-tagline">We support niggas because we are from NiggaLand</div>
 
     <div class="section">
         <label>Select Advertisement Category</label>
@@ -744,7 +910,6 @@ select.form-control:focus,input[type="text"]:focus{
         <div class="features-grid">
             <label id="feature1" class="feature-item"><input type="checkbox" id="feat_garden" value="garden" onchange="updateAd()"> 1. Garden</label>
             <div class="feature-item">
-                <label for="garage_val">2. G.S</label>
                 <select id="garage_val" onchange="updateAd()">
                     <option value="">-- Select G.S --</option>
                     <option value="2 g.s.">2 g.s.</option>
@@ -757,13 +922,17 @@ select.form-control:focus,input[type="text"]:focus{
             <label class="feature-item"><input type="checkbox" id="feat_custom" value="custom interior" onchange="updateAd()"> 4. Custom Interior</label>
             <label id="feature5" class="feature-item"><input type="checkbox" id="feat_insurance" value="insurance" onchange="updateAd()"> 5. Insurance</label>
             <label id="feature6" class="feature-item"><input type="checkbox" id="feat_pool" value="swimming pool" onchange="updateAd()"> 6. Swimming Pool</label>
-            <label id="feature7" class="feature-item"><input type="checkbox" id="feat_tennis" value="tennis court" onchange="updateAd()"> 7. Tennis Court</label>
-            <label id="feature8" class="feature-item"><input type="checkbox" id="feat_heli" value="helipad" onchange="updateAd()"> 8. Helipad</label>
-            <label id="feature9" class="feature-item"><input type="checkbox" id="feat_driveway" value="driveway" onchange="updateAd()"> 9. Driveway</label>
-            <label id="feature10" class="feature-item"><input type="checkbox" id="feat_backyard" value="backyard" onchange="updateAd()"> 10. Backyard</label>
-            <label id="feature11" class="feature-item"><input type="checkbox" id="feat_nice" value="Nice view" onchange="updateAd()"> 11. Nice view</label>
-            <label id="feature12" class="feature-item"><input type="checkbox" id="feat_beautiful" value="beautiful view" onchange="updateAd()"> 12. Beautiful view</label>
-            <label id="feature13" class="feature-item"><input type="checkbox" id="feat_great" value="great view" onchange="updateAd()"> 13. Great view</label>
+            <label id="feature8" class="feature-item"><input type="checkbox" id="feat_heli" value="helipad" onchange="updateAd()"> 7. Helipad</label>
+            <label id="feature9" class="feature-item"><input type="checkbox" id="feat_driveway" value="driveway" onchange="updateAd()"> 8. Driveway</label>
+            <label id="feature10" class="feature-item"><input type="checkbox" id="feat_backyard" value="backyard" onchange="updateAd()"> 9. Backyard</label>
+            <div id="feature11" class="feature-item">
+                <select id="view_val" onchange="updateAd()">
+                    <option value="">-- Select View --</option>
+                    <option value="Nice view">Nice view</option>
+                    <option value="beautiful view">Beautiful view</option>
+                    <option value="great view">Great view</option>
+                </select>
+            </div>
         </div>
     </div>
 
@@ -891,16 +1060,12 @@ select.form-control:focus,input[type="text"]:focus{
 
 
         <div class="grid-layout section others-controls-grid">
-            <div class="others-search-wrap">
-                <label>Search &amp; Select Item</label>
-                <button type="button" class="others-search-btn" onclick="openOthersTemplatePopup('othersCustomText')">
-                    <span class="others-search-main"><span class="search-icon">⌕</span><span><strong>Search &amp; Select</strong><small>Choose an item from the Others database</small></span></span>
-                    <span class="others-picker-arrow">⌄</span>
-                </button>
-            </div>
-            <div>
+            <div class="others-item-compact others-item1-col">
                 <label for="othersCustomText">Ad Text / Item 1 (Editable)</label>
-                <input type="text" id="othersCustomText" class="form-control others-item-output" placeholder="Selected item will appear here — edit if needed" value="" oninput="syncOthersPickerText(); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText')">
+                <div class="others-edit-picker">
+                    <input type="text" id="othersCustomText" placeholder="Selected item will appear here — edit if needed" value="" oninput="syncOthersPickerText(); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText')">
+                    <button type="button" onclick="openOthersTemplatePopup('othersCustomText')" title="Search Item 1" aria-label="Search Item 1">⌕</button>
+                </div>
                 <div id="othersSpecialControls" class="others-special-controls hidden">
                     <div id="othersSpecialColorWrap">
                         <label for="othersSpecialColor">Colour</label>
@@ -909,6 +1074,7 @@ select.form-control:focus,input[type="text"]:focus{
                             <option value="black">black</option>
                             <option value="white">white</option>
                             <option value="blue">blue</option>
+                            <option value="green">green</option>
                             <option value="pink">pink</option>
                             <option value="purple">purple</option>
                             <option value="red">red</option>
@@ -975,12 +1141,123 @@ select.form-control:focus,input[type="text"]:focus{
                     <option value="">-- Search and select an ad --</option>
                 </select>
             </div>
-            <div class="others-item-compact">
+            <div class="others-extra-items">
+            <div class="others-item-compact others-item2-col">
                 <label for="othersCustomText2" id="othersItem2Label">Item 2 (Optional • Editable)</label>
                 <div class="others-edit-picker">
-                    <input type="text" id="othersCustomText2" placeholder="Add another item..." value="" oninput="syncOthersPickerText(); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText2')">
+                    <input type="text" id="othersCustomText2" placeholder="Add another item..." value="" oninput="syncOthersPickerText(); updateOthersSpecialFields('2'); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText2')">
                     <button type="button" onclick="openOthersTemplatePopup('othersCustomText2')" title="Search Item 2" aria-label="Search Item 2">⌕</button>
                 </div>
+                <div id="othersSpecialControls2" class="others-special-controls hidden">
+                    <div id="othersSpecialColorWrap2">
+                        <label for="othersSpecialColor2">Colour</label>
+                        <select id="othersSpecialColor2" class="form-control" onchange="updateOthersSpecialFields('2'); updateAd()">
+                            <option value="">Colour</option>
+                            <option value="black">black</option><option value="white">white</option><option value="blue">blue</option>
+                            <option value="green">green</option>
+                            <option value="pink">pink</option><option value="purple">purple</option><option value="red">red</option>
+                            <option value="yellow">yellow</option><option value="brown">brown</option><option value="grey">grey</option>
+                        </select>
+                    </div>
+                    <div id="othersSpecialGenderWrap2" class="hidden">
+                        <label for="othersSpecialGender2">Gender</label>
+                        <select id="othersSpecialGender2" class="form-control" onchange="updateOthersSpecialFields('2'); updateAd()">
+                            <option value="">Men / Women</option>
+                            <option value="men">men</option>
+                            <option value="women">women</option>
+                        </select>
+                    </div>
+                    <div id="othersSpecialTypeWrap2">
+                        <label for="othersSpecialType2">Type</label>
+                        <select id="othersSpecialType2" class="form-control" onchange="updateOthersSpecialFields('2'); updateAd()">
+                            <option value="">No type</option>
+                            <option value="1">type 1</option><option value="2">type 2</option><option value="3">type 3</option><option value="4">type 4</option><option value="5">type 5</option><option value="6">type 6</option><option value="7">type 7</option><option value="8">type 8</option><option value="9">type 9</option><option value="10">type 10</option><option value="11">type 11</option><option value="12">type 12</option><option value="13">type 13</option><option value="14">type 14</option><option value="15">type 15</option><option value="16">type 16</option><option value="17">type 17</option><option value="18">type 18</option><option value="19">type 19</option><option value="20">type 20</option><option value="21">type 21</option><option value="22">type 22</option><option value="23">type 23</option><option value="24">type 24</option><option value="25">type 25</option><option value="30">type 30</option>
+                        </select>
+                    </div>
+                    <div id="othersSpecialQualityWrap2" class="hidden">
+                        <label for="othersSpecialQuality2">Quality</label>
+                        <select id="othersSpecialQuality2" class="form-control" onchange="updateOthersSpecialFields('2'); updateAd()">
+                            <option value="">Select quality</option>
+                            <option value="low">low quality</option>
+                            <option value="medium">medium quality</option>
+                            <option value="high">high quality</option>
+                            <option value="premium">premium quality</option>
+                            <option value="max">max quality</option>
+                        </select>
+                    </div>
+                    <div id="othersQuantityItemWrap2" class="hidden others-quantity-two-boxes others-quantity-slot" style="grid-column:1 / -1">
+                        <div class="others-quantity-box quantity-box">
+                            <label for="othersQuantityItemQuantity2">Quantity</label>
+                            <input type="number" id="othersQuantityItemQuantity2" class="form-control" min="1" step="1" value="" oninput="updateQuantityItemControls('2'); updateAd()">
+                        </div>
+                        <div class="others-quantity-box bulk-box">
+                            <label>Quantity type</label>
+                            <label class="others-bulk-check" for="othersQuantityItemBulk2">
+                                <input type="checkbox" id="othersQuantityItemBulk2" onchange="updateAd()">
+                                <span>In bulk</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="others-item-compact others-item3-col">
+                <label for="othersCustomText3" id="othersItem3Label">Item 3 (Optional • Editable)</label>
+                <div class="others-edit-picker">
+                    <input type="text" id="othersCustomText3" placeholder="Add another item..." value="" oninput="syncOthersPickerText(); updateOthersSpecialFields('3'); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText3')">
+                    <button type="button" onclick="openOthersTemplatePopup('othersCustomText3')" title="Search Item 3" aria-label="Search Item 3">⌕</button>
+                </div>
+                <div id="othersSpecialControls3" class="others-special-controls hidden">
+                    <div id="othersSpecialColorWrap3">
+                        <label for="othersSpecialColor3">Colour</label>
+                        <select id="othersSpecialColor3" class="form-control" onchange="updateOthersSpecialFields('3'); updateAd()">
+                            <option value="">Colour</option>
+                            <option value="black">black</option><option value="white">white</option><option value="blue">blue</option>
+                            <option value="green">green</option>
+                            <option value="pink">pink</option><option value="purple">purple</option><option value="red">red</option>
+                            <option value="yellow">yellow</option><option value="brown">brown</option><option value="grey">grey</option>
+                        </select>
+                    </div>
+                    <div id="othersSpecialGenderWrap3" class="hidden">
+                        <label for="othersSpecialGender3">Gender</label>
+                        <select id="othersSpecialGender3" class="form-control" onchange="updateOthersSpecialFields('3'); updateAd()">
+                            <option value="">Men / Women</option>
+                            <option value="men">men</option>
+                            <option value="women">women</option>
+                        </select>
+                    </div>
+                    <div id="othersSpecialTypeWrap3">
+                        <label for="othersSpecialType3">Type</label>
+                        <select id="othersSpecialType3" class="form-control" onchange="updateOthersSpecialFields('3'); updateAd()">
+                            <option value="">No type</option>
+                            <option value="1">type 1</option><option value="2">type 2</option><option value="3">type 3</option><option value="4">type 4</option><option value="5">type 5</option><option value="6">type 6</option><option value="7">type 7</option><option value="8">type 8</option><option value="9">type 9</option><option value="10">type 10</option><option value="11">type 11</option><option value="12">type 12</option><option value="13">type 13</option><option value="14">type 14</option><option value="15">type 15</option><option value="16">type 16</option><option value="17">type 17</option><option value="18">type 18</option><option value="19">type 19</option><option value="20">type 20</option><option value="21">type 21</option><option value="22">type 22</option><option value="23">type 23</option><option value="24">type 24</option><option value="25">type 25</option><option value="30">type 30</option>
+                        </select>
+                    </div>
+                    <div id="othersSpecialQualityWrap3" class="hidden">
+                        <label for="othersSpecialQuality3">Quality</label>
+                        <select id="othersSpecialQuality3" class="form-control" onchange="updateOthersSpecialFields('3'); updateAd()">
+                            <option value="">Select quality</option>
+                            <option value="low">low quality</option>
+                            <option value="medium">medium quality</option>
+                            <option value="high">high quality</option>
+                            <option value="premium">premium quality</option>
+                            <option value="max">max quality</option>
+                        </select>
+                    </div>
+                    <div id="othersQuantityItemWrap3" class="hidden others-quantity-two-boxes others-quantity-slot" style="grid-column:1 / -1">
+                        <div class="others-quantity-box quantity-box">
+                            <label for="othersQuantityItemQuantity3">Quantity</label>
+                            <input type="number" id="othersQuantityItemQuantity3" class="form-control" min="1" step="1" value="" oninput="updateQuantityItemControls('3'); updateAd()">
+                        </div>
+                        <div class="others-quantity-box bulk-box">
+                            <label>Quantity type</label>
+                            <label class="others-bulk-check" for="othersQuantityItemBulk3">
+                                <input type="checkbox" id="othersQuantityItemBulk3" onchange="updateAd()">
+                                <span>In bulk</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
             
             </div>
@@ -998,6 +1275,14 @@ select.form-control:focus,input[type="text"]:focus{
             <div id="priceHint" class="muted" style="font-size:12px;margin-top:5px;opacity:.75;">For Others: edit the price freely.
 
 </div>
+        </div>
+        <div id="price2Wrapper" class="hidden">
+            <label id="price2Label" for="price2">Price - Item 2</label>
+            <input type="text" id="price2" value="" oninput="updateAd()">
+        </div>
+        <div id="price3Wrapper" class="hidden">
+            <label id="price3Label" for="price3">Price - Item 3</label>
+            <input type="text" id="price3" value="" oninput="updateAd()">
         </div>
     </div>
 
@@ -1735,7 +2020,6 @@ const OTHERS_AD_TEMPLATES = [
   'shamanic mask',
   'gloves',
   'boxing gloves',
-  'scrap marks',
   'chain around the body accessory',
   'chain lost treasure neon accessory',
   'Chain with star pendant',
@@ -1764,6 +2048,15 @@ const OTHERS_AD_TEMPLATES = [
   'black voron on shoulder accessory',
   'Grand chain',
   'snake around the body accessory',
+  'Fire Ring',
+  'Chick on shoulder accessory',
+  'Unicorn Tail',
+  'Wizard Cat',
+  'Macaque with pacifier',
+  'Toy Fish',
+  'Piglet on bread',
+  'Mister Seal',
+  'Hero S Cape',
   'Abibas Marquee Boost Lows shoes',
   'Abibas Pezy Boost 700 V3 Alvah shoes',
   'Abibas Pezy foam shoes',
@@ -1826,9 +2119,7 @@ const OTHERS_AD_TEMPLATES = [
   'Kupreme t-shirt',
   'Khanel top',
   'longsleeve blob',
-  'Lui Vi pants',
   'Lui Vi jacket',
-  'Lui Vi pants and jacket',
   'Lui Vi sweatshirt',
   'Lui Vi t-shirt',
   'Lui Vi top',
@@ -1933,15 +2224,6 @@ const OTHERS_AD_TEMPLATES = [
   'Lion cub',
   'Prime Platinum',
   'Prime',
-  'Fire Ring',
-  'Unicorn Tail',
-  'Wizard Cat',
-  'Macaque with pacifier',
-  'Chick on shoulder accessory',
-  'Toy Fish',
-  'Piglet on bread',
-  'Mister Seal',
-  'Hero S Cape',
   'tuning parts',
   'tires tuning',
   'brakes tuning',
@@ -1966,6 +2248,7 @@ const OTHERS_AD_TEMPLATES = [
   'half-glowing pants',
   'insulated personal pants',
   'Khanel pants',
+  'Lui Vi pants',
   'Lui Vi shorts',
   'luminous End pants',
   'luminous Grand trousers',
@@ -2076,7 +2359,7 @@ function recordOthersItemUsage(item) {
 function getOthersPopupItems(query = "") {
     const q = String(query || "").toLowerCase().trim();
     const target = othersPopupTarget || "othersCustomText";
-    const useRawItem = target === "othersCustomText2";
+    const useRawItem = target === "othersCustomText2" || target === "othersCustomText3";
     const usage = getOthersItemUsage();
     const seen = new Set();
     const items = [];
@@ -2127,6 +2410,7 @@ function openOthersTemplatePopup(targetInputId = "othersCustomText") {
     const titles = {
         othersCustomText: "Select Item 1",
         othersCustomText2: "Select Item 2",
+        othersCustomText3: "Select Item 3",
     };
     const title = document.getElementById("othersPopupTitle");
     if (title) title.textContent = titles[othersPopupTarget] || "Select Others Ad";
@@ -2198,6 +2482,14 @@ function chooseOthersPopupItem(item) {
         select.value = item;
     }
     closeOthersTemplatePopup();
+    if (target && /^othersCustomText[23]$/.test(target.id)) {
+        const sfx = target.id.slice(-1);
+        ["Color", "Type", "Gender", "Quality"].forEach(k => {
+            const el = document.getElementById("othersSpecial" + k + sfx);
+            if (el) el.value = "";
+        });
+        updateOthersSpecialFields(sfx);
+    }
     if (target && target.id === "othersCustomText") {
         const color = document.getElementById("othersSpecialColor");
         const type = document.getElementById("othersSpecialType");
@@ -2208,6 +2500,17 @@ function chooseOthersPopupItem(item) {
         updateOthersSpecialFields();
     }
     updateAd();
+
+    // After selecting an item from the popup, return focus to that item's
+    // input so quantity can be typed immediately with the keyboard.
+    if (target) {
+        setTimeout(() => {
+            target.focus();
+            try {
+                target.setSelectionRange(target.value.length, target.value.length);
+            } catch (_) {}
+        }, 0);
+    }
 }
 
 function syncOthersPickerText() {
@@ -2279,6 +2582,15 @@ function handleOthersDirectItemKeydown(event, targetId = "othersCustomText") {
         if (type) type.value = "";
         if (gender) gender.value = "";
         updateOthersSpecialFields();
+    }
+
+    if (/^othersCustomText[23]$/.test(targetId)) {
+        const sfx = targetId.slice(-1);
+        ["Color", "Type", "Gender", "Quality"].forEach(k => {
+            const el = document.getElementById("othersSpecial" + k + sfx);
+            if (el) el.value = "";
+        });
+        updateOthersSpecialFields(sfx);
     }
 
     updateAd();
@@ -2377,7 +2689,7 @@ function isOthersPluralItem(text) {
 }
 
 // Satanic Horns and Satanic Wings are never priced with an "each" suffix.
-function isOthersNoEachItem(itemText) {
+function isOthersNoEachItem(itemText, suffix = "") {
     const base = (itemText || "").trim().toLowerCase();
     // Any item explicitly written with the singular article "a" is a
     // single item, so it must never receive an "each" suffix.
@@ -2387,8 +2699,8 @@ function isOthersNoEachItem(itemText) {
     // Any item that uses the special Colour / Type / Gender / Quality
     // selectors must NOT receive an "each" suffix. The selector describes
     // the variant of the item; it does not make the price a per-item price.
-    if (typeof getOthersSpecialBaseItem === "function" && getOthersSpecialBaseItem()) {
-        const specialBase = getOthersSpecialBaseItem();
+    if (typeof getOthersSpecialBaseItem === "function" && getOthersSpecialBaseItem(suffix)) {
+        const specialBase = getOthersSpecialBaseItem(suffix);
         if (OTHERS_COLOR_AND_TYPE_ITEMS.has(specialBase) ||
             OTHERS_COLOR_TYPE_1_10_ITEMS.has(specialBase) ||
             OTHERS_TYPE_ONLY_ITEMS.has(specialBase) ||
@@ -2421,7 +2733,7 @@ function othersAdHasNoPrice(text) {
 
     // Non-saleable / social / activity / location-style Others ads.
     // These should never receive Price or Budget.
-    return /^(?:looking\s+(?:for|to)\b|.*\blooking\s+for\s+work\b|wedding\b|party\b|.*\bcar\s+meet\b|looking\s+to\s+play\b)/i.test(value);
+    return /^(?:looking\s+(?:for|to)\b|.*\blooking\s+for\s+work\b|wedding\s+at\b|party\b|.*\bcar\s+meet\b|looking\s+to\s+play\b)/i.test(value);
 }
 
 function selectOthersTemplate() {
@@ -2434,6 +2746,9 @@ function selectOthersTemplate() {
     updateOthersSpecialFields();
     syncOthersPickerText();
     document.getElementById("othersCustomText2").value = "";
+    if (document.getElementById("othersCustomText3")) document.getElementById("othersCustomText3").value = "";
+    updateOthersSpecialFields("2");
+    updateOthersSpecialFields("3");
 // Others templates never carry an item price. Price/Budget is controlled
     // only by the main price field, just like Real Estate, Auto and Business.
     document.getElementById("price").value = "";
@@ -2685,7 +3000,8 @@ const OTHERS_TYPE_ONLY_ITEMS = new Set([
     "toothy mask",
     "shamanic mask",
     "volex watch",
-    "kolex watch"
+    "kolex watch",
+    "luminous t-shirt"
 ]);
 
 const OTHERS_PRIME_TYPE_ONLY_ITEMS = new Set([
@@ -2729,7 +3045,6 @@ const OTHERS_TYPE_1_10_ITEMS = new Set([
 ]);
 
 const OTHERS_COLOR_TYPE_1_10_ITEMS = new Set([
-    "scrap marks"
 ]);
 // Every shoe/footwear item gets a Gender selector.
 function isOthersShoeItem(item) {
@@ -2837,10 +3152,9 @@ const OTHERS_PANTS_COLOR_TYPE_ITEMS = new Set([
 
 const OTHERS_COLOR_ONLY_ITEMS = new Set([
     'lui vi pants',
-    'lui vi jacket',
-    'lui vi pants and jacket',
     'lui vi shorts',
     'denim jacket',
+    'lui vi jacket',
     'lui vi sweatshirt',
     'lui vi t-shirt',
     'lui vi top',
@@ -2851,10 +3165,9 @@ const OTHERS_COLOR_GENDER_ITEMS = new Set([
     'boxing gloves',
     'abibas pants',
     'lui vi pants',
-    'lui vi jacket',
-    'lui vi pants and jacket',
     'lui vi shorts',
     'denim jacket',
+    'lui vi jacket',
     'lui vi sweatshirt',
     'lui vi t-shirt',
     'lui vi top',
@@ -2915,9 +3228,9 @@ const OTHERS_GENDER_ITEMS = new Set([
     "kolex watch"
 ]);
 
-function getOthersSpecialBaseItem() {
+function getOthersSpecialBaseItem(suffix = "") {
     return (normalizeOthersAction(stripOthersPrice(
-        document.getElementById("othersCustomText")?.value || ""
+        document.getElementById("othersCustomText" + suffix)?.value || ""
     ))
     .replace(/\s+of type\s*#?\s*\d+\s*$/i, "")
     .replace(/\s+type\s*#?\s*\d+\s*$/i, "")
@@ -2932,19 +3245,20 @@ function isOthersWatchTypeGenderItem(itemText) {
     return base === "volex watch" || base === "kolex watch";
 }
 
-function updateOthersSpecialFields() {
-    const controls = document.getElementById("othersSpecialControls");
-    const color = document.getElementById("othersSpecialColor");
-    const type = document.getElementById("othersSpecialType");
-    const gender = document.getElementById("othersSpecialGender");
-    const quality = document.getElementById("othersSpecialQuality");
-    const colorWrap = document.getElementById("othersSpecialColorWrap");
-    const typeWrap = document.getElementById("othersSpecialTypeWrap");
-    const genderWrap = document.getElementById("othersSpecialGenderWrap");
-    const qualityWrap = document.getElementById("othersSpecialQualityWrap");
-    const grandWrap = document.getElementById("othersQuantityItemWrap");
-    const input = document.getElementById("othersCustomText");
-    const base = getOthersSpecialBaseItem();
+// suffix: "" = Item 1, "2" = Item 2, "3" = Item 3.
+function updateOthersSpecialFields(suffix = "") {
+    const controls = document.getElementById("othersSpecialControls" + suffix);
+    const color = document.getElementById("othersSpecialColor" + suffix);
+    const type = document.getElementById("othersSpecialType" + suffix);
+    const gender = document.getElementById("othersSpecialGender" + suffix);
+    const quality = document.getElementById("othersSpecialQuality" + suffix);
+    const colorWrap = document.getElementById("othersSpecialColorWrap" + suffix);
+    const typeWrap = document.getElementById("othersSpecialTypeWrap" + suffix);
+    const genderWrap = document.getElementById("othersSpecialGenderWrap" + suffix);
+    const qualityWrap = document.getElementById("othersSpecialQualityWrap" + suffix);
+    const grandWrap = document.getElementById("othersQuantityItemWrap" + suffix);
+    const input = document.getElementById("othersCustomText" + suffix);
+    const base = getOthersSpecialBaseItem(suffix);
     const isGrandTicket = isOthersQuantityItem(base);
 
     const isShoeColorType = OTHERS_SHOE_COLOR_TYPE_ITEMS.has(base);
@@ -2979,12 +3293,21 @@ function updateOthersSpecialFields() {
     // Bulk is independent of entering a numeric quantity, so a blank quantity
     // must still allow the user to tick "In bulk".
     if (isGrandTicket || isOthersQuantityItem(base)) {
-        updateQuantityItemControls();
+        updateQuantityItemControls(suffix);
     } else {
-        const bulk = document.getElementById("othersQuantityItemBulk");
-        const qty = document.getElementById("othersQuantityItemQuantity");
-        if (bulk) { bulk.checked = false; bulk.disabled = true; }
+        // Clear ONLY this item's quantity controls. Do not accidentally reset
+        // Item 1 when Item 2 or Item 3 is being updated.
+        const bulk = document.getElementById("othersQuantityItemBulk" + suffix);
+        const qty = document.getElementById("othersQuantityItemQuantity" + suffix);
+        if (bulk) {
+            bulk.checked = false;
+            bulk.disabled = true;
+            bulk.classList.remove("hidden");
+            const bulkBox = bulk.closest(".bulk-box");
+            if (bulkBox) bulkBox.classList.add("hidden");
+        }
         if (qty) qty.value = "";
+        if (grandWrap) grandWrap.classList.add("hidden");
     }
 
     if (!isColorType && !isColorOnly && !isColorGenderItem) color.value = "";
@@ -3152,12 +3475,13 @@ function isOthersQuantityItem(raw) {
     return OTHERS_QUANTITY_ITEMS.has(key) || isTicketItem;
 }
 
-function updateQuantityItemControls() {
-    const wrap = document.getElementById("othersQuantityItemWrap");
-    const qty = document.getElementById("othersQuantityItemQuantity");
-    const bulk = document.getElementById("othersQuantityItemBulk");
-    if (!wrap) return;
-    const raw = (document.getElementById("othersCustomText")?.value || "").trim();
+function updateQuantityItemControls(suffix = "") {
+    const wrap = document.getElementById("othersQuantityItemWrap" + suffix);
+    const qty = document.getElementById("othersQuantityItemQuantity" + suffix);
+    const bulk = document.getElementById("othersQuantityItemBulk" + suffix);
+    const input = document.getElementById("othersCustomText" + suffix);
+    if (!wrap || !input) return;
+    const raw = (input.value || "").trim();
     const isQuantity = isOthersQuantityItem(raw);
     wrap.classList.toggle("hidden", !isQuantity);
     if (!isQuantity) {
@@ -3167,13 +3491,39 @@ function updateQuantityItemControls() {
     }
     const qtyText = String(qty?.value || "").trim();
     const n = parseInt(qtyText || "1", 10) || 1;
-    // Bulk is available even when Quantity is blank. If a quantity is entered,
-    // bulk remains available for 2+; quantity 1 disables bulk.
-    const canBulk = !qtyText || n > 1;
+
+    // Old quantity rule:
+    // blank = bulk allowed, 1 = bulk disabled, 2+ = bulk allowed.
+    // Clothing can NEVER be sold in bulk.
+    const isClothing = isOthersClothingItem(raw);
+    const hasThreeItems = ["othersCustomText", "othersCustomText2", "othersCustomText3"]
+        .every(id => (document.getElementById(id)?.value || "").trim());
+    const canBulk = !isClothing && !hasThreeItems && (!qtyText || n > 1);
+
     if (bulk) {
         bulk.disabled = !canBulk;
         if (!canBulk) bulk.checked = false;
+        if (isClothing) bulk.dataset.clothingLock = "1";
+        else delete bulk.dataset.clothingLock;
+
+        // When all three item slots are filled, remove the bulk selector entirely.
+        const bulkBox = bulk.closest(".bulk-box");
+        if (bulkBox) bulkBox.classList.toggle("hidden", hasThreeItems || isClothing);
     }
+}
+
+function getQuantitySubjectForSuffix(suffix = "") {
+    const qtyEl = document.getElementById("othersQuantityItemQuantity" + suffix);
+    const bulkEl = document.getElementById("othersQuantityItemBulk" + suffix);
+    const inputEl = document.getElementById("othersCustomText" + suffix);
+    const rawOriginal = (inputEl?.value || "").trim();
+    const qtyText = String(qtyEl?.value || "").trim();
+    const qty = Math.max(1, parseInt(qtyText || "1", 10) || 1);
+    const bulk = bulkEl?.checked === true && (!qtyText || qty > 1);
+    if (!qtyText && !bulk) return formatOthersDisplayName(rawOriginal);
+    if (bulk) return `${qtyText && qty > 1 ? qty + " " : ""}${formatOthersDisplayName(rawOriginal)} in bulk`;
+    if (qty <= 1) return formatOthersDisplayName(rawOriginal);
+    return `${qty} ${formatOthersDisplayName(rawOriginal)}`;
 }
 
 function getQuantityItemSubject() {
@@ -3314,17 +3664,24 @@ function getQuantityItemSubject() {
 function getOthersItems() {
     const item1 = (document.getElementById("othersCustomText")?.value || "").trim();
     const item2 = (document.getElementById("othersCustomText2")?.value || "").trim();
+    const item3 = (document.getElementById("othersCustomText3")?.value || "").trim();
     // Item 1 is authoritative. Never resurrect an old item from the hidden template select.
-    const values = [item1, item2]
+    const rawSlots = [item1, item2, item3]
         .map(v => normalizeOthersAction(stripOthersPrice(v)))
         .map(v => v.replace(/[.\s]+$/, "").trim())
-        .map(formatOthersDisplayName)
-        .filter(Boolean);
+        .map(formatOthersDisplayName);
+    const slotNumbers = [];
+    const values = [];
+    rawSlots.forEach((v, i) => { if (v) { values.push(v); slotNumbers.push(i + 1); } });
 
-    // Special quantity items and ordinary plural Others items use the quantity/bulk controls.
-    if (values.length > 0 && (isOthersQuantityItem(values[0]) || isOthersPluralItem(values[0]))) {
-        values[0] = getQuantityItemSubject();
-    }
+    // Quantity/bulk controls work independently for Item 1, Item 2 and Item 3.
+    values.forEach((v, idx) => {
+        const suffix = idx === 0 ? "" : String(idx + 1);
+        const rawValue = (document.getElementById("othersCustomText" + suffix)?.value || "").trim();
+        if (isOthersQuantityItem(rawValue)) {
+            values[idx] = suffix === "" ? getQuantityItemSubject() : getQuantitySubjectForSuffix(suffix);
+        }
+    });
 
     // Safety-net for special selectors: Type is added only to items that
     // explicitly support Type. Prime / Prime Platinum are handled directly
@@ -3374,14 +3731,45 @@ function getOthersItems() {
         }
     }
 
+    // With 2-3 items, "in bulk" belongs at the very end of the whole list,
+    // so strip it from Item 1 here and remember that it was requested.
+    getOthersItems.item1Bulk = false;
+    if (values.length > 1 && values[0] && /\s+in bulk$/i.test(values[0])) {
+        values[0] = values[0].replace(/\s+in bulk$/i, "").trim();
+        getOthersItems.item1Bulk = true;
+    }
+
     // Do not repeat the same item if it was entered twice.
     const seen = new Set();
-    return values.filter(v => {
+    getOthersItems.sources = [];
+    return values.filter((v, i) => {
         const key = v.toLowerCase().replace(/\s+/g, " ").trim();
         if (seen.has(key)) return false;
         seen.add(key);
+        getOthersItems.sources.push(slotNumbers[i]);
         return true;
     });
+}
+
+// Clothing items (pants, jackets, hoodies, shoes, gloves, ...) can never be sold "in bulk".
+function isOthersClothingItem(text) {
+    const base = normalizeOthersAction(stripOthersPrice(String(text || "")))
+        .replace(/\s+of type\s*#?\s*\d+\s*$/i, "")
+        .replace(/\s+type\s*#?\s*\d+\s*$/i, "")
+        .replace(/\s+for\s+(?:men|women)\s*$/i, "")
+        .replace(/^(?:white|black|pink|purple|grey|gray|yellow|green|brown|red|blue)\s+/i, "")
+        .replace(/[.\s]+$/, "").trim().toLowerCase();
+    if (!base) return false;
+    if (isOthersWatchTypeGenderItem(base)) return false;
+    if (OTHERS_COLOR_GENDER_ITEMS.has(base) || OTHERS_PANTS_COLOR_TYPE_ITEMS.has(base) ||
+        OTHERS_PANTS_TYPE_1_25_ITEMS.has(base) || OTHERS_SHOE_COLOR_TYPE_ITEMS.has(base) ||
+        isOthersShoeItem(base)) return true;
+    return /\b(?:hoodies?|pants|trousers|shorts|jeans|joggers?|leggings|skirt|dress|jackets?|coats?|sweatshirts?|sweaters?|t-?shirts?|shirts?|tops?|suits?|trunks|gloves)\b/.test(base);
+}
+
+function othersHasClothingItem() {
+    return ["othersCustomText", "othersCustomText2", "othersCustomText3"]
+        .some(id => isOthersClothingItem(document.getElementById(id)?.value || ""));
 }
 
 function joinOthersItems(items) {
@@ -3614,16 +4002,31 @@ function resetForm() {
     document.getElementById("plantationCrop").value = "";
     document.getElementById("plantationBeds").selectedIndex = 0;
     document.getElementById("price").value = "";
+    if (document.getElementById("price2")) document.getElementById("price2").value = "";
+    if (document.getElementById("price3")) document.getElementById("price3").value = "";
     document.getElementById("othersTemplateSelect").selectedIndex = 0;
     document.getElementById("othersCustomText").value = "";
     document.getElementById("othersCustomText2").value = "";
+    if (document.getElementById("othersCustomText3")) document.getElementById("othersCustomText3").value = "";
     if (document.getElementById("othersSpecialColor")) document.getElementById("othersSpecialColor").value = "";
     if (document.getElementById("othersSpecialType")) document.getElementById("othersSpecialType").value = "";
     if (document.getElementById("othersSpecialGender")) document.getElementById("othersSpecialGender").value = "";
-    if (document.getElementById("othersQuantityItemQuantity")) document.getElementById("othersQuantityItemQuantity").value = "";
-    if (document.getElementById("othersQuantityItemBulk")) document.getElementById("othersQuantityItemBulk").checked = false;
+    ["", "2", "3"].forEach(sfx => {
+        const q = document.getElementById("othersQuantityItemQuantity" + sfx);
+        const b = document.getElementById("othersQuantityItemBulk" + sfx);
+        if (q) q.value = "";
+        if (b) b.checked = false;
+    });
+    ["2", "3"].forEach(n => {
+        ["Color", "Type", "Gender", "Quality"].forEach(k => {
+            const el = document.getElementById("othersSpecial" + k + n);
+            if (el) el.value = "";
+        });
+    });
     updateQuantityItemControls();
     updateOthersSpecialFields();
+    updateOthersSpecialFields("2");
+    updateOthersSpecialFields("3");
 syncOthersPickerText();
     closeOthersTemplatePopup();
 
@@ -3631,13 +4034,10 @@ syncOthersPickerText();
     document.getElementById("feat_custom").checked = false;
     document.getElementById("feat_insurance").checked = false;
     document.getElementById("feat_pool").checked = false;
-    document.getElementById("feat_tennis").checked = false;
     document.getElementById("feat_heli").checked = false;
     document.getElementById("feat_driveway").checked = false;
     document.getElementById("feat_backyard").checked = false;
-    document.getElementById("feat_nice").checked = false;
-    document.getElementById("feat_beautiful").checked = false;
-    document.getElementById("feat_great").checked = false;
+    document.getElementById("view_val").selectedIndex = 0;
     document.getElementById("garage_val").selectedIndex = 0;
 
     document.getElementById("veh_config").checked = false;
@@ -3791,6 +4191,7 @@ function updateAd() {
     const adPreview = document.getElementById('adPreview');
     const copyBtn = document.getElementById('copyBtn');
 
+
     // In Others, Trading uses Item 2 as the thing being traded FOR.
     // Keep the normal Item 2 label for every other intent.
     const othersItem2Label = document.getElementById('othersItem2Label');
@@ -3810,15 +4211,44 @@ function updateAd() {
     if (intent === 'Buying') priceLabel.innerText = "Budget";
     else priceLabel.innerText = "Price";
 
-    if (category === "others") {
-        const rawFirstOthersItem = document.getElementById("othersCustomText")?.value || "";
-        const quantityItem = isOthersQuantityItem(rawFirstOthersItem);
-        const pluralItem = isOthersPluralItem(rawFirstOthersItem);
-        const firstOthersItem = getOthersItems()[0] || "";
-        const tuningItem = isOthersTuningItem(firstOthersItem);
-        if (quantityItem || pluralItem) {
-            updateQuantityItemControls();
+    // Others with 2-3 items: one price box per item (shown in item order).
+    {
+        const w2 = document.getElementById('price2Wrapper');
+        const w3 = document.getElementById('price3Wrapper');
+        const hint = document.getElementById('priceHint');
+        const multiItems = category === 'others' ? getOthersItems() : [];
+        const multiSources = (getOthersItems.sources || []).slice();
+        const showMulti = category === 'others' && intent !== 'Trading' && multiItems.length > 1 &&
+            !multiItems.some(it => othersAdHasNoPrice(it));
+        const word = intent === 'Buying' ? 'Budget' : 'Price';
+        [[w2, 'price2Label', 1], [w3, 'price3Label', 2]].forEach(([w, labelId, pos]) => {
+            if (!w) return;
+            const show = showMulti && multiItems.length > pos;
+            w.classList.toggle('hidden', !show);
+            const lab = document.getElementById(labelId);
+            if (lab && show) lab.textContent = `${word} - ${multiItems[pos]}`;
+        });
+        const priceLabelEl = document.getElementById('priceLabel');
+        if (priceLabelEl) {
+            if (showMulti) priceLabelEl.setAttribute('data-suffix', multiItems[0]);
+            else priceLabelEl.removeAttribute('data-suffix');
         }
+        if (hint) {
+            hint.textContent = showMulti
+                ? 'Fill one box per item, in order. Empty = Negotiable.'
+                : 'For Others: edit the price freely.';
+        }
+        if (!showMulti) {
+            const p2 = document.getElementById('price2'); const p3 = document.getElementById('price3');
+            if (p2) p2.value = ''; if (p3) p3.value = '';
+        }
+    }
+
+    if (category === "others") {
+        // Refresh quantity controls independently for Item 1, Item 2 and Item 3.
+        ["", "2", "3"].forEach(function (suffix) {
+            try { updateQuantityItemControls(suffix); } catch (e) { /* keep editor usable */ }
+        });
     }
 
     if (intent === "Trading") {
@@ -3852,13 +4282,11 @@ function updateAd() {
         if (document.getElementById('feat_custom').checked) featuresList.push("custom interior");
         if (document.getElementById('feat_insurance').checked) featuresList.push("insurance");
         if (document.getElementById('feat_pool').checked) featuresList.push("swimming pool");
-        if (document.getElementById('feat_tennis').checked) featuresList.push("tennis court");
         if (document.getElementById('feat_heli').checked) featuresList.push("helipad");
         if (document.getElementById('feat_driveway').checked) featuresList.push("driveway");
         if (document.getElementById('feat_backyard').checked) featuresList.push("backyard");
-        if (document.getElementById('feat_nice').checked) featuresList.push("Nice view");
-        if (document.getElementById('feat_beautiful').checked) featuresList.push("beautiful view");
-        if (document.getElementById('feat_great').checked) featuresList.push("great view");
+        const viewValue = document.getElementById('view_val')?.value;
+        if (viewValue) featuresList.push(viewValue);
 
         if (location) {
             const nearLocations = ["beach market", "Lifeinvader", "Postal"];
@@ -3901,12 +4329,25 @@ function updateAd() {
             const lower = clean.toLowerCase();
             return OTHERS_PET_ITEMS.has(lower) ? `a pet ${clean}` : clean;
         });
+        const multiBulk = displayOthersItems.length > 1 && !othersHasClothingItem() &&
+            getOthersItems.item1Bulk === true;
         if (intent === "Trading" && displayOthersItems.length >= 2) {
             // Trading syntax in Others: first item FOR second item.
-            coreSubjectText = `${displayOthersItems[0]} for ${displayOthersItems[1]}`;
+            coreSubjectText = displayOthersItems.length >= 3
+                ? `${displayOthersItems[0]} for ${displayOthersItems[1]} and ${displayOthersItems[2]}`
+                : `${displayOthersItems[0]} for ${displayOthersItems[1]}`;
         } else {
-            coreSubjectText = joinOthersItems(displayOthersItems);
+            // Items that all end in "fruits" (or all in "vegetables") share the word:
+            // "pineapple fruits" + "mandarin fruits" -> "pineapple and mandarin fruits".
+            const groupMatches = displayOthersItems.map(it => /^([^\d].*?)\s+(fruits|vegetables)$/i.exec(it.trim()));
+            const canGroup = displayOthersItems.length > 1 && groupMatches.every(Boolean) &&
+                !displayOthersItems.some(it => /^a\s/i.test(it)) &&
+                new Set(groupMatches.map(m => m[2].toLowerCase())).size === 1;
+            coreSubjectText = canGroup
+                ? `${joinOthersItems(groupMatches.map(m => m[1]))} ${groupMatches[0][2]}`
+                : joinOthersItems(displayOthersItems);
         }
+        if (multiBulk) coreSubjectText += " in bulk";
         // More than one item is always a bundle/list ad, so its price is not
         // treated as an item price. The output must remain Negotiable.
 
@@ -3986,7 +4427,7 @@ function updateAd() {
         (isOthersTuningItem(firstOthersForEach) ||
          isOthersPluralItem(firstOthersForEach));
     const quantityRawItemForPrice = category === "others" ? (document.getElementById("othersCustomText")?.value || "") : "";
-    const isQuantityItemForPrice = category === "others" && (isOthersQuantityItem(quantityRawItemForPrice) || isOthersPluralItem(quantityRawItemForPrice));
+    const isQuantityItemForPrice = category === "others" && isOthersQuantityItem(quantityRawItemForPrice);
     // Quantity ticket items do not accept E; E is reserved for tuning parts.
     const priceInputForParse = isQuantityItemForPrice ? rawPrice.replace(/\s+e\s*$/i, "") : rawPrice;
     const priceObj = parsePriceRules(priceInputForParse, intent, allowOthersEach);
@@ -3998,12 +4439,11 @@ function updateAd() {
         priceObj.each = true;
     }
 
-    // Some Others items are always priced per item.
-    // Tuning Parts must ALWAYS append "each." when a real price is entered;
-    // the user does not need to type E. Negotiable never gets "each.".
+    // Only timber and biospark append "each." after a real price.
+    // Negotiable never gets "each.".
     if (category === "others" && getOthersItems().length === 1 &&
         !isOthersNoEachItem(getOthersItems()[0]) &&
-        (isOthersAlwaysEachItem(getOthersItems()[0]) || isOthersTuningItem(getOthersItems()[0])) &&
+        isOthersAlwaysEachItem(getOthersItems()[0]) &&
         priceObj.value !== "Negotiable") {
         priceObj.each = true;
     }
@@ -4038,8 +4478,34 @@ function updateAd() {
         // - A single real item may use the entered price.
         const noPriceOthersAd = category === "others" && othersItems.some(item => othersAdHasNoPrice(item));
 
-        if (multipleOthersItems) {
-            parsedPriceText = "Negotiable";
+        let multiPriceSentence = null;
+        if (multipleOthersItems && !noPriceOthersAd) {
+            // One price per item, e.g. "$1.700 and $1.500 each respectively."
+            const srcs = getOthersItems.sources || [];
+            const rawBoxes = { 1: rawPrice, 2: document.getElementById('price2')?.value || '', 3: document.getElementById('price3')?.value || '' };
+            const entries = othersItems.map((itemText, i) => {
+                const slot = srcs[i] || (i + 1);
+                const suffix = slot === 1 ? "" : String(slot);
+                const tuning = isOthersTuningItem(itemText);
+                const rawBox = String(rawBoxes[slot] || "");
+                const obj = parsePriceRules(tuning ? rawBox : rawBox.replace(/\s+e\s*$/i, ""), intent, tuning);
+                const negotiable = /^Negotiable$/i.test(String(obj.value || "").trim());
+                const noEach = isOthersNoEachItem(itemText, suffix);
+                const autoEach = !noEach && (isOthersAlwaysEachItem(itemText) || isOthersPluralItem(itemText) ||
+                    (slot === 1 && getOthersItems.item1Bulk === true));
+                const each = !negotiable && !noEach && (autoEach || obj.each === true);
+                return { text: obj.value, negotiable, each };
+            });
+            // If any item has no price, the whole ad is simply Negotiable.
+            if (entries.some(e => e.negotiable)) {
+                multiPriceSentence = "Negotiable.";
+            } else {
+                const priced = entries.filter(e => !e.negotiable);
+                const allEach = priced.every(e => e.each);
+                const anyEach = priced.some(e => e.each);
+                const texts = entries.map(e => (!allEach && e.each) ? `${e.text} each` : e.text);
+                multiPriceSentence = `${joinOthersItems(texts)}${allEach ? " each" : ""} respectively.`;
+            }
         }
 
         if (noPriceOthersAd) {
@@ -4050,14 +4516,15 @@ function updateAd() {
             const quantityRawForSuffix = (document.getElementById("othersCustomText")?.value || "").trim();
             const quantityPluralSelected = isQuantityItemForPrice && isOthersPluralItem(quantityRawForSuffix);
             const quantityNeedsEach = isQuantityItemForPrice && !isOthersNoEachItem(quantityRawForSuffix) && (quantityQtyForPrice > 1 || quantityBulkForPrice || quantityPluralSelected);
-            const tuningPartsNeedsEach = category === "others" && !multipleOthersItems && isOthersTuningItem((document.getElementById("othersCustomText")?.value || "").trim()) && !/^Negotiable$/i.test(parsedPriceText.trim());
-            const eachSuffix = !multipleOthersItems && !/^Negotiable$/i.test(parsedPriceText.trim()) && (priceObj.each || quantityNeedsEach || tuningPartsNeedsEach) ? " each." : "";
+            const eachSuffix = !multipleOthersItems && !/^Negotiable$/i.test(parsedPriceText.trim()) && (priceObj.each || quantityNeedsEach) ? " each." : "";
             // Negotiable always ends with a period for both Price and Budget.
             const negotiableSuffix = !priceObj.each && /^Negotiable$/i.test(parsedPriceText.trim()) ? "." : "";
             // A plain Million amount ends with a period too (e.g. "$3 Million.").
             // Non-Million numeric prices do not get this extra period.
             const millionPriceSuffix = !priceObj.each && !negotiableSuffix && /\bMillion$/i.test(parsedPriceText.trim()) ? "." : "";
-            outputAdSentence = `${firstHalfDescription}${baseSentenceDot} ${labelHeader}: ${parsedPriceText}${eachSuffix}${negotiableSuffix}${millionPriceSuffix}`;
+            outputAdSentence = multiPriceSentence !== null
+                ? `${firstHalfDescription}${baseSentenceDot} ${labelHeader}: ${multiPriceSentence}`
+                : `${firstHalfDescription}${baseSentenceDot} ${labelHeader}: ${parsedPriceText}${eachSuffix}${negotiableSuffix}${millionPriceSuffix}`;
         }
     }
 
@@ -4069,12 +4536,14 @@ filterVehicles();
 <script>
 function updateApartmentFeatures() {
     const isApartment = document.getElementById("prop_apt")?.checked;
-    [1,5,6,7,8,9,10,11,12,13].forEach(n => {
+    [1,5,6,8,9,10,11].forEach(n => {
         const el = document.getElementById("feature" + n);
         if (el) {
             el.classList.toggle("hidden", isApartment);
             const checkbox = el.querySelector("input[type=checkbox]");
             if (isApartment && checkbox) checkbox.checked = false;
+            const sel = el.querySelector("select");
+            if (isApartment && sel) sel.selectedIndex = 0;
         }
     });
 }
@@ -4150,5 +4619,598 @@ updateBusinessBuyingRules();
     letter-spacing: .2px;
 }
 </style>
+<style>
+/* Whole G.S / View box is one big clickable select */
+.feature-item.select-box { position: relative; cursor: pointer; }
+.feature-item.select-box > select.select-overlay {
+    position: absolute; left: 0; top: 0;
+    width: 100% !important; max-width: none !important; height: 100%;
+    margin: 0; padding: 0; border: 0;
+    opacity: 0; cursor: pointer; z-index: 5;
+}
+.feature-item.select-box > select:not(.select-overlay) { pointer-events: none; }
+</style>
+<script>
+// Clicking anywhere in the G.S (2) or View (10) box opens its dropdown list.
+// A transparent real <select> covers the whole box and drives the visible one.
+(function () {
+    ["garage_val", "view_val"].forEach(function (id) {
+        var orig = document.getElementById(id);
+        if (!orig) return;
+        var box = orig.closest(".feature-item");
+        if (!box) return;
+        box.classList.add("select-box");
+
+        var overlay = document.createElement("select");
+        overlay.className = "select-overlay";
+        overlay.setAttribute("aria-hidden", "true");
+        overlay.tabIndex = -1;
+        box.appendChild(overlay);
+
+        function sync() {
+            overlay.innerHTML = "";
+            Array.prototype.forEach.call(orig.options, function (o) {
+                var n = document.createElement("option");
+                n.value = o.value;
+                n.textContent = o.textContent;
+                n.hidden = o.hidden;
+                n.disabled = o.disabled;
+                overlay.appendChild(n);
+            });
+            overlay.selectedIndex = orig.selectedIndex;
+        }
+
+        overlay.addEventListener("change", function () {
+            orig.value = overlay.value;
+            if (typeof updateAd === "function") updateAd();
+            sync();
+        });
+
+        ["pointerenter", "mousedown", "touchstart", "focus"].forEach(function (ev) {
+            overlay.addEventListener(ev, sync, { passive: true });
+        });
+        sync();
+    });
+})();
+</script>
+<script>
+// Item 1 box: first click (while empty) opens the search popup.
+// Once it has text, or on a second click while the box is focused, you just edit normally.
+(function () {
+    var input = document.getElementById("othersCustomText");
+    if (!input) return;
+    var wasFocused = false;
+    input.addEventListener("mousedown", function () {
+        wasFocused = (document.activeElement === input);
+    });
+    input.addEventListener("click", function () {
+        if (wasFocused) return;                       // 2nd click -> edit
+        if (input.value.trim() !== "") return;        // already has an item -> edit
+        if (typeof openOthersTemplatePopup === "function") openOthersTemplatePopup("othersCustomText");
+    });
+})();
+</script>
+<script>
+// Type-to-select for the Others option dropdowns (Colour / Gender / Type / Quality).
+// Works with the list open or closed. The ad updates immediately, no Enter needed.
+//   Type   : type a number (1, 2 ... 12 ... 30)  -> "type N"
+//   Gender : m -> men, w -> women
+//   Colour : type the first letters (bla -> black, blu -> blue ...)
+//   Quality: l / m / h
+(function () {
+    var IDLE_MS = 800;
+
+    function setupSelect(sel) {
+        var buf = "", last = 0;
+
+        function findMatch(b) {
+            var isType = sel.id.indexOf("othersSpecialType") === 0;
+            var opts = Array.prototype.filter.call(sel.options, function (o) {
+                return o.value !== "" && !o.disabled && !o.hidden;
+            });
+            if (isType) return opts.filter(function (o) { return o.value === b; })[0] || null;
+            return opts.filter(function (o) {
+                return o.textContent.trim().toLowerCase().indexOf(b) === 0;
+            })[0] || null;
+        }
+
+        sel.addEventListener("keydown", function (e) {
+            if (e.ctrlKey || e.altKey || e.metaKey) return;
+            if (!e.key || e.key.length !== 1 || e.key === " ") return;
+
+            var ch = e.key.toLowerCase();
+            var isType = sel.id.indexOf("othersSpecialType") === 0;
+            var isColor = sel.id.indexOf("othersSpecialColor") === 0;
+            var now = Date.now();
+
+            // Colour always gets priority. This fixes:
+            // w  -> white
+            // wh -> white
+            // gr -> green
+            // blu -> blue
+            // m -> black (because black is not m; no match, so nothing changes)
+            // Do NOT redirect "w" from Colour to Gender.
+            if (isColor) {
+                if (!/[a-z]/.test(ch)) return;
+
+                // "W" is ambiguous:
+                //   W      -> women
+                //   WH     -> white
+                // Wait briefly after W so WH can be recognized as White.
+                if (ch === "w" && !buf && sel.value !== "white") {
+                    e.preventDefault();
+                    last = now;
+                    buf = "w";
+
+                    clearTimeout(sel._wGenderTimer);
+                    sel._wGenderTimer = setTimeout(function () {
+                        if (buf === "w") {
+                            var sfx = sel.id.replace(/^othersSpecialColor/, "");
+                            var g = document.getElementById("othersSpecialGender" + sfx);
+                            if (g && g.offsetParent !== null) {
+                                g.value = "women";
+                                g.dispatchEvent(new Event("change", { bubbles: true }));
+                            }
+                            buf = "";
+                        }
+                    }, 350);
+                    return;
+                }
+
+                if (now - last > IDLE_MS) buf = "";
+
+                var bColor = buf + ch;
+                var matchColor = findMatch(bColor);
+
+                if (!matchColor) {
+                    bColor = ch;
+                    matchColor = findMatch(bColor);
+                }
+
+                e.preventDefault();
+                last = now;
+
+                if (!matchColor) {
+                    buf = "";
+                    return;
+                }
+
+                clearTimeout(sel._wGenderTimer);
+                buf = bColor;
+
+                if (sel.value !== matchColor.value) {
+                    sel.value = matchColor.value;
+                    sel.dispatchEvent(new Event("change", { bubbles: true }));
+                }
+                return;
+            }
+
+            // Type: number keys select the exact type.
+            if (isType) {
+                if (!/[0-9]/.test(ch)) return;
+
+                if (now - last > IDLE_MS) buf = "";
+                last = now;
+
+                var bType = buf + ch;
+                var matchType = findMatch(bType);
+
+                if (!matchType) {
+                    bType = ch;
+                    matchType = findMatch(bType);
+                }
+
+                e.preventDefault();
+                if (!matchType) {
+                    buf = "";
+                    return;
+                }
+
+                buf = bType;
+
+                if (sel.value !== matchType.value) {
+                    sel.value = matchType.value;
+                    sel.dispatchEvent(new Event("change", { bubbles: true }));
+                }
+                return;
+            }
+
+            // Gender: m -> men, w -> women.
+            // This applies only when the Gender selector itself is focused.
+            if (!/[a-z]/.test(ch)) return;
+
+            if (now - last > IDLE_MS) buf = "";
+            last = now;
+
+            var b = buf + ch;
+            var match = findMatch(b);
+
+            if (!match) {
+                b = ch;
+                match = findMatch(b);
+            }
+
+            e.preventDefault();
+            if (!match) {
+                buf = "";
+                return;
+            }
+
+            buf = b;
+
+            if (sel.value !== match.value) {
+                sel.value = match.value;
+                sel.dispatchEvent(new Event("change", { bubbles: true }));
+            }
+        });
+    }
+
+    ["", "2", "3"].forEach(function (sfx) {
+        ["Color", "Gender", "Type", "Quality"].forEach(function (k) {
+            var el = document.getElementById("othersSpecial" + k + sfx);
+            if (el) { setupSelect(el); el.dataset.keyboardBound = "1"; }
+        });
+    });
+    // Gender shortcuts also work when another special selector (such as Colour)
+    // still has focus:
+    //   m -> men
+    //   w -> women
+    // Colour keeps its multi-letter matching, so "wh" can still select white.
+    document.addEventListener("keydown", function (e) {
+        if (e.ctrlKey || e.altKey || e.metaKey) return;
+        if (!e.key || e.key.length !== 1) return;
+
+        var ch = e.key.toLowerCase();
+        if (ch !== "m" && ch !== "w") return;
+
+        var active = document.activeElement;
+        if (!active || !/^SELECT$/.test(active.tagName)) return;
+
+        // Colour selector handles W/WH itself so W can mean women while WH means white.
+        if (ch === "w" && /^othersSpecialColor/.test(active.id)) return;
+        if (!/^othersSpecial(?:Color|Type|Quality)/.test(active.id)) return;
+
+        var sfxMatch = active.id.match(/^othersSpecial(?:Color|Type|Quality)(.*)$/);
+        var sfx = sfxMatch ? sfxMatch[1] : "";
+        var gender = document.getElementById("othersSpecialGender" + sfx);
+
+        if (!gender || gender.offsetParent === null) return;
+
+        e.preventDefault();
+
+        gender.value = ch === "m" ? "men" : "women";
+        gender.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+
+    // Universal keyboard shortcuts for ALL Others selector fields (Items 1/2/3).
+    // This is delegated from the document so it also works when Item 2/3
+    // controls are created/shown dynamically.
+    document.addEventListener("keydown", function (e) {
+        if (e.ctrlKey || e.altKey || e.metaKey) return;
+
+        var sel = e.target;
+        if (!sel || sel.tagName !== "SELECT") return;
+
+        var m = sel.id.match(/^othersSpecial(Color|Gender|Type|Quality)(2|3)?$/);
+        if (!m) return;
+
+        // The existing selector handler owns normal matching. This delegated
+        // handler only guarantees shortcuts for dynamically-created selectors.
+        if (sel.dataset.keyboardBound === "1") return;
+
+        var kind = m[1];
+        var ch = (e.key || "").toLowerCase();
+        if (!ch || ch.length !== 1) return;
+
+        var opts = Array.prototype.filter.call(sel.options, function (o) {
+            return o.value !== "" && !o.disabled && !o.hidden;
+        });
+
+        function choose(value) {
+            var option = opts.find(function (o) {
+                return o.value === value;
+            });
+            if (!option) return false;
+            e.preventDefault();
+            sel.value = option.value;
+            sel.dispatchEvent(new Event("change", { bubbles: true }));
+            return true;
+        }
+
+        // Type: number -> exact type.
+        if (kind === "Type" && /[0-9]/.test(ch)) {
+            choose(ch);
+            return;
+        }
+
+        // Gender: M/W -> men/women.
+        if (kind === "Gender" && (ch === "m" || ch === "w")) {
+            choose(ch === "m" ? "men" : "women");
+            return;
+        }
+
+        // Quality: first letter.
+        if (kind === "Quality" && /[a-z]/.test(ch)) {
+            var q = opts.find(function (o) {
+                return o.textContent.trim().toLowerCase().indexOf(ch) === 0;
+            });
+            if (q) {
+                e.preventDefault();
+                sel.value = q.value;
+                sel.dispatchEvent(new Event("change", { bubbles: true }));
+            }
+        }
+    });
+
+    // Re-run selector binding if the controls are rebuilt dynamically.
+    window.addEventListener("load", function () {
+        ["", "2", "3"].forEach(function (sfx) {
+            ["Color", "Gender", "Type", "Quality"].forEach(function (k) {
+                var el = document.getElementById("othersSpecial" + k + sfx);
+                if (el && !el.dataset.keyboardBound) {
+                    setupSelect(el);
+                    el.dataset.keyboardBound = "1";
+                }
+            });
+        });
+    });
+
+
+    // After an item is chosen, jump to its first visible option dropdown
+    // so you can start typing straight away (no need to click it).
+    if (typeof chooseOthersPopupItem === "function") {
+        var _origChoose = chooseOthersPopupItem;
+        chooseOthersPopupItem = function (item) {
+            var r = _origChoose.apply(this, arguments);
+            var sfx = "";
+            try {
+                var m = /^othersCustomText([23])$/.exec(othersPopupTarget || "");
+                sfx = m ? m[1] : "";
+            } catch (err) {}
+            setTimeout(function () {
+                var order = ["Color", "Gender", "Type", "Quality"];
+                for (var i = 0; i < order.length; i++) {
+                    var el = document.getElementById("othersSpecial" + order[i] + sfx);
+                    if (el && el.offsetParent !== null) { el.focus(); break; }
+                }
+            }, 0);
+            return r;
+        };
+    }
+})();
+</script>
+<style>
+/* Multi-item price boxes: first box reads "Price - <item 1>" like the others.
+   Shown via CSS so the generated ad text (which reads the label) is not affected. */
+#priceLabel[data-suffix]::after { content: " - " attr(data-suffix); }
+</style>
+
+
+<style>
+/* Top-left quick-link buttons */
+#quickLinksRow{
+    position:absolute;
+    left:28px;
+    top:92px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    z-index:20;
+}
+.quick-link-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:34px;
+    padding:0 13px;
+    box-sizing:border-box;
+    border:2px solid var(--primary);
+    border-radius:999px;
+    background:var(--card-bg);
+    color:var(--primary);
+    font-size:.78rem;
+    font-weight:700;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:all .2s ease;
+}
+.quick-link-btn:hover{
+    background:var(--primary);
+    color:#fff;
+    transform:translateY(-1px);
+}
+body.dark-mode .quick-link-btn{
+    background:#0f172a;
+    color:#facc15;
+    border-color:#facc15;
+}
+body.dark-mode .quick-link-btn:hover{
+    background:#facc15;
+    color:#0f172a;
+}
+@media(max-width:700px){
+    #quickLinksRow{left:12px;top:92px;gap:5px}
+    .quick-link-btn{font-size:.7rem;padding:0 9px;min-height:30px}
+}
+</style>
+<style>
+#themeToggleRow{position:absolute;right:28px;top:92px;display:flex;justify-content:flex-end;margin:0;z-index:20}
+#themeToggleBtn{padding:8px 16px;border-radius:999px;border:2px solid var(--primary);background:var(--card-bg);color:var(--primary);font-weight:600;font-size:.85rem;cursor:pointer;transition:all .2s}
+#themeToggleBtn:hover{background:var(--primary);color:#fff}
+body.dark-mode{--bg:#0f172a;--card-bg:#1e293b;--text:#e2e8f0;--border:#475569;--primary:#818cf8;--primary-hover:#6366f1}
+body.dark-mode .container{background:#1e293b!important;color:#e2e8f0!important;box-shadow:0 10px 15px -3px rgba(0,0,0,.6)}
+body.dark-mode h1,body.dark-mode h2,body.dark-mode h3,body.dark-mode label,body.dark-mode .feature-item{color:#e2e8f0}
+body.dark-mode .bangii-heading{color:#fff}
+body.dark-mode h2{border-bottom-color:#475569}
+body.dark-mode .radio-group label,body.dark-mode .features-grid{background:#0f172a!important;border-color:#475569!important;color:#e2e8f0}
+body.dark-mode .radio-group label:has(input[type="radio"]:checked){background:#312e81!important;border-color:#818cf8!important;color:#c7d2fe!important}
+body.dark-mode select,body.dark-mode input[type="text"],body.dark-mode textarea,body.dark-mode select.form-control{background:#0f172a!important;color:#e2e8f0!important;border-color:#475569!important}
+body.dark-mode .result-box{background:#0f172a!important}
+body.dark-mode .result-box.error-box{background:#450a0a!important}
+body.dark-mode #adPreview{color:#e0e7ff}
+body.dark-mode #adPreview.error-text{color:#f87171}
+body.dark-mode #themeToggleBtn{background:#0f172a;color:#facc15;border-color:#facc15}
+body.dark-mode #themeToggleBtn:hover{background:#facc15;color:#0f172a}
+</style>
+<script>
+var THEME_ORDER=['night','idle','day']; 
+var THEME_LABEL={idle:'🌙 Nigga',night:'☀️ Niggafication',day:'⚪ Diniggaficatione'}; // label shows the NEXT mode
+function applyTheme(t){
+  document.body.classList.remove('dark-mode','day-mode');
+  if(t==='night')document.body.classList.add('dark-mode');
+  if(t==='day')document.body.classList.add('day-mode');
+  document.body.setAttribute('data-theme-state',t);
+  var b=document.getElementById('themeToggleBtn');if(b)b.textContent=THEME_LABEL[t];
+}
+function toggleTheme(){
+  var cur=document.body.getAttribute('data-theme-state')||'idle';
+  var next=THEME_ORDER[(THEME_ORDER.indexOf(cur)+1)%THEME_ORDER.length];
+  applyTheme(next);
+  try{localStorage.setItem('bangiiThemeState',next);}catch(e){}
+}
+(function(){var t='idle';try{t=localStorage.getItem('bangiiThemeState')||'idle';}catch(e){}applyTheme(THEME_ORDER.indexOf(t)>-1?t:'idle');})();
+</script>
+
+<style>
+/* Colourful Day theme */
+body.day-mode{background:linear-gradient(135deg,#fde68a 0%,#fbcfe8 35%,#bae6fd 70%,#bbf7d0 100%) fixed!important}
+body.day-mode .container{background:#ffffff!important;border-top:6px solid transparent;border-image:linear-gradient(90deg,#f97316,#ec4899,#8b5cf6,#06b6d4,#22c55e) 1;box-shadow:0 12px 30px rgba(236,72,153,.22)}
+body.day-mode h2{color:#be185d;border-bottom:2px solid #f9a8d4}
+body.day-mode .section>label,body.day-mode .grid-layout label{color:#7c3aed}
+body.day-mode .radio-group label{background:#fff7ed;border-color:#fdba74}
+body.day-mode .radio-group label:hover{background:#ffedd5;border-color:#f97316}
+body.day-mode .radio-group label:has(input[type="radio"]:checked){background:linear-gradient(135deg,#8b5cf6,#ec4899)!important;border-color:#c026d3!important;color:#fff!important;box-shadow:0 4px 10px rgba(192,38,211,.35)}
+body.day-mode .features-grid{background:linear-gradient(135deg,#ecfeff,#fdf4ff)!important;border-color:#a5f3fc!important}
+body.day-mode select,body.day-mode input[type="text"]{border-color:#c4b5fd}
+body.day-mode select:focus,body.day-mode input[type="text"]:focus{border-color:#ec4899!important;box-shadow:0 0 0 3px rgba(236,72,153,.2)}
+body.day-mode .result-box:not(.error-box){background:linear-gradient(135deg,#fefce8,#fdf2f8)!important;border-color:#f97316!important}
+body.day-mode #adPreview:not(.error-text){color:#6d28d9}
+body.day-mode #themeToggleBtn{background:linear-gradient(135deg,#1e1b4b,#4338ca);color:#fde68a;border:2px solid #4338ca}
+body.day-mode #themeToggleBtn:hover{filter:brightness(1.2)}
+</style>
+
+<style>
+/* Night theme: pure black background, white text only */
+html body.dark-mode{background:#000!important;--bg:#000;--card-bg:#000;--text:#fff;--border:#555}
+html body.dark-mode .container{background:#000!important;border:1px solid #333!important;border-image:none!important;box-shadow:none!important}
+html body.dark-mode .container *:not(button):not(#juiceOpeningOverlay *){color:#fff!important}
+html body.dark-mode button{color:#fff!important}
+html body.dark-mode .bangii-heading{background:none!important;-webkit-text-fill-color:#fff!important;color:#fff!important;text-shadow:none!important;animation:none}
+html body.dark-mode .bangii-icon{-webkit-text-fill-color:initial!important}
+html body.dark-mode h2{border-bottom:1px solid #555!important}
+html body.dark-mode .radio-group label,html body.dark-mode .features-grid,html body.dark-mode .result-box,html body.dark-mode .result-box.error-box{background:#000!important;border-color:#555!important}
+html body.dark-mode .radio-group label:has(input[type="radio"]:checked){background:#000!important;border:2px solid #fff!important;box-shadow:0 0 0 1px #fff!important;color:#fff!important}
+html body.dark-mode select,html body.dark-mode input[type="text"],html body.dark-mode textarea,html body.dark-mode option{background:#000!important;color:#fff!important;border-color:#777!important}
+html body.dark-mode input::placeholder{color:#bbb!important}
+html body.dark-mode #adPreview,html body.dark-mode #adPreview.error-text{color:#fff!important}
+html body.dark-mode #themeToggleBtn{background:#000!important;color:#fff!important;border:2px solid #fff!important}
+html body.dark-mode #themeToggleBtn:hover{background:#fff!important;color:#000!important}
+</style>
+
+<style>
+#themeToggleBtn{background:#1e293b;color:#e2e8f0;border:2px solid #6366f1}
+#themeToggleBtn:hover{background:#6366f1;color:#fff}
+</style>
+<script id="quantity-keyboard-shortcut-enhancement">
+(function () {
+    const suffixes = ["", "2", "3"];
+    const state = {};
+
+    function getItemInput(suffix) {
+        return document.getElementById("othersCustomText" + suffix);
+    }
+    function getQtyInput(suffix) {
+        return document.getElementById("othersQuantityItemQuantity" + suffix);
+    }
+    function getWrap(suffix) {
+        return document.getElementById("othersQuantityItemWrap" + suffix);
+    }
+    function isAvailable(suffix) {
+        const wrap = getWrap(suffix);
+        const qty = getQtyInput(suffix);
+        return !!(wrap && qty && !wrap.classList.contains("hidden") && !qty.disabled);
+    }
+    function isItemField(el) {
+        return !!el && suffixes.some(sfx => el.id === "othersCustomText" + sfx);
+    }
+    function suffixForItem(el) {
+        return el.id === "othersCustomText" ? "" : el.id.replace("othersCustomText", "");
+    }
+    function apply(suffix) {
+        const qty = getQtyInput(suffix);
+        if (!qty) return;
+        const st = state[suffix] || (state[suffix] = {buf:"", last:0});
+        const value = st.buf === "" ? "" : String(Math.max(1, parseInt(st.buf, 10) || 1));
+        qty.value = value;
+        if (typeof updateQuantityItemControls === "function") updateQuantityItemControls(suffix);
+        qty.dispatchEvent(new Event("input", {bubbles:true}));
+        if (typeof updateAd === "function") updateAd();
+    }
+    function reset(suffix) {
+        state[suffix] = {buf:"", last:0};
+    }
+
+    document.addEventListener("keydown", function (event) {
+        const active = document.activeElement;
+        if (!isItemField(active)) return;
+        const suffix = suffixForItem(active);
+
+        // Selecting an item can rebuild/show its quantity controls just before
+        // the next keypress. Refresh this specific item's controls first so the
+        // keyboard shortcut works for Item 1, Item 2, and Item 3.
+        if (typeof updateOthersSpecialFields === "function") {
+            updateOthersSpecialFields(suffix);
+        } else if (typeof updateQuantityItemControls === "function") {
+            updateQuantityItemControls(suffix);
+        }
+        if (!isAvailable(suffix)) return;
+
+        // Number keys entered while an item box is focused go to THAT item's quantity.
+        // Item 1 -> othersQuantityItemQuantity
+        // Item 2 -> othersQuantityItemQuantity2
+        // Item 3 -> othersQuantityItemQuantity3
+        if (/^\d$/.test(event.key)) {
+            event.preventDefault();
+            const st = state[suffix] || (state[suffix] = {buf:"", last:0});
+            const now = Date.now();
+            if (now - st.last > 900) st.buf = "";
+            st.last = now;
+            st.buf = (st.buf + event.key).replace(/^0+(?=\d)/, "").slice(0, 6);
+            apply(suffix);
+            return;
+        }
+
+        if (event.key === "Backspace") {
+            const st = state[suffix] || (state[suffix] = {buf:"", last:0});
+            if (st.buf) {
+                event.preventDefault();
+                st.buf = st.buf.slice(0, -1);
+                st.last = Date.now();
+                apply(suffix);
+            }
+        }
+    }, true);
+
+    document.addEventListener("input", function (event) {
+        const target = event.target;
+        const suffix = suffixes.find(sfx => target && target.id === "othersQuantityItemQuantity" + sfx);
+        if (suffix === undefined) return;
+        const st = state[suffix] || (state[suffix] = {buf:"", last:0});
+        st.buf = String(target.value || "").replace(/\D/g, "").slice(0, 6);
+        st.last = Date.now();
+    });
+
+    suffixes.forEach(function (suffix) {
+        const item = getItemInput(suffix);
+        if (item) {
+            item.addEventListener("change", function () { reset(suffix); });
+            item.addEventListener("blur", function () { reset(suffix); });
+        }
+    });
+})();
+
+</script>
+
+
 </body>
 </html>
