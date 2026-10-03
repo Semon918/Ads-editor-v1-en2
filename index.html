@@ -5240,6 +5240,11 @@ body.trade-mode #price3Wrapper{display:none !important;}
 
 /* Plus switch (same look as the In bulk switch) */
 .tb-plus{margin:0;padding:0;}
+.tb-for{margin:0;padding:0;}
+.tb-side.tb-off{opacity:.38;filter:grayscale(.6);pointer-events:none;user-select:none;}
+.tb-side.tb-off .tb-badge{background:#64748b !important;}
+.tb-for-note{display:none;margin-top:4px;font-size:10px;color:#94a3b8;text-align:center;}
+.tb-for-note.on{display:block;}
 .tb-plus-switch{display:flex !important;align-items:center;justify-content:center;gap:8px;margin:0 !important;height:40px;padding:0 8px;box-sizing:border-box;border:1.5px solid #4b5a7a;border-radius:10px;background:#0f172a;color:#f1f5f9 !important;cursor:pointer;user-select:none;font-size:.85rem !important;font-weight:700 !important;}
 .tb-plus-switch input{appearance:none;-webkit-appearance:none;flex:0 0 34px;width:34px;height:20px;margin:0;border-radius:999px;background:#475569;position:relative;cursor:pointer;transition:background .18s;}
 .tb-plus-switch input::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.4);transition:transform .18s;}
@@ -5664,9 +5669,11 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
 
     const give = buildSide("give", "Trading", "I give");
     const want = buildSide("want", "For", "I want");
+    const forState = { on: false };   // "Enable For" switch state (OFF = single item)
     /* Detected trading category - shown in the UI only, never part of the copied ad text */
     const CATNAME = { item: "Other", vehicle: "Auto", property: "Real Estate", business: "Business" };
     function detectCategory() {          // returns the category KEY (item / vehicle / property / business)
+        if (!forState.on) return give.type;
         return give.type === want.type ? give.type : "item";
     }
     const catCard = el("div", "tb-cat");
@@ -5687,6 +5694,23 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
     const plus = { on: false, amt: null };
     const mid = el("div", "tb-mid");
     mid.appendChild(el("div", "tb-mid-arrow", "⇄"));
+    /* "Enable For" switch - above Plus. OFF (default) = single item: "Trading a car." */
+    const forBox = el("div", "tb-for");
+    const forSw = el("label", "tb-plus-switch");
+    const forCheck = document.createElement("input"); forCheck.type = "checkbox";
+    forSw.appendChild(forCheck); forSw.appendChild(el("span", "", "Enable For"));
+    const forNote = el("div", "tb-for-note", "Single item");
+    forNote.classList.add("on");
+    forBox.appendChild(forSw); forBox.appendChild(forNote);
+    mid.appendChild(forBox);
+    function applyForState() {
+        forState.on = forCheck.checked;
+        want.root.classList.toggle("tb-off", !forState.on);
+        if (forState.on) want.root.removeAttribute("inert"); else want.root.setAttribute("inert", "");
+        want.root.setAttribute("aria-disabled", forState.on ? "false" : "true");
+        forNote.textContent = forState.on ? "Trading for an item" : "Single item";
+    }
+    forCheck.addEventListener("change", function () { applyForState(); refresh(); });
     const plusBox = el("div", "tb-plus");
     const sw = el("label", "tb-plus-switch");
     const plusCheck = document.createElement("input"); plusCheck.type = "checkbox";
@@ -5700,6 +5724,7 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
     mid.appendChild(plusBox);
     grid.appendChild(give.root); grid.appendChild(mid); grid.appendChild(want.root);
     plus.reset = function () { plusCheck.checked = false; plus.on = false; plus.amt.value = ""; amtWrap.classList.remove("on"); };
+    applyForState();
 
     /* ---------- vehicle search popup ---------- */
     const VEH_TABS = [["all", "All"], ["car", "Cars"], ["motorcycle", "Motorcycles"], ["helicopter", "Helicopters"], ["plane", "Planes"], ["boat", "Boats"]];
@@ -5825,7 +5850,7 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
     function itemTexts() {
         // Read the Others boxes, ignoring slots that this builder is not using.
         const ids = { "1": "othersCustomText", "2": "othersCustomText2", "3": "othersCustomText3" };
-        const used = { "1": give.type === "item", "2": want.type === "item", "3": false };   // a trade is max 2 items
+        const used = { "1": give.type === "item", "2": forState.on && want.type === "item", "3": false };   // a trade is max 2 items
         const saved = {}, out = {};
         Object.keys(ids).forEach(function (k) {
             const e = $(ids[k]); if (e && !used[k]) { saved[k] = e.value; e.value = ""; }
@@ -5897,7 +5922,7 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
     }
     function compose() {
         const items = itemTexts();
-        const g = sideText(give, items), w = sideText(want, items);
+        const g = sideText(give, items), w = forState.on ? sideText(want, items) : "";
         if (!g) return null;
         let out = "Trading " + g + plusText();
         if (w) out += " for " + w;
@@ -5930,7 +5955,7 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
     const prevReset = window.resetForm;
     if (typeof prevReset === "function") {
         window.resetForm = function () {
-            give.reset(); want.reset(); plus.reset();
+            give.reset(); want.reset(); plus.reset(); forCheck.checked = false; applyForState();
             return prevReset.apply(this, arguments);
         };
     }
