@@ -5271,6 +5271,34 @@ body.day-mode .tb-plus-switch input{background:#cbd5e1;}
 body.day-mode .tb-plus{border-top-color:#c4b5fd;}
 body.day-mode .tb-plus-switch input:checked{background:linear-gradient(135deg,#8b5cf6,#ec4899);}
 
+/* category buttons: logo on top, name underneath */
+.tb-types .tb-type{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:9px 2px;font-size:.74rem;line-height:1.15;}
+.tb-ic{display:inline-flex;width:20px;height:20px;}
+.tb-ic svg{width:100%;height:100%;display:block;}
+.tb-cat-ico .tb-ic{width:24px;height:24px;}
+/* smaller text for the 'choose what you are trading' hint */
+#adPreview.tb-hint{font-size:14px !important;line-height:1.55 !important;font-weight:600 !important;}
+/* detected trading category (display only, never copied) */
+.tb-cat{display:flex;align-items:center;gap:12px;margin-top:14px;padding:12px 16px;border:1.5px solid #6d4fe0;border-radius:14px;background:rgba(79,70,229,.12);box-shadow:0 0 0 3px rgba(124,58,237,.12);}
+.tb-cat-ico{flex:0 0 40px;height:40px;border-radius:10px;background:rgba(124,58,237,.25);color:#c4b5fd;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.tb-cat-main{font-size:1.05rem;font-weight:800;color:#f1f5f9;}
+.tb-cat-val{display:inline-block;margin-left:6px;padding:2px 12px;border-radius:9px;background:#5b3fd1;color:#fff;font-weight:800;}
+.tb-cat-sub{font-size:12px;color:#94a3b8;margin-top:2px;}
+.tb-cat-note{margin-left:auto;max-width:52%;text-align:right;font-size:12px;line-height:1.4;}
+.tb-cat-note-how{color:#cbd5e1;}
+.tb-cat-note-warn{color:#fbbf24;font-weight:700;margin-top:3px;}
+@media (max-width:760px){.tb-cat{flex-wrap:wrap;}.tb-cat-note{margin-left:0;max-width:100%;flex-basis:100%;text-align:left;}}
+html body.dark-mode .tb-cat-note-how{color:#ddd;}
+html body.dark-mode .tb-cat-note-warn{color:#fff;}
+body.day-mode .tb-cat-note-how{color:#5b21b6;}
+body.day-mode .tb-cat-note-warn{color:#b45309;}
+html body.dark-mode .tb-cat{background:#000;border-color:#777;box-shadow:none;}
+html body.dark-mode .tb-cat-val{background:#fff;color:#000;}
+html body.dark-mode .tb-cat-ico{background:#111;color:#fff;}
+body.day-mode .tb-cat{background:linear-gradient(135deg,#ecfeff,#fdf4ff);border-color:#c4b5fd;}
+body.day-mode .tb-cat-main{color:#4c1d95;}
+body.day-mode .tb-cat-sub{color:#6d28d9;}
+body.day-mode .tb-cat-val{background:linear-gradient(135deg,#8b5cf6,#ec4899);}
 /* vehicle / item pick row */
 .tb-pick{display:flex;gap:8px;align-items:stretch;}
 .tb-pick .tb-in{flex:1;min-width:0;}
@@ -5445,6 +5473,15 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
     const panel = $("tradeBuilder"), grid = $("tbGrid");
     if (!panel || !grid) return;
 
+    const ICON = {
+        vehicle: '<svg viewBox="1.2 3.5 21.6 17" fill="currentColor"><path fill-rule="evenodd" d="M2 15.7V13.2Q2 11.4 3.8 11.2L6 11 7.8 7Q8.2 6 9.2 6H14.8Q15.8 6 16.2 7L18 11 20.2 11.2Q22 11.4 22 13.2V15.7Q22 17 20.7 17H19.8A2.8 2.8 0 0 0 14.2 17H9.8A2.8 2.8 0 0 0 4.2 17H3.3Q2 17 2 15.7ZM8.5 10.6 9.6 7.7H12V10.6ZM13 7.7H14.4L15.5 10.6H13Z"/><circle cx="7" cy="17" r="2.1"/><circle cx="17" cy="17" r="2.1"/></svg>',
+        property: '<svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 3 2 11.2h2.4V20h6.1v-5.6h3V20h6.1v-8.8H22zM10 11h4v2.4h-4z"/></svg>',
+        business: '<svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9 4h6a1 1 0 0 1 1 1v2h4a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4V5a1 1 0 0 1 1-1zm1 2v1h4V6zM3 12.5h18v1.6H3z"/></svg>',
+        item: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12c-1.6-2.6-3.2-4-5-4a4 4 0 1 0 0 8c1.8 0 3.4-1.4 5-4s3.2-4 5-4a4 4 0 1 1 0 8c-1.8 0-3.4-1.4-5-4z"/></svg>'
+    };
+    const NAME = { vehicle: "Auto", property: "Real Estate", business: "Business", item: "Other" };
+    function icon(t) { const s = document.createElement("span"); s.className = "tb-ic"; s.innerHTML = ICON[t]; return s; }
+
     function el(tag, cls, text) {
         const e = document.createElement(tag);
         if (cls) e.className = cls;
@@ -5497,7 +5534,7 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
 
     /* ---------- build one side ---------- */
     function buildSide(key, badge, title) {
-        const side = { key: key, type: "item" };
+        const side = { key: key, type: "vehicle" };   // Auto is selected by default
         const root = el("div", "tb-side"); root.dataset.side = key;
         const head = el("div", "tb-head");
         head.appendChild(el("span", "tb-badge", badge));
@@ -5506,10 +5543,11 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
 
         const bar = el("div", "tb-types");
         side.typeBtns = {};
-        [["item", "💬 Item"], ["vehicle", "🚗 Vehicle"], ["property", "🏠 Property"], ["business", "🏢 Business"]].forEach(function (t) {
-            const b = el("button", "tb-type", t[1]); b.type = "button"; b.dataset.type = t[0];
-            b.addEventListener("click", function () { side.type = t[0]; showType(side); sync(); refresh(); });
-            side.typeBtns[t[0]] = b; bar.appendChild(b);
+        ["vehicle", "property", "business", "item"].forEach(function (t) {
+            const b = el("button", "tb-type"); b.type = "button"; b.dataset.type = t;
+            b.appendChild(icon(t)); b.appendChild(document.createTextNode(NAME[t]));
+            b.addEventListener("click", function () { side.type = t; showType(side); sync(); refresh(); });
+            side.typeBtns[t] = b; bar.appendChild(b);
         });
         root.appendChild(bar);
 
@@ -5579,7 +5617,7 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
 
         side.root = root;
         side.reset = function () {
-            side.type = "item"; side.propKind = "house";
+            side.type = "vehicle"; side.propKind = "house";
             [side.veh, side.propNum, side.bizNum, side.bizCrop].forEach(i => i.value = "");
             [side.vehCfg, side.propLoc, side.propGs, side.propView].forEach(s => s.selectedIndex = 0);
             side.bizType.selectedIndex = 0;
@@ -5626,6 +5664,25 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
 
     const give = buildSide("give", "Trading", "I give");
     const want = buildSide("want", "For", "I want");
+    /* Detected trading category - shown in the UI only, never part of the copied ad text */
+    const CATNAME = { item: "Other", vehicle: "Auto", property: "Real Estate", business: "Business" };
+    function detectCategory() {          // returns the category KEY (item / vehicle / property / business)
+        return give.type === want.type ? give.type : "item";
+    }
+    const catCard = el("div", "tb-cat");
+    catCard.innerHTML = '<div class="tb-cat-ico" id="tbCatIco"></div><div><div class="tb-cat-main">Trading<span class="tb-cat-val" id="tbCatVal">(Other)</span></div>' +
+        '<div class="tb-cat-sub">Category auto-detected from your two selections</div></div>' +
+        '<div class="tb-cat-note"><div class="tb-cat-note-how">Choose what you are trading (left box) \u2014 then what you want in return (right box).</div>' +
+        '<div class="tb-cat-note-warn">\u26A0\uFE0F Be careful about the price, you may get punished for trolling \u26A0\uFE0F</div></div>';
+    panel.appendChild(catCard);
+    function updateCat() {
+        const k = detectCategory(), v = $("tbCatVal"), ic = $("tbCatIco");
+        if (v) v.textContent = "(" + CATNAME[k] + ")";
+        if (ic) { ic.innerHTML = ""; ic.appendChild(icon(k)); }
+        catCard.dataset.category = k;
+    }
+    updateCat();
+
     /* ONE Plus control, always in the middle: "Trading X plus cash for Y" */
     const plus = { on: false, amt: null };
     const mid = el("div", "tb-mid");
@@ -5795,11 +5852,10 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
     }
     function vehicleText(s) {
         const name = s.veh.value.trim();
-        if (!name) return "";
         const f = [];
         if (s.vehCfg.value) f.push(s.vehCfg.value);
         s.vehFeat.forEach(c => { if (c.input.checked) f.push(c.text); });
-        return formatCarName(name) + joinFeatures(f);
+        return (name ? formatCarName(name) : "a car") + joinFeatures(f);
     }
     function propertyText(s) {
         const apt = s.propKind === "apartment", num = s.noNumber ? "" : s.propNum.value.trim();
@@ -5853,16 +5909,20 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
     window.updateAd = function () {
         const on = sync();
         prevUpdateAd.apply(this, arguments);
-        if (!on) return;
+        const pv = $("adPreview");
+        if (!on) { if (pv) pv.classList.remove("tb-hint"); return; }
         applyLabels(true);
+        updateCat();
         const preview = $("adPreview"), card = $("resultCard"), copyBtn = $("copyBtn");
         const text = compose();
         if (text === null) {
             card.classList.add("error-box"); preview.classList.add("error-text");
             copyBtn.classList.add("hidden");
-            preview.innerText = "Choose what you are trading (left box) — then what you want in return (right box).";
+            preview.classList.add("tb-hint");
+            preview.innerText = "Choose what you are trading (left box) — then what you want in return (right box).\n⚠️ Be careful about the price, you may get punished for trolling ⚠️";
         } else {
             card.classList.remove("error-box"); preview.classList.remove("error-text");
+            preview.classList.remove("tb-hint");
             copyBtn.classList.remove("hidden");
             preview.innerText = text;
         }
