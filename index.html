@@ -1963,6 +1963,8 @@ const OTHERS_AD_TEMPLATES = [
   'Gift of resources',
   'Gift of gardeners',
   'Gift of Caravan',
+  'Gift of desert scarf mask',
+  'Gift of organizations',
   'Old Summer gifts',
   'Old summer gold gifts',
   'Old Autumn gifts',
@@ -2072,9 +2074,6 @@ const OTHERS_AD_TEMPLATES = [
   'Looking for a Juice Shop owner.',
 
 
-  'organisation containers',
-  'desert scarf mask containers',
-  'gardeners containers',
   'unskinned medium quality backpack',
   'high quality bear backpack',
   'high quality Clvin Lein backpack',
@@ -2905,13 +2904,10 @@ const OTHERS_CONTAINER_ITEMS = new Set([
     "old summer containers",
     "valuable containers",
     "truckers containers",
-    "organisation containers",
-    "desert scarf mask containers",
     "racers containers",
     "ingrand containers",
     "daily containers",
     "resources containers",
-    "gardeners containers",
     "wheels containers"
 ]);
 
@@ -3011,13 +3007,10 @@ const OTHERS_QUANTITY_ITEMS = new Set([
     "old summer containers",
     "valuable containers",
     "truckers containers",
-    "organisation containers",
-    "desert scarf mask containers",
     "racers containers",
     "ingrand containers",
     "daily containers",
     "resources containers",
-    "gardeners containers",
     "wheels containers",
     "juices",
     "10% juices",
@@ -3629,7 +3622,7 @@ function isOthersJuiceItem(text) {
 
 function isOthersContainerItem(text) {
     const v = (text || "").toLowerCase().trim();
-    return OTHERS_CONTAINER_ITEMS.has(v) || /^(?:\d+\s+)?(?:progen|old winter|old summer|valuable|truckers|organisation|desert scarf mask|racers|ingrand|daily|resources|gardeners|wheels) containers$/.test(v);
+    return OTHERS_CONTAINER_ITEMS.has(v) || /^(?:\d+\s+)?(?:progen|old winter|old summer|valuable|truckers|racers|ingrand|daily|resources|wheels) containers$/.test(v);
 }
 
 function isOthersQuantityItem(raw) {
