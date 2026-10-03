@@ -746,6 +746,109 @@ select.form-control:focus,input[type="text"]:focus{
     gap:16px;
 }
 </style>
+
+<style id="quantity-bulk-upgrade">
+/* ---------- Quantity stepper + In-bulk toggle (all 3 item slots) ---------- */
+.others-quantity-two-boxes{
+    grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) !important;
+    gap:10px !important; width:100% !important; max-width:100% !important; align-items:end;
+}
+.others-quantity-two-boxes .others-quantity-box > label:first-child{
+    font-size:.72rem; letter-spacing:.6px; text-transform:uppercase; font-weight:700;
+    opacity:.8; margin-bottom:6px;
+}
+.qty-stepper{
+    display:flex; align-items:stretch; height:40px; box-sizing:border-box;
+    border:1.5px solid #4b5a7a; border-radius:10px; overflow:hidden;
+    background:#0f172a; transition:border-color .15s, box-shadow .15s;
+}
+.qty-stepper:focus-within{border-color:#818cf8; box-shadow:0 0 0 3px rgba(99,102,241,.28);}
+.qty-stepper .qty-btn{
+    flex:0 0 38px; border:0; margin:0; padding:0; cursor:pointer;
+    background:#1e293b; color:#e2e8f0; font-size:20px; font-weight:700; line-height:1;
+    display:flex; align-items:center; justify-content:center; user-select:none;
+    transition:background .15s, color .15s;
+}
+.qty-stepper .qty-btn:hover{background:#4f46e5; color:#fff;}
+.qty-stepper .qty-btn:active{background:#4338ca;}
+.qty-stepper .qty-btn:disabled{opacity:.4; cursor:not-allowed; background:#1e293b; color:#e2e8f0;}
+#othersQuantityItemWrap.others-quantity-two-boxes .quantity-box .qty-stepper .form-control,
+#othersQuantityItemWrap2.others-quantity-two-boxes .quantity-box .qty-stepper .form-control,
+#othersQuantityItemWrap3.others-quantity-two-boxes .quantity-box .qty-stepper .form-control{
+    flex:1 1 auto; width:auto !important; min-width:0 !important; max-width:none !important;
+    height:100% !important; min-height:0 !important; max-height:none !important;
+    border:0 !important; border-radius:0 !important; box-shadow:none !important;
+    background:transparent !important; color:var(--qty-text,#fff) !important; text-align:center;
+    font-size:16px; font-weight:700; padding:0 4px; outline:none;
+    -moz-appearance:textfield; appearance:textfield;
+}
+.qty-stepper .form-control::-webkit-outer-spin-button,
+.qty-stepper .form-control::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
+.qty-stepper .form-control::placeholder{color:#64748b; font-weight:500;}
+
+/* In bulk: a switch inside a pill */
+.others-quantity-two-boxes .bulk-box .others-bulk-check{
+    width:100% !important; height:40px !important; min-height:40px !important;
+    box-sizing:border-box; display:flex; align-items:center; justify-content:flex-start;
+    gap:8px; padding:0 10px !important; margin:0;
+    border:1.5px solid #4b5a7a !important; border-radius:10px !important;
+    background:#0f172a; cursor:pointer; user-select:none;
+    transition:border-color .15s, background .15s, box-shadow .15s;
+}
+.others-quantity-two-boxes .bulk-box .others-bulk-check:hover{border-color:#818cf8 !important;}
+.others-quantity-two-boxes .bulk-box .others-bulk-check:has(input:checked){
+    border-color:#8b5cf6 !important; background:rgba(124,58,237,.18);
+    box-shadow:0 0 0 3px rgba(139,92,246,.22);
+}
+.others-quantity-two-boxes .bulk-box .others-bulk-check:has(input:disabled){
+    opacity:.45; cursor:not-allowed; box-shadow:none;
+}
+.others-quantity-two-boxes .bulk-box .others-bulk-check input[type="checkbox"]{
+    appearance:none; -webkit-appearance:none; flex:0 0 34px;
+    width:34px !important; min-width:34px; height:20px !important; margin:0;
+    border:0 !important; border-radius:999px !important; background:#475569 !important;
+    position:relative; display:block; cursor:inherit; transition:background .18s;
+}
+.others-quantity-two-boxes .bulk-box .others-bulk-check input[type="checkbox"]::after{
+    content:"" !important; position:absolute; top:2px; left:2px; width:16px; height:16px;
+    border-radius:50%; background:#fff; transform:none !important;
+    transition:transform .18s; box-shadow:0 1px 3px rgba(0,0,0,.4);
+}
+.others-quantity-two-boxes .bulk-box .others-bulk-check input[type="checkbox"]:checked{
+    background:#7c3aed !important;
+}
+.others-quantity-two-boxes .bulk-box .others-bulk-check input[type="checkbox"]:checked::after{
+    transform:translateX(14px) !important;
+}
+.others-quantity-two-boxes .bulk-box .others-bulk-check span{
+    font-size:.85rem; font-weight:700; white-space:nowrap;
+}
+@media (max-width:600px){
+    .others-quantity-two-boxes{grid-template-columns:1fr 1fr !important; width:100% !important; gap:10px !important;}
+}
+
+/* Night theme */
+html body.dark-mode .qty-stepper,
+html body.dark-mode .others-quantity-two-boxes .bulk-box .others-bulk-check{background:#000 !important; border-color:#777 !important;}
+html body.dark-mode .qty-stepper .qty-btn{background:#111 !important;}
+html body.dark-mode .qty-stepper .qty-btn:hover{background:#fff !important; color:#000 !important;}
+html body.dark-mode .qty-stepper:focus-within{border-color:#fff !important; box-shadow:0 0 0 3px rgba(255,255,255,.25);}
+html body.dark-mode .others-quantity-two-boxes .bulk-box .others-bulk-check:has(input:checked){border-color:#fff !important; background:#111 !important; box-shadow:0 0 0 2px rgba(255,255,255,.35);}
+html body.dark-mode .others-quantity-two-boxes .bulk-box .others-bulk-check input[type="checkbox"]:checked{background:#fff !important;}
+html body.dark-mode .others-quantity-two-boxes .bulk-box .others-bulk-check input[type="checkbox"]::after{background:#000;}
+html body.dark-mode .others-quantity-two-boxes .bulk-box .others-bulk-check input[type="checkbox"]:not(:checked)::after{background:#fff;}
+
+/* Day theme */
+body.day-mode .qty-stepper,
+body.day-mode .others-quantity-two-boxes .bulk-box .others-bulk-check{background:#fff; border-color:#c4b5fd !important;}
+body.day-mode .qty-stepper .qty-btn{background:#ede9fe; color:#6d28d9;}
+body.day-mode .qty-stepper .qty-btn:hover{background:linear-gradient(135deg,#8b5cf6,#ec4899); color:#fff;}
+body.day-mode .qty-stepper{--qty-text:#1e293b;}
+body.day-mode .qty-stepper:focus-within{border-color:#ec4899; box-shadow:0 0 0 3px rgba(236,72,153,.22);}
+body.day-mode .others-quantity-two-boxes .bulk-box .others-bulk-check:has(input:checked){background:#faf5ff; border-color:#c026d3 !important; box-shadow:0 0 0 3px rgba(192,38,211,.18);}
+body.day-mode .others-quantity-two-boxes .bulk-box .others-bulk-check input[type="checkbox"]{background:#cbd5e1 !important;}
+body.day-mode .others-quantity-two-boxes .bulk-box .others-bulk-check input[type="checkbox"]:checked{background:linear-gradient(135deg,#8b5cf6,#ec4899) !important;}
+</style>
 </head>
 <body>
 
@@ -823,7 +926,7 @@ select.form-control:focus,input[type="text"]:focus{
     <h1 class="bangii-heading"><span class="bangii-icon">⚡</span> Bangii Team <span class="bangii-icon">⚡</span></h1>
     <div class="bangii-tagline">We support niggas because we are from NiggaLand</div>
 
-    <div class="section">
+    <div class="section" id="categorySection">
         <label>Select Advertisement Category</label>
         <div class="radio-group">
             <label><input type="radio" name="category" id="cat_realestate" value="realestate" checked onchange="switchCategory()"><span>🏠 Real Estate</span></label>
@@ -841,6 +944,11 @@ select.form-control:focus,input[type="text"]:focus{
             <label><input type="radio" name="intent" id="intent_trading" value="Trading" onchange="updateAd()">Trading</label>
             <label><input type="radio" name="intent" id="intent_both" value="Selling or trading" onchange="updateAd()">Selling or trading</label>
         </div>
+    </div>
+
+    <div id="tradeBuilder" class="section hidden">
+        <label>🔁 Trade Builder <span class="tb-sub">— pick a category for each side</span></label>
+        <div class="tb-grid" id="tbGrid"></div>
     </div>
 
     <div id="realestateWorkspace">
@@ -1063,7 +1171,7 @@ select.form-control:focus,input[type="text"]:focus{
             <div class="others-item-compact others-item1-col">
                 <label for="othersCustomText">Ad Text / Item 1 (Editable)</label>
                 <div class="others-edit-picker">
-                    <input type="text" id="othersCustomText" placeholder="Selected item will appear here — edit if needed" value="" oninput="syncOthersPickerText(); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText')">
+                    <input type="text" id="othersCustomText" placeholder="Selected item will appear here — edit if needed" value="" oninput="syncOthersPickerText(); refreshOthersItem1Selectors(); updateAd()" onkeydown="handleOthersDirectItemKeydown(event, 'othersCustomText')">
                     <button type="button" onclick="openOthersTemplatePopup('othersCustomText')" title="Search Item 1" aria-label="Search Item 1">⌕</button>
                 </div>
                 <div id="othersSpecialControls" class="others-special-controls hidden">
@@ -2500,17 +2608,6 @@ function chooseOthersPopupItem(item) {
         updateOthersSpecialFields();
     }
     updateAd();
-
-    // After selecting an item from the popup, return focus to that item's
-    // input so quantity can be typed immediately with the keyboard.
-    if (target) {
-        setTimeout(() => {
-            target.focus();
-            try {
-                target.setSelectionRange(target.value.length, target.value.length);
-            } catch (_) {}
-        }, 0);
-    }
 }
 
 function syncOthersPickerText() {
@@ -2594,6 +2691,13 @@ function handleOthersDirectItemKeydown(event, targetId = "othersCustomText") {
     }
 
     updateAd();
+
+    // Jump straight into the first visible Colour/Gender/Type/Quality selector so
+    // the keyboard shortcuts work immediately (no click needed).
+    const focusSfx = targetId === "othersCustomText" ? "" : targetId.slice(-1);
+    setTimeout(function () {
+        if (typeof focusOthersFirstSelector === "function") focusOthersFirstSelector(focusSfx);
+    }, 0);
 }
 
 function extractOthersPrice(template) {
@@ -3228,13 +3332,33 @@ const OTHERS_GENDER_ITEMS = new Set([
     "kolex watch"
 ]);
 
+// Gloves: Colour + Type + Gender (the Type selector is optional).
+const OTHERS_GLOVES_TYPE_ITEMS = new Set([
+    'gloves',
+    'boxing gloves',
+]);
+
+// The editable item text is built as "<colour> <item> of type N for men".
+// The trailing "for men/women" must be removed BEFORE "of type N", otherwise the
+// item is no longer recognised once both Type and Gender are chosen, and its
+// selectors disappear/reset the next time one of them is changed.
+function stripOthersSelectorSuffixes(text) {
+    let v = String(text || "");
+    let prev;
+    do {
+        prev = v;
+        v = v
+            .replace(/\s+for\s+(?:men|women)\s*$/i, "")
+            .replace(/\s+of\s+type\s*#?\s*\d+\s*$/i, "")
+            .replace(/\s+type\s*#?\s*\d+\s*$/i, "");
+    } while (v !== prev);
+    return v;
+}
+
 function getOthersSpecialBaseItem(suffix = "") {
-    return (normalizeOthersAction(stripOthersPrice(
+    return (stripOthersSelectorSuffixes(normalizeOthersAction(stripOthersPrice(
         document.getElementById("othersCustomText" + suffix)?.value || ""
-    ))
-    .replace(/\s+of type\s*#?\s*\d+\s*$/i, "")
-    .replace(/\s+type\s*#?\s*\d+\s*$/i, "")
-    .replace(/\s+for\s+(?:men|women)\s*$/i, "")
+    )))
     .replace(/^(?:white|black|pink|purple|grey|gray|yellow|green|brown|red|blue)\s+/i, "")
     .replace(/^(?:low|medium|high|premium|max)\s+quality\s+/i, "")
     .replace(/[.\s]+$/, "").trim().toLowerCase()).replace(/\s+of\s+type\s*$/i, "");
@@ -3243,6 +3367,22 @@ function getOthersSpecialBaseItem(suffix = "") {
 function isOthersWatchTypeGenderItem(itemText) {
     const base = String(itemText || "").trim().toLowerCase();
     return base === "volex watch" || base === "kolex watch";
+}
+
+const othersLastSpecialBase = {};
+
+// Typing in the Item 1 box: show/hide the Colour/Type/Gender selectors for the
+// typed item (Items 2 and 3 already did this). When the typed text is a DIFFERENT
+// item than before, the old selections are cleared so they are not carried over.
+function refreshOthersItem1Selectors() {
+    const previous = othersLastSpecialBase[""];
+    if (previous !== undefined && previous !== getOthersSpecialBaseItem("")) {
+        ["Color", "Type", "Gender", "Quality"].forEach(function (k) {
+            const el = document.getElementById("othersSpecial" + k);
+            if (el) el.value = "";
+        });
+    }
+    updateOthersSpecialFields();
 }
 
 // suffix: "" = Item 1, "2" = Item 2, "3" = Item 3.
@@ -3259,6 +3399,7 @@ function updateOthersSpecialFields(suffix = "") {
     const grandWrap = document.getElementById("othersQuantityItemWrap" + suffix);
     const input = document.getElementById("othersCustomText" + suffix);
     const base = getOthersSpecialBaseItem(suffix);
+    othersLastSpecialBase[suffix] = base;
     const isGrandTicket = isOthersQuantityItem(base);
 
     const isShoeColorType = OTHERS_SHOE_COLOR_TYPE_ITEMS.has(base);
@@ -3272,6 +3413,7 @@ function updateOthersSpecialFields(suffix = "") {
     const isGenderItem = OTHERS_GENDER_ITEMS.has(base);
     const isWatchTypeGenderItem = isOthersWatchTypeGenderItem(base);
     const isColorGenderItem = OTHERS_COLOR_GENDER_ITEMS.has(base);
+    const isGloveItem = OTHERS_GLOVES_TYPE_ITEMS.has(base);
     // Footwear uses Colour + Type + Gender. Keep the rule based on the
     // actual selected item text so it also works for footwear added later.
     const isShoeOptions = isShoeItem;
@@ -3285,7 +3427,7 @@ function updateOthersSpecialFields(suffix = "") {
 
     // Gender-only accessories: show Men/Women only.
     colorWrap?.classList.toggle("hidden", isGrandTicket || !(isColorType || isColorOnly || isColorGenderItem));
-    typeWrap?.classList.toggle("hidden", isGrandTicket || isQualityItem || isColorOnly || isColorGenderItem || (isGenderItem && !isColorType && !isTypeOnly && !isWatchTypeGenderItem));
+    typeWrap?.classList.toggle("hidden", isGrandTicket || isQualityItem || isColorOnly || (isColorGenderItem && !isGloveItem) || (isGenderItem && !isColorType && !isTypeOnly && !isWatchTypeGenderItem));
     genderWrap?.classList.toggle("hidden", isGrandTicket || !(isGenderItem || isColorGenderItem || isShoeItem || isPantsColorType));
     qualityWrap?.classList.toggle("hidden", isGrandTicket || !isQualityItem);
     grandWrap?.classList.toggle("hidden", !isGrandTicket);
@@ -3311,15 +3453,15 @@ function updateOthersSpecialFields(suffix = "") {
     }
 
     if (!isColorType && !isColorOnly && !isColorGenderItem) color.value = "";
-    if (isColorGenderItem || (isGenderItem && !isColorType && !isTypeOnly)) type.value = "";
-    if (!isGenderItem && !isColorGenderItem && !isShoeItem) gender.value = "";
+    if ((isColorGenderItem && !isGloveItem) || (isGenderItem && !isColorType && !isTypeOnly)) type.value = "";
+    if (!isGenderItem && !isColorGenderItem && !isShoeItem && !isPantsColorType) gender.value = "";
     if (!isQualityItem && quality) quality.value = "";
 
     // Limit the type list to the exact requested types for Prime / Prime Platinum.
     const primeTypeOnly = OTHERS_PRIME_TYPE_ONLY_ITEMS.has(base);
     // Limit the type list to 1-10 for the requested 1-10 items.
     const type10Only = OTHERS_TYPE_1_10_ITEMS.has(base) && !isShoeColorType && !isPantsColorType && !isPantsTypeOnly;
-    const type25Only = OTHERS_TYPE_1_25_ITEMS.has(base);
+    const type25Only = OTHERS_TYPE_1_25_ITEMS.has(base) || isGloveItem;
     Array.from(type.options).forEach(opt => {
         if (!opt.value) {
             opt.hidden = false;
@@ -3355,10 +3497,7 @@ function updateOthersSpecialFields(suffix = "") {
 
     // Rebuild the editable item text without losing current selections.
     if (isColorType || isColorOnly || isTypeOnly || isGenderItem || isColorGenderItem || isQualityItem) {
-        let value = normalizeOthersAction(stripOthersPrice(input.value))
-            .replace(/\s+of type\s*#?\s*\d+\s*$/i, "")
-            .replace(/\s+type\s*#?\s*\d+\s*$/i, "")
-            .replace(/\s+for\s+(?:men|women)\s*$/i, "")
+        let value = stripOthersSelectorSuffixes(normalizeOthersAction(stripOthersPrice(input.value)))
             .replace(/^(?:white|black|pink|purple|grey|gray|yellow|green|brown|red|blue)\s+/i, "")
             .replace(/^(?:low|medium|high)\s+quality\s+/i, "")
             .trim();
@@ -3393,7 +3532,7 @@ function updateOthersSpecialFields(suffix = "") {
         }
 
         const selectedColor = (isColorType || isColorOnly || isColorGenderItem) ? color.value : "";
-        const selectedType = (isTypeOnly || isPrimeTypeOnly) ? type.value : "";
+        const selectedType = (isTypeOnly || isPrimeTypeOnly || isGloveItem) ? type.value : "";
         const selectedGender = (isGenderItem || isColorGenderItem || isShoeItem || isPantsColorType) ? gender.value : "";
         const selectedQuality = isQualityItem ? quality.value : "";
 
@@ -3710,6 +3849,9 @@ function getOthersItems() {
         const alreadyHasType = /\b(?:of\s+)?type\s*#?\s*\d+\b/i.test(values[0]);
         if (supportsType && selectedType && !alreadyHasType) {
             values[0] = `${values[0]} of type ${selectedType}`;
+        } else if (OTHERS_GLOVES_TYPE_ITEMS.has(base) && selectedType && !alreadyHasType) {
+            // Gloves: keep the order "<colour> gloves of type N for men".
+            values[0] = values[0].replace(/(\s+for\s+(?:men|women))?\s*$/i, ` of type ${selectedType}$1`);
         }
 
         // Safety-net for footwear and pants: always reflect the live Colour and Gender
@@ -3753,10 +3895,7 @@ function getOthersItems() {
 
 // Clothing items (pants, jackets, hoodies, shoes, gloves, ...) can never be sold "in bulk".
 function isOthersClothingItem(text) {
-    const base = normalizeOthersAction(stripOthersPrice(String(text || "")))
-        .replace(/\s+of type\s*#?\s*\d+\s*$/i, "")
-        .replace(/\s+type\s*#?\s*\d+\s*$/i, "")
-        .replace(/\s+for\s+(?:men|women)\s*$/i, "")
+    const base = stripOthersSelectorSuffixes(normalizeOthersAction(stripOthersPrice(String(text || ""))))
         .replace(/^(?:white|black|pink|purple|grey|gray|yellow|green|brown|red|blue)\s+/i, "")
         .replace(/[.\s]+$/, "").trim().toLowerCase();
     if (!base) return false;
@@ -4691,289 +4830,158 @@ updateBusinessBuyingRules();
 })();
 </script>
 <script>
-// Type-to-select for the Others option dropdowns (Colour / Gender / Type / Quality).
-// Works with the list open or closed. The ad updates immediately, no Enter needed.
-//   Type   : type a number (1, 2 ... 12 ... 30)  -> "type N"
+// Keyboard shortcuts for the Others option dropdowns (Colour / Gender / Type / Quality).
+// They work for Items 1, 2 and 3, with the list open or closed, and the ad updates
+// immediately (no Enter needed). Whichever option dropdown has focus, you can type:
+//   Type   : a number (1, 2 ... 12 ... 30)  -> "type N"
 //   Gender : m -> men, w -> women
-//   Colour : type the first letters (bla -> black, blu -> blue ...)
-//   Quality: l / m / h
+//   Colour : the first letters (bla -> black, blu -> blue, wh -> white ...)
+//   Quality: l / m / h / p / ma   (only while the Quality dropdown has focus)
+// "w" alone means women; "wh" means white (a short pause after "w" selects women).
 (function () {
-    var IDLE_MS = 800;
+    var IDLE_MS = 800;      // typing buffer resets after this much silence
+    var W_WAIT_MS = 350;    // how long a lone "w" waits for an "h" before meaning women
+    var SELECT_RE = /^othersSpecial(Color|Gender|Type|Quality)(2|3)?$/;
+    var ORDER = ["Color", "Gender", "Type", "Quality"];
+    var state = {};
 
-    function setupSelect(sel) {
-        var buf = "", last = 0;
-
-        function findMatch(b) {
-            var isType = sel.id.indexOf("othersSpecialType") === 0;
-            var opts = Array.prototype.filter.call(sel.options, function (o) {
-                return o.value !== "" && !o.disabled && !o.hidden;
-            });
-            if (isType) return opts.filter(function (o) { return o.value === b; })[0] || null;
-            return opts.filter(function (o) {
-                return o.textContent.trim().toLowerCase().indexOf(b) === 0;
-            })[0] || null;
-        }
-
-        sel.addEventListener("keydown", function (e) {
-            if (e.ctrlKey || e.altKey || e.metaKey) return;
-            if (!e.key || e.key.length !== 1 || e.key === " ") return;
-
-            var ch = e.key.toLowerCase();
-            var isType = sel.id.indexOf("othersSpecialType") === 0;
-            var isColor = sel.id.indexOf("othersSpecialColor") === 0;
-            var now = Date.now();
-
-            // Colour always gets priority. This fixes:
-            // w  -> white
-            // wh -> white
-            // gr -> green
-            // blu -> blue
-            // m -> black (because black is not m; no match, so nothing changes)
-            // Do NOT redirect "w" from Colour to Gender.
-            if (isColor) {
-                if (!/[a-z]/.test(ch)) return;
-
-                // "W" is ambiguous:
-                //   W      -> women
-                //   WH     -> white
-                // Wait briefly after W so WH can be recognized as White.
-                if (ch === "w" && !buf && sel.value !== "white") {
-                    e.preventDefault();
-                    last = now;
-                    buf = "w";
-
-                    clearTimeout(sel._wGenderTimer);
-                    sel._wGenderTimer = setTimeout(function () {
-                        if (buf === "w") {
-                            var sfx = sel.id.replace(/^othersSpecialColor/, "");
-                            var g = document.getElementById("othersSpecialGender" + sfx);
-                            if (g && g.offsetParent !== null) {
-                                g.value = "women";
-                                g.dispatchEvent(new Event("change", { bubbles: true }));
-                            }
-                            buf = "";
-                        }
-                    }, 350);
-                    return;
-                }
-
-                if (now - last > IDLE_MS) buf = "";
-
-                var bColor = buf + ch;
-                var matchColor = findMatch(bColor);
-
-                if (!matchColor) {
-                    bColor = ch;
-                    matchColor = findMatch(bColor);
-                }
-
-                e.preventDefault();
-                last = now;
-
-                if (!matchColor) {
-                    buf = "";
-                    return;
-                }
-
-                clearTimeout(sel._wGenderTimer);
-                buf = bColor;
-
-                if (sel.value !== matchColor.value) {
-                    sel.value = matchColor.value;
-                    sel.dispatchEvent(new Event("change", { bubbles: true }));
-                }
-                return;
-            }
-
-            // Type: number keys select the exact type.
-            if (isType) {
-                if (!/[0-9]/.test(ch)) return;
-
-                if (now - last > IDLE_MS) buf = "";
-                last = now;
-
-                var bType = buf + ch;
-                var matchType = findMatch(bType);
-
-                if (!matchType) {
-                    bType = ch;
-                    matchType = findMatch(bType);
-                }
-
-                e.preventDefault();
-                if (!matchType) {
-                    buf = "";
-                    return;
-                }
-
-                buf = bType;
-
-                if (sel.value !== matchType.value) {
-                    sel.value = matchType.value;
-                    sel.dispatchEvent(new Event("change", { bubbles: true }));
-                }
-                return;
-            }
-
-            // Gender: m -> men, w -> women.
-            // This applies only when the Gender selector itself is focused.
-            if (!/[a-z]/.test(ch)) return;
-
-            if (now - last > IDLE_MS) buf = "";
-            last = now;
-
-            var b = buf + ch;
-            var match = findMatch(b);
-
-            if (!match) {
-                b = ch;
-                match = findMatch(b);
-            }
-
-            e.preventDefault();
-            if (!match) {
-                buf = "";
-                return;
-            }
-
-            buf = b;
-
-            if (sel.value !== match.value) {
-                sel.value = match.value;
-                sel.dispatchEvent(new Event("change", { bubbles: true }));
-            }
-        });
+    function st(sfx) {
+        return state[sfx] || (state[sfx] = { digits: "", letters: "", last: 0, wTimer: null });
     }
-
-    ["", "2", "3"].forEach(function (sfx) {
-        ["Color", "Gender", "Type", "Quality"].forEach(function (k) {
-            var el = document.getElementById("othersSpecial" + k + sfx);
-            if (el) { setupSelect(el); el.dataset.keyboardBound = "1"; }
-        });
-    });
-    // Gender shortcuts also work when another special selector (such as Colour)
-    // still has focus:
-    //   m -> men
-    //   w -> women
-    // Colour keeps its multi-letter matching, so "wh" can still select white.
-    document.addEventListener("keydown", function (e) {
-        if (e.ctrlKey || e.altKey || e.metaKey) return;
-        if (!e.key || e.key.length !== 1) return;
-
-        var ch = e.key.toLowerCase();
-        if (ch !== "m" && ch !== "w") return;
-
-        var active = document.activeElement;
-        if (!active || !/^SELECT$/.test(active.tagName)) return;
-
-        // Colour selector handles W/WH itself so W can mean women while WH means white.
-        if (ch === "w" && /^othersSpecialColor/.test(active.id)) return;
-        if (!/^othersSpecial(?:Color|Type|Quality)/.test(active.id)) return;
-
-        var sfxMatch = active.id.match(/^othersSpecial(?:Color|Type|Quality)(.*)$/);
-        var sfx = sfxMatch ? sfxMatch[1] : "";
-        var gender = document.getElementById("othersSpecialGender" + sfx);
-
-        if (!gender || gender.offsetParent === null) return;
-
-        e.preventDefault();
-
-        gender.value = ch === "m" ? "men" : "women";
-        gender.dispatchEvent(new Event("change", { bubbles: true }));
-    });
-
-    // Universal keyboard shortcuts for ALL Others selector fields (Items 1/2/3).
-    // This is delegated from the document so it also works when Item 2/3
-    // controls are created/shown dynamically.
-    document.addEventListener("keydown", function (e) {
-        if (e.ctrlKey || e.altKey || e.metaKey) return;
-
-        var sel = e.target;
-        if (!sel || sel.tagName !== "SELECT") return;
-
-        var m = sel.id.match(/^othersSpecial(Color|Gender|Type|Quality)(2|3)?$/);
-        if (!m) return;
-
-        // The existing selector handler owns normal matching. This delegated
-        // handler only guarantees shortcuts for dynamically-created selectors.
-        if (sel.dataset.keyboardBound === "1") return;
-
-        var kind = m[1];
-        var ch = (e.key || "").toLowerCase();
-        if (!ch || ch.length !== 1) return;
-
-        var opts = Array.prototype.filter.call(sel.options, function (o) {
+    function getSel(kind, sfx) {
+        var el = document.getElementById("othersSpecial" + kind + sfx);
+        return (el && !el.disabled && el.offsetParent !== null) ? el : null;
+    }
+    function visibleOptions(el) {
+        return Array.prototype.filter.call(el.options, function (o) {
             return o.value !== "" && !o.disabled && !o.hidden;
         });
+    }
+    function byPrefix(el, buf) {
+        return visibleOptions(el).filter(function (o) {
+            return o.textContent.trim().toLowerCase().indexOf(buf) === 0;
+        })[0] || null;
+    }
+    function byValue(el, value) {
+        return visibleOptions(el).filter(function (o) { return o.value === value; })[0] || null;
+    }
+    function setValue(el, value) {
+        if (!el || el.value === value) return;
+        el.value = value;
+        el.dispatchEvent(new Event("change", { bubbles: true }));
+    }
 
-        function choose(value) {
-            var option = opts.find(function (o) {
-                return o.value === value;
-            });
-            if (!option) return false;
-            e.preventDefault();
-            sel.value = option.value;
-            sel.dispatchEvent(new Event("change", { bubbles: true }));
-            return true;
+    // Used after an item is chosen (popup or Enter in the item box).
+    window.focusOthersFirstSelector = function (sfx) {
+        sfx = sfx || "";
+        for (var i = 0; i < ORDER.length; i++) {
+            var el = getSel(ORDER[i], sfx);
+            if (el) { el.focus(); return true; }
         }
+        return false;
+    };
 
-        // Type: number -> exact type.
-        if (kind === "Type" && /[0-9]/.test(ch)) {
-            choose(ch);
+    document.addEventListener("keydown", function (e) {
+        if (e.ctrlKey || e.altKey || e.metaKey || e.isComposing) return;
+        var target = e.target;
+        if (!target || target.tagName !== "SELECT") return;
+        var m = SELECT_RE.exec(target.id || "");
+        if (!m) return;
+        if (!e.key || e.key.length !== 1) return;
+
+        var kind = m[1], sfx = m[2] || "";
+        var ch = e.key.toLowerCase();
+        var isDigit = /[0-9]/.test(ch);
+        var isLetter = /[a-z]/.test(ch);
+        if (!isDigit && !isLetter) return;
+
+        var s = st(sfx), now = Date.now();
+        if (now - s.last > IDLE_MS) { s.digits = ""; s.letters = ""; }
+        s.last = now;
+        clearTimeout(s.wTimer);
+        e.preventDefault();   // stop the browser's own (unreliable) type-ahead
+
+        // Numbers always go to this item's Type dropdown, whichever dropdown has focus.
+        if (isDigit) {
+            s.letters = "";
+            var typeSel = getSel("Type", sfx);
+            if (!typeSel) return;
+            var d = s.digits + ch;
+            var hit = byValue(typeSel, d);
+            if (!hit) { d = ch; hit = byValue(typeSel, d); }
+            if (!hit) { s.digits = ""; return; }
+            s.digits = d;
+            setValue(typeSel, hit.value);
             return;
         }
 
-        // Gender: M/W -> men/women.
-        if (kind === "Gender" && (ch === "m" || ch === "w")) {
-            choose(ch === "m" ? "men" : "women");
+        s.digits = "";
+
+        // Quality dropdown: letters pick the quality.
+        if (kind === "Quality") {
+            var lq = s.letters + ch;
+            var q = byPrefix(target, lq);
+            if (!q) { lq = ch; q = byPrefix(target, lq); }
+            if (!q) { s.letters = ""; return; }
+            s.letters = lq;
+            setValue(target, q.value);
             return;
         }
 
-        // Quality: first letter.
-        if (kind === "Quality" && /[a-z]/.test(ch)) {
-            var q = opts.find(function (o) {
-                return o.textContent.trim().toLowerCase().indexOf(ch) === 0;
-            });
-            if (q) {
-                e.preventDefault();
-                sel.value = q.value;
-                sel.dispatchEvent(new Event("change", { bubbles: true }));
+        // Letters go to Colour first, then to Gender (m = men, w = women).
+        var colorSel = getSel("Color", sfx);
+        var genderSel = getSel("Gender", sfx);
+
+        // Keep typing a colour name (bla -> black, wh -> white, gre -> green ...).
+        if (colorSel && s.letters) {
+            var lc = s.letters + ch;
+            var cont = byPrefix(colorSel, lc);
+            if (cont) {
+                s.letters = lc;
+                setValue(colorSel, cont.value);
+                return;
             }
         }
-    });
+        s.letters = "";
 
-    // Re-run selector binding if the controls are rebuilt dynamically.
-    window.addEventListener("load", function () {
-        ["", "2", "3"].forEach(function (sfx) {
-            ["Color", "Gender", "Type", "Quality"].forEach(function (k) {
-                var el = document.getElementById("othersSpecial" + k + sfx);
-                if (el && !el.dataset.keyboardBound) {
-                    setupSelect(el);
-                    el.dataset.keyboardBound = "1";
-                }
-            });
-        });
-    });
+        // A lone "w" could be women or the start of white: wait for a possible "h".
+        if (ch === "w" && colorSel && genderSel) {
+            s.letters = "w";
+            s.wTimer = setTimeout(function () {
+                if (s.letters !== "w") return;
+                s.letters = "";
+                var g = getSel("Gender", sfx);
+                if (g) setValue(g, "women");
+            }, W_WAIT_MS);
+            return;
+        }
 
+        if (colorSel) {
+            var first = byPrefix(colorSel, ch);
+            if (first) {
+                s.letters = ch;
+                setValue(colorSel, first.value);
+                return;
+            }
+        }
 
-    // After an item is chosen, jump to its first visible option dropdown
-    // so you can start typing straight away (no need to click it).
+        if (genderSel && (ch === "m" || ch === "w")) {
+            setValue(genderSel, ch === "m" ? "men" : "women");
+        }
+    }, true);
+
+    // After an item is chosen from the popup, jump to its first visible option
+    // dropdown so you can start typing straight away (no need to click it).
     if (typeof chooseOthersPopupItem === "function") {
         var _origChoose = chooseOthersPopupItem;
         chooseOthersPopupItem = function (item) {
             var r = _origChoose.apply(this, arguments);
             var sfx = "";
             try {
-                var m = /^othersCustomText([23])$/.exec(othersPopupTarget || "");
-                sfx = m ? m[1] : "";
+                var mm = /^othersCustomText([23])$/.exec(othersPopupTarget || "");
+                sfx = mm ? mm[1] : "";
             } catch (err) {}
-            setTimeout(function () {
-                var order = ["Color", "Gender", "Type", "Quality"];
-                for (var i = 0; i < order.length; i++) {
-                    var el = document.getElementById("othersSpecial" + order[i] + sfx);
-                    if (el && el.offsetParent !== null) { el.focus(); break; }
-                }
-            }, 0);
+            setTimeout(function () { window.focusOthersFirstSelector(sfx); }, 0);
             return r;
         };
     }
@@ -5111,106 +5119,766 @@ html body.dark-mode #themeToggleBtn:hover{background:#fff!important;color:#000!i
 #themeToggleBtn{background:#1e293b;color:#e2e8f0;border:2px solid #6366f1}
 #themeToggleBtn:hover{background:#6366f1;color:#fff}
 </style>
+<style id="v3-layout-and-quantity-box">
+/* ===== Item 1 / Item 2 / Item 3 always stay on ONE line ===== */
+html body .others-controls-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    grid-template-rows:auto !important;
+    column-gap:12px; row-gap:12px; align-items:start;
+}
+html body .others-controls-grid .others-item1-col{grid-column:1 !important; grid-row:1 !important;}
+html body .others-controls-grid .others-item2-col{grid-column:2 !important; grid-row:1 !important;}
+html body .others-controls-grid .others-item3-col{grid-column:3 !important; grid-row:1 !important;}
+
+/* ===== Slightly bigger Item boxes ===== */
+html body .others-item-compact > label{font-size:13px;}
+html body .others-item-compact .others-edit-picker{gap:8px;}
+html body .others-item-compact .others-edit-picker input{
+    min-height:46px; font-size:14px; padding:10px 12px; border-radius:9px;
+}
+html body .others-item-compact .others-edit-picker button{
+    min-height:46px; flex:0 0 46px; min-width:46px; font-size:17px; border-radius:9px;
+}
+
+/* ===== Quantity box: plain box again (no +/- buttons), slightly rounded ===== */
+html body #othersQuantityItemWrap.others-quantity-two-boxes .quantity-box input.form-control,
+html body #othersQuantityItemWrap2.others-quantity-two-boxes .quantity-box input.form-control,
+html body #othersQuantityItemWrap3.others-quantity-two-boxes .quantity-box input.form-control {
+    display:block; width:100% !important; min-width:0 !important; max-width:none !important;
+    height:40px !important; min-height:40px !important; max-height:40px !important;
+    box-sizing:border-box; padding:0 10px;
+    border:1.5px solid #4b5a7a !important; border-radius:8px !important;
+    background:#0f172a !important; color:#fff !important;
+    font-size:16px; font-weight:700; text-align:center;
+    caret-color:#a5b4fc; box-shadow:none !important; outline:none;
+    transition:border-color .15s, box-shadow .15s;
+}
+html body #othersQuantityItemWrap.others-quantity-two-boxes .quantity-box input.form-control:focus,
+html body #othersQuantityItemWrap2.others-quantity-two-boxes .quantity-box input.form-control:focus,
+html body #othersQuantityItemWrap3.others-quantity-two-boxes .quantity-box input.form-control:focus {
+    border-color:#818cf8 !important; box-shadow:0 0 0 3px rgba(99,102,241,.28) !important;
+}
+/* Night theme */
+html body.dark-mode #othersQuantityItemWrap.others-quantity-two-boxes .quantity-box input.form-control,
+html body.dark-mode #othersQuantityItemWrap2.others-quantity-two-boxes .quantity-box input.form-control,
+html body.dark-mode #othersQuantityItemWrap3.others-quantity-two-boxes .quantity-box input.form-control {
+    background:#000 !important; border-color:#777 !important; color:#fff !important; caret-color:#fff;
+}
+html body.dark-mode #othersQuantityItemWrap.others-quantity-two-boxes .quantity-box input.form-control:focus,
+html body.dark-mode #othersQuantityItemWrap2.others-quantity-two-boxes .quantity-box input.form-control:focus,
+html body.dark-mode #othersQuantityItemWrap3.others-quantity-two-boxes .quantity-box input.form-control:focus {
+    border-color:#fff !important; box-shadow:0 0 0 3px rgba(255,255,255,.25) !important;
+}
+/* Day theme */
+html body.day-mode #othersQuantityItemWrap.others-quantity-two-boxes .quantity-box input.form-control,
+html body.day-mode #othersQuantityItemWrap2.others-quantity-two-boxes .quantity-box input.form-control,
+html body.day-mode #othersQuantityItemWrap3.others-quantity-two-boxes .quantity-box input.form-control {
+    background:#fff !important; border-color:#c4b5fd !important; color:#1e293b !important; caret-color:#7c3aed;
+}
+html body.day-mode #othersQuantityItemWrap.others-quantity-two-boxes .quantity-box input.form-control:focus,
+html body.day-mode #othersQuantityItemWrap2.others-quantity-two-boxes .quantity-box input.form-control:focus,
+html body.day-mode #othersQuantityItemWrap3.others-quantity-two-boxes .quantity-box input.form-control:focus {
+    border-color:#ec4899 !important; box-shadow:0 0 0 3px rgba(236,72,153,.22) !important;
+}
+
+/* ===== Small screens: keep 3 items on one line, just tighter ===== */
+@media (max-width:700px){
+    html body .others-controls-grid{column-gap:6px;}
+    html body .others-item-compact .others-edit-picker{gap:4px;}
+    html body .others-item-compact .others-edit-picker input{font-size:13px; padding:10px 8px;}
+    html body .others-item-compact .others-edit-picker button{flex:0 0 34px; min-width:34px; font-size:15px;}
+    html body #othersQuantityItemWrap.others-quantity-two-boxes,
+    html body #othersQuantityItemWrap2.others-quantity-two-boxes,
+    html body #othersQuantityItemWrap3.others-quantity-two-boxes{
+        grid-template-columns:minmax(0,1fr) !important; width:100% !important;
+    }
+}
+</style>
+<style id="trade-builder-style">
+body.trade-mode #categorySection,
+body.trade-mode #realestateWorkspace,
+body.trade-mode #autoWorkspace,
+body.trade-mode #businessWorkspace,
+body.trade-mode #othersWorkspace,
+body.trade-mode #othersPriceWarning,
+body.trade-mode #priceWrapper,
+body.trade-mode #price2Wrapper,
+body.trade-mode #price3Wrapper{display:none !important;}
+
+#tradeBuilder.hidden{display:none !important;}
+#tradeBuilder > label{font-size:.95rem;}
+.tb-sub{font-weight:500;opacity:.65;font-size:.8rem;}
+.tb-grid{display:grid;grid-template-columns:minmax(0,1fr) 128px minmax(0,1fr);gap:10px;align-items:start;}
+.tb-mid{align-self:center;display:flex;flex-direction:column;align-items:stretch;gap:8px;min-width:0;}
+.tb-mid-arrow{text-align:center;font-size:20px;opacity:.7;user-select:none;}
+.tb-mid-cap{text-align:center;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#94a3b8;}
+.tb-side{border:1.5px solid #334155;border-radius:12px;padding:12px;background:rgba(15,23,42,.55);color:#e2e8f0;min-width:0;box-sizing:border-box;}
+.tb-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.tb-badge{font-size:.68rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:#4f46e5;color:#fff;}
+.tb-side[data-side="want"] .tb-badge{background:#059669;}
+.tb-title{font-weight:700;font-size:.95rem;color:#f1f5f9;}
+.tb-types{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:12px;}
+.tb-type{border:1.5px solid #475569;background:#0f172a;color:#e2e8f0;border-radius:8px;padding:8px 2px;font-size:.78rem;font-weight:600;cursor:pointer;line-height:1.2;transition:all .15s;}
+.tb-type:hover{border-color:#818cf8;}
+.tb-type.on{border-color:#818cf8;background:#312e81;color:#e0e7ff;box-shadow:0 0 0 2px rgba(129,140,248,.25);}
+.tb-pane{display:none;}
+.tb-pane.on{display:block;}
+.tb-pane label,.tb-plus label.tb-lab{font-size:12px;font-weight:600;margin:8px 0 4px;display:block;color:#cbd5e1;}
+.tb-pane > label:first-child{margin-top:0;}
+.tb-in,.tb-sel{width:100%;box-sizing:border-box;height:42px;padding:0 10px;border:1.5px solid #475569;border-radius:8px;font-size:14px;background:#0f172a;color:#f8fafc;}
+.tb-in::placeholder{color:#64748b;}
+.tb-in:focus,.tb-sel:focus{outline:none;border-color:#818cf8;box-shadow:0 0 0 3px rgba(99,102,241,.28);}
+.tb-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.tb-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.tb-chip{display:inline-flex;align-items:center;gap:6px;margin:0 !important;padding:6px 10px;border:1.5px solid #475569;border-radius:999px;background:#0f172a;color:#e2e8f0 !important;font-size:12px !important;font-weight:600;cursor:pointer;user-select:none;transition:all .15s;}
+.tb-chip input{display:none;}
+.tb-chip.on{border-color:#a78bfa;background:#4c1d95;color:#f5f3ff !important;}
+.tb-chip.hide{display:none;}
+.tb-item-slot{display:grid;grid-template-columns:1fr;gap:10px;}
+.tb-item-slot .others-item-compact{min-width:0;}
+.tb-item-slot .others-item-compact > label{font-size:12px;}
+
+/* Plus switch (same look as the In bulk switch) */
+.tb-plus{margin:0;padding:0;}
+.tb-plus-switch{display:flex !important;align-items:center;justify-content:center;gap:8px;margin:0 !important;height:40px;padding:0 8px;box-sizing:border-box;border:1.5px solid #4b5a7a;border-radius:10px;background:#0f172a;color:#f1f5f9 !important;cursor:pointer;user-select:none;font-size:.85rem !important;font-weight:700 !important;}
+.tb-plus-switch input{appearance:none;-webkit-appearance:none;flex:0 0 34px;width:34px;height:20px;margin:0;border-radius:999px;background:#475569;position:relative;cursor:pointer;transition:background .18s;}
+.tb-plus-switch input::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.4);transition:transform .18s;}
+.tb-plus-switch input:checked{background:#7c3aed;}
+.tb-plus-switch input:checked::after{transform:translateX(14px);}
+.tb-plus-switch:has(input:checked){border-color:#8b5cf6;background:rgba(124,58,237,.22);box-shadow:0 0 0 3px rgba(139,92,246,.22);}
+.tb-plus-amount{margin-top:8px;display:none;}
+.tb-plus-amount .tb-in{padding:0 8px;font-size:13px;text-align:center;}
+.tb-plus-amount.on{display:block;}
+.tb-plus-amount small{display:block;margin-top:4px;font-size:11px;color:#94a3b8;}
+
+/* Night */
+html body.dark-mode .tb-side{background:#000 !important;border-color:#555 !important;}
+html body.dark-mode .tb-type,html body.dark-mode .tb-chip,html body.dark-mode .tb-in,html body.dark-mode .tb-sel,html body.dark-mode .tb-plus-switch{background:#000 !important;border-color:#777 !important;color:#fff !important;}
+html body.dark-mode .tb-type.on,html body.dark-mode .tb-chip.on,html body.dark-mode .tb-plus-switch:has(input:checked){border-color:#fff !important;background:#111 !important;box-shadow:0 0 0 1px #fff;}
+html body.dark-mode .tb-badge{background:#fff !important;color:#000 !important;}
+html body.dark-mode .tb-plus-switch input{background:#475569;}
+html body.dark-mode .tb-plus-switch input:checked{background:#fff;}
+html body.dark-mode .tb-plus-switch input::after{background:#000;}
+html body.dark-mode .tb-plus-switch input:not(:checked)::after{background:#fff;}
+html body.dark-mode .tb-plus{border-top-color:#555;}
+/* Day */
+body.day-mode .tb-side{background:linear-gradient(135deg,#ecfeff,#fdf4ff);border-color:#a5f3fc;color:#1e293b;}
+body.day-mode .tb-title,body.day-mode .tb-pane label,body.day-mode .tb-plus-amount small{color:#4c1d95;}
+body.day-mode .tb-type,body.day-mode .tb-chip,body.day-mode .tb-in,body.day-mode .tb-sel,body.day-mode .tb-plus-switch{background:#fff;color:#1e293b !important;border-color:#c4b5fd;}
+body.day-mode .tb-in{color:#1e293b !important;}
+body.day-mode .tb-type.on,body.day-mode .tb-chip.on{background:linear-gradient(135deg,#8b5cf6,#ec4899);border-color:#c026d3;color:#fff !important;box-shadow:none;}
+body.day-mode .tb-plus-switch input{background:#cbd5e1;}
+body.day-mode .tb-plus{border-top-color:#c4b5fd;}
+body.day-mode .tb-plus-switch input:checked{background:linear-gradient(135deg,#8b5cf6,#ec4899);}
+
+/* vehicle / item pick row */
+.tb-pick{display:flex;gap:8px;align-items:stretch;}
+.tb-pick .tb-in{flex:1;min-width:0;}
+.tb-pick-btn{flex:0 0 42px;border:1.5px solid #475569;border-radius:8px;background:#1e293b;color:#e2e8f0;cursor:pointer;font-size:17px;transition:.15s;}
+.tb-pick-btn:hover{background:#334155;border-color:#94a3b8;}
+html body.dark-mode .tb-pick-btn{background:#000 !important;border-color:#777 !important;color:#fff !important;}
+body.day-mode .tb-pick-btn{background:#fff;border-color:#c4b5fd;color:#6d28d9;}
+/* vehicle search popup */
+.tbv-tabs{display:flex;flex-wrap:wrap;gap:6px;}
+.tbv-tab{border:1px solid #475569;background:#0f172a;color:#e2e8f0;border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer;}
+.tbv-tab.on{background:#4f46e5;border-color:#818cf8;color:#fff;}
+.tbv-tag{float:right;font-size:11px;opacity:.55;text-transform:capitalize;}
+.tbv-sel{border-color:#818cf8 !important;background:#1e293b !important;}
+body.day-mode .tb-mid-cap{color:#6d28d9;}
+
+@media (max-width:720px){
+  .tb-grid{grid-template-columns:1fr;}
+  .tb-mid-arrow{display:none;}
+  .tb-mid{flex-direction:row;align-items:center;justify-content:center;flex-wrap:wrap;}
+  .tb-plus{width:100%;max-width:340px;}
+}
+@media (max-width:560px){
+  .tb-types{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+</style>
 <script id="quantity-keyboard-shortcut-enhancement">
 (function () {
     const suffixes = ["", "2", "3"];
     const state = {};
+    const seen = {};
+    let activeSlot = null;      // item slot ("", "2", "3") that number keys currently go to
+    const RESET_MS = 1500;      // pause after which a new number starts fresh
 
-    function getItemInput(suffix) {
-        return document.getElementById("othersCustomText" + suffix);
-    }
-    function getQtyInput(suffix) {
-        return document.getElementById("othersQuantityItemQuantity" + suffix);
-    }
-    function getWrap(suffix) {
-        return document.getElementById("othersQuantityItemWrap" + suffix);
-    }
-    function isAvailable(suffix) {
-        const wrap = getWrap(suffix);
-        const qty = getQtyInput(suffix);
-        return !!(wrap && qty && !wrap.classList.contains("hidden") && !qty.disabled);
+    function getItemInput(sfx) { return document.getElementById("othersCustomText" + sfx); }
+    function getQtyInput(sfx)  { return document.getElementById("othersQuantityItemQuantity" + sfx); }
+    function getWrap(sfx)      { return document.getElementById("othersQuantityItemWrap" + sfx); }
+    function st(sfx)           { return state[sfx] || (state[sfx] = {buf:"", last:0}); }
+    function reset(sfx)        { state[sfx] = {buf:"", last:0}; }
+
+    function isAvailable(sfx) {
+        const wrap = getWrap(sfx), qty = getQtyInput(sfx);
+        return !!(wrap && qty && !wrap.classList.contains("hidden") && !qty.disabled && wrap.offsetParent !== null);
     }
     function isItemField(el) {
-        return !!el && suffixes.some(sfx => el.id === "othersCustomText" + sfx);
+        return !!el && suffixes.some(s => el.id === "othersCustomText" + s);
     }
-    function suffixForItem(el) {
-        return el.id === "othersCustomText" ? "" : el.id.replace("othersCustomText", "");
+    function suffixForItem(el) { return el.id.replace("othersCustomText", ""); }
+
+    function isTypingTarget(el) {
+        if (!el || el === document.body || el === document.documentElement) return false;
+        if (el.isContentEditable) return true;
+        const tag = el.tagName;
+        if (tag === "TEXTAREA" || tag === "SELECT") return true;
+        if (tag === "INPUT") {
+            const t = (el.type || "text").toLowerCase();
+            return !["checkbox","radio","button","submit","reset","range","color","file","image"].includes(t);
+        }
+        return false;
     }
-    function apply(suffix) {
-        const qty = getQtyInput(suffix);
+    function overlayOpen() {
+        if (document.querySelector(".others-popup:not(.hidden)")) return true;
+        const g = document.getElementById("othersPriceGuideOverlay");
+        if (g && g.classList.contains("show")) return true;
+        const j = document.getElementById("juiceOpeningOverlay");
+        if (j && j.offsetWidth > 0) return true;
+        return false;
+    }
+
+    // Whenever an item changes to a quantity item, that slot becomes the one number keys go to.
+    function refreshActive() {
+        suffixes.forEach(function (sfx) {
+            const item = getItemInput(sfx);
+            const val = item ? String(item.value || "").trim().toLowerCase() : "";
+            if (seen[sfx] === val) return;
+            seen[sfx] = val;
+            reset(sfx);
+            if (isAvailable(sfx)) activeSlot = sfx;
+            else if (activeSlot === sfx) activeSlot = null;
+        });
+    }
+
+    function apply(sfx) {
+        const qty = getQtyInput(sfx);
         if (!qty) return;
-        const st = state[suffix] || (state[suffix] = {buf:"", last:0});
-        const value = st.buf === "" ? "" : String(Math.max(1, parseInt(st.buf, 10) || 1));
-        qty.value = value;
-        if (typeof updateQuantityItemControls === "function") updateQuantityItemControls(suffix);
+        const s = st(sfx);
+        qty.value = s.buf === "" ? "" : String(Math.max(1, parseInt(s.buf, 10) || 1));
+        if (typeof updateQuantityItemControls === "function") updateQuantityItemControls(sfx);
         qty.dispatchEvent(new Event("input", {bubbles:true}));
         if (typeof updateAd === "function") updateAd();
     }
-    function reset(suffix) {
-        state[suffix] = {buf:"", last:0};
+
+    // Keep the active slot in sync after the page's own code updates the controls
+    if (typeof window.updateQuantityItemControls === "function") {
+        const orig = window.updateQuantityItemControls;
+        window.updateQuantityItemControls = function () {
+            const r = orig.apply(this, arguments);
+            try { refreshActive(); } catch (e) {}
+            return r;
+        };
     }
 
     document.addEventListener("keydown", function (event) {
+        if (event.ctrlKey || event.metaKey || event.altKey) return;
+        const isDigit = /^\d$/.test(event.key);
+        if (!isDigit && event.key !== "Backspace") return;
+
+        refreshActive();
         const active = document.activeElement;
-        if (!isItemField(active)) return;
-        const suffix = suffixForItem(active);
-
-        // Selecting an item can rebuild/show its quantity controls just before
-        // the next keypress. Refresh this specific item's controls first so the
-        // keyboard shortcut works for Item 1, Item 2, and Item 3.
-        if (typeof updateOthersSpecialFields === "function") {
-            updateOthersSpecialFields(suffix);
-        } else if (typeof updateQuantityItemControls === "function") {
-            updateQuantityItemControls(suffix);
+        let sfx;
+        if (isItemField(active)) {
+            sfx = suffixForItem(active);
+            activeSlot = sfx;
+        } else {
+            // Focus is NOT in a typing box: send numbers to the last selected quantity item.
+            if (isTypingTarget(active) || overlayOpen() || activeSlot === null) return;
+            sfx = activeSlot;
         }
-        if (!isAvailable(suffix)) return;
+        if (!isAvailable(sfx)) return;
 
-        // Number keys entered while an item box is focused go to THAT item's quantity.
-        // Item 1 -> othersQuantityItemQuantity
-        // Item 2 -> othersQuantityItemQuantity2
-        // Item 3 -> othersQuantityItemQuantity3
-        if (/^\d$/.test(event.key)) {
+        const s = st(sfx);
+        if (isDigit) {
             event.preventDefault();
-            const st = state[suffix] || (state[suffix] = {buf:"", last:0});
             const now = Date.now();
-            if (now - st.last > 900) st.buf = "";
-            st.last = now;
-            st.buf = (st.buf + event.key).replace(/^0+(?=\d)/, "").slice(0, 6);
-            apply(suffix);
+            if (now - s.last > RESET_MS) s.buf = "";
+            s.last = now;
+            if (event.key === "0" && s.buf === "") return;   // no leading zero
+            s.buf = (s.buf + event.key).slice(0, 6);
+            apply(sfx);
             return;
         }
-
-        if (event.key === "Backspace") {
-            const st = state[suffix] || (state[suffix] = {buf:"", last:0});
-            if (st.buf) {
-                event.preventDefault();
-                st.buf = st.buf.slice(0, -1);
-                st.last = Date.now();
-                apply(suffix);
-            }
+        if (s.buf) {   // Backspace
+            event.preventDefault();
+            s.buf = s.buf.slice(0, -1);
+            s.last = Date.now();
+            apply(sfx);
         }
     }, true);
 
+    // Typing directly into a quantity box keeps the shortcut buffer in sync
     document.addEventListener("input", function (event) {
-        const target = event.target;
-        const suffix = suffixes.find(sfx => target && target.id === "othersQuantityItemQuantity" + sfx);
-        if (suffix === undefined) return;
-        const st = state[suffix] || (state[suffix] = {buf:"", last:0});
-        st.buf = String(target.value || "").replace(/\D/g, "").slice(0, 6);
-        st.last = Date.now();
+        const t = event.target;
+        const sfx = suffixes.find(x => t && t.id === "othersQuantityItemQuantity" + x);
+        if (sfx === undefined) return;
+        const s = st(sfx);
+        s.buf = String(t.value || "").replace(/\D/g, "").slice(0, 6);
+        s.last = Date.now();
     });
 
-    suffixes.forEach(function (suffix) {
-        const item = getItemInput(suffix);
-        if (item) {
-            item.addEventListener("change", function () { reset(suffix); });
-            item.addEventListener("blur", function () { reset(suffix); });
-        }
+    // Clicking into an item's own controls makes that item the active one
+    document.addEventListener("focusin", function (event) {
+        const id = (event.target && event.target.id) || "";
+        const m = id.match(/^(?:othersCustomText|othersQuantityItemQuantity|othersQuantityItemBulk)([23]?)$/);
+        if (m && isAvailable(m[1])) activeSlot = m[1];
     });
+
+    // Item typed/changed by hand
+    suffixes.forEach(function (sfx) {
+        const item = getItemInput(sfx);
+        if (!item) return;
+        item.addEventListener("input", refreshActive);
+        item.addEventListener("change", refreshActive);
+    });
+
+    refreshActive();
 })();
-
 </script>
 
 
+<script id="trade-builder-script">
+(function () {
+    const $ = id => document.getElementById(id);
+    const panel = $("tradeBuilder"), grid = $("tbGrid");
+    if (!panel || !grid) return;
+
+    function el(tag, cls, text) {
+        const e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text != null) e.textContent = text;
+        return e;
+    }
+    function refresh() { if (typeof updateAd === "function") updateAd(); }
+
+    /* ---------- small UI helpers ---------- */
+    function chip(label, onChange) {
+        const w = el("label", "tb-chip");
+        const i = document.createElement("input"); i.type = "checkbox";
+        w.appendChild(i); w.appendChild(document.createTextNode(label));
+        i.addEventListener("change", function () { w.classList.toggle("on", i.checked); onChange && onChange(); refresh(); });
+        return { wrap: w, input: i };
+    }
+    function selectFrom(srcSel, firstLabel) {
+        const s = el("select", "tb-sel");
+        if (firstLabel !== undefined) { const o = el("option", "", firstLabel); o.value = ""; s.appendChild(o); }
+        if (srcSel) Array.from(srcSel.options).forEach(function (o) {
+            if (o.value === "") return;
+            const n = el("option", "", o.textContent); n.value = o.value; s.appendChild(n);
+        });
+        s.addEventListener("change", refresh);
+        return s;
+    }
+    function field(labelText, node) {
+        const l = el("label", "", labelText);
+        return [l, node];
+    }
+    function inputBox(ph) {
+        const i = el("input", "tb-in"); i.type = "text"; i.placeholder = ph || ""; i.autocomplete = "off";
+        i.addEventListener("input", refresh);
+        return i;
+    }
+    function joinFeatures(list) {            // same wording rules as the main editor
+        list = list.slice();
+        if (!list.length) return "";
+        if (list[0].indexOf("with ") === 0) {
+            let s = " " + list.shift();
+            if (list.length === 1) s += " and " + list[0];
+            else if (list.length > 1) { const last = list.pop(); s += ", " + list.join(", ") + " and " + last; }
+            return s;
+        }
+        if (list.length === 1) return " with " + list[0];
+        if (list.length === 2) return " with " + list[0] + " and " + list[1];
+        const last = list.pop();
+        return " with " + list.join(", ") + " and " + last;
+    }
+
+    /* ---------- build one side ---------- */
+    function buildSide(key, badge, title) {
+        const side = { key: key, type: "item" };
+        const root = el("div", "tb-side"); root.dataset.side = key;
+        const head = el("div", "tb-head");
+        head.appendChild(el("span", "tb-badge", badge));
+        head.appendChild(el("span", "tb-title", title));
+        root.appendChild(head);
+
+        const bar = el("div", "tb-types");
+        side.typeBtns = {};
+        [["item", "💬 Item"], ["vehicle", "🚗 Vehicle"], ["property", "🏠 Property"], ["business", "🏢 Business"]].forEach(function (t) {
+            const b = el("button", "tb-type", t[1]); b.type = "button"; b.dataset.type = t[0];
+            b.addEventListener("click", function () { side.type = t[0]; showType(side); sync(); refresh(); });
+            side.typeBtns[t[0]] = b; bar.appendChild(b);
+        });
+        root.appendChild(bar);
+
+        side.panes = {};
+        ["item", "vehicle", "property", "business"].forEach(function (t) {
+            const p = el("div", "tb-pane"); p.dataset.pane = t; side.panes[t] = p; root.appendChild(p);
+        });
+
+        /* item: Others columns are moved in here */
+        side.slot = el("div", "tb-item-slot"); side.panes.item.appendChild(side.slot);
+
+        /* vehicle */
+        side.veh = inputBox("Search or type a vehicle name");
+        side.vehBtn = el("button", "tb-pick-btn", "⌕"); side.vehBtn.type = "button";
+        side.vehBtn.title = "Search vehicles"; side.vehBtn.setAttribute("aria-label", "Search vehicles");
+        side.vehBtn.addEventListener("click", function () { openVehPopup(side); });
+        side.veh.addEventListener("keydown", function (e) {
+            if (e.key !== "Enter") return;
+            e.preventDefault();
+            const q = side.veh.value.trim();
+            const hits = vehList("all", q);
+            if (hits.length && hits.length <= 1) { side.veh.value = hits[0].name; refresh(); }
+            else openVehPopup(side, q);
+        });
+        side.vehRow = el("div", "tb-pick"); side.vehRow.appendChild(side.veh); side.vehRow.appendChild(side.vehBtn);
+        side.vehCfg = selectFrom($("veh_config_val"), "No chip tuning config");
+        side.vehFeat = [["visual upgrades", "Visual upgrades"], ["luminous wheels", "Luminous wheels"], ["insurance", "Insurance"], ["turbo kit", "Turbo kit"], ["drift kit", "Drift kit"]]
+            .map(function (f) { const c = chip(f[1]); c.text = f[0]; return c; });
+        const vp = side.panes.vehicle;
+        field("Vehicle name", side.vehRow).forEach(n => vp.appendChild(n));
+        field("Tuning", side.vehCfg).forEach(n => vp.appendChild(n));
+        const vc = el("div", "tb-chips"); side.vehFeat.forEach(c => vc.appendChild(c.wrap)); vp.appendChild(vc);
+
+        /* property */
+        side.propKind = "house";
+        const pp = side.panes.property;
+        const kinds = el("div", "tb-row"); side.kindBtns = {};
+        [["house", "🏠 House"], ["apartment", "🏢 Apartment"]].forEach(function (k) {
+            const b = el("button", "tb-type", k[1]); b.type = "button";
+            b.addEventListener("click", function () { side.propKind = k[0]; propKindUI(side); refresh(); });
+            side.kindBtns[k[0]] = b; kinds.appendChild(b);
+        });
+        pp.appendChild(kinds);
+        side.noNumber = (key === "want");
+        side.propNum = inputBox("e.g. 41 (optional)");
+        side.propLoc = selectFrom($("locationSelect"), "No location");
+        field("House № (optional)", side.propNum).forEach(function (n) { pp.appendChild(n); if (n.tagName === "LABEL") side.propNumLabel = n; });
+        field("Location", side.propLoc).forEach(n => pp.appendChild(n));
+        side.propFeat = [["garden", "Garden", true], ["custom interior", "Custom interior", false], ["insurance", "Insurance", true], ["swimming pool", "Swimming pool", true], ["helipad", "Helipad", true], ["driveway", "Driveway", true], ["backyard", "Backyard", true]]
+            .map(function (f) { const c = chip(f[1]); c.text = f[0]; c.houseOnly = f[2]; return c; });
+        const pc = el("div", "tb-chips"); side.propFeat.forEach(c => pc.appendChild(c.wrap)); pp.appendChild(pc);
+        const gv = $("garage_val"), vv = $("view_val");
+        const gr = el("div", "tb-row");
+        side.propGs = selectFrom(gv, "G.S"); side.propView = selectFrom(vv, "View");
+        gr.appendChild(side.propGs); gr.appendChild(side.propView);
+        const gwrap = el("div", ""); gwrap.style.marginTop = "8px"; gwrap.appendChild(gr); pp.appendChild(gwrap);
+
+        /* business */
+        const bp = side.panes.business;
+        side.bizType = selectFrom($("businessTypeSelect"));
+        side.bizType.addEventListener("change", function () { bizUI(side); });
+        side.bizNum = inputBox("e.g. 27");
+        side.bizCrop = inputBox("e.g. Cotton");
+        field("Business type", side.bizType).forEach(n => bp.appendChild(n));
+        side.bizNumField = field("Business №", side.bizNum); side.bizNumField.forEach(n => bp.appendChild(n));
+        side.bizCropField = field("Plantation crop", side.bizCrop); side.bizCropField.forEach(n => bp.appendChild(n));
+
+        side.root = root;
+        side.reset = function () {
+            side.type = "item"; side.propKind = "house";
+            [side.veh, side.propNum, side.bizNum, side.bizCrop].forEach(i => i.value = "");
+            [side.vehCfg, side.propLoc, side.propGs, side.propView].forEach(s => s.selectedIndex = 0);
+            side.bizType.selectedIndex = 0;
+            side.vehFeat.concat(side.propFeat).forEach(c => { c.input.checked = false; c.wrap.classList.remove("on"); });
+            showType(side); propKindUI(side); bizUI(side);
+        };
+        showType(side); propKindUI(side); bizUI(side);
+        return side;
+    }
+
+    function showType(side) {
+        Object.keys(side.panes).forEach(t => {
+            side.panes[t].classList.toggle("on", t === side.type);
+            side.typeBtns[t].classList.toggle("on", t === side.type);
+        });
+    }
+    function propKindUI(side) {
+        const apt = side.propKind === "apartment";
+        Object.keys(side.kindBtns).forEach(k => side.kindBtns[k].classList.toggle("on", k === side.propKind));
+        side.propNumLabel.textContent = apt ? "Apartment № (optional)" : "House № (optional)";
+        side.propNumLabel.style.display = side.noNumber ? "none" : "";
+        side.propNum.style.display = side.noNumber ? "none" : "";
+        if (side.noNumber) side.propNum.value = "";
+        side.propFeat.forEach(function (c) {
+            const hide = apt && c.houseOnly;
+            c.wrap.classList.toggle("hide", hide);
+            if (hide) { c.input.checked = false; c.wrap.classList.remove("on"); }
+        });
+        side.propView.style.display = apt ? "none" : "";
+        if (apt) side.propView.selectedIndex = 0;
+        Array.from(side.propGs.options).forEach(function (o) {
+            const rm = apt && (o.value === "2 g.s." || o.value === "5 g.s.");
+            o.hidden = rm; o.disabled = rm;
+        });
+        if (apt && (side.propGs.value === "2 g.s." || side.propGs.value === "5 g.s.")) side.propGs.selectedIndex = 0;
+    }
+    function bizUI(side) {
+        const plant = side.bizType.value === "Plantation";
+        side.bizNumField.forEach(n => n.style.display = (plant || side.noNumber) ? "none" : "");
+        if (side.noNumber) side.bizNum.value = "";
+        side.bizCropField.forEach(n => n.style.display = plant ? "" : "none");
+        if (plant) side.bizNum.value = "";
+    }
+
+    const give = buildSide("give", "Trading", "I give");
+    const want = buildSide("want", "For", "I want");
+    /* ONE Plus control, always in the middle: "Trading X plus cash for Y" */
+    const plus = { on: false, amt: null };
+    const mid = el("div", "tb-mid");
+    mid.appendChild(el("div", "tb-mid-arrow", "⇄"));
+    const plusBox = el("div", "tb-plus");
+    const sw = el("label", "tb-plus-switch");
+    const plusCheck = document.createElement("input"); plusCheck.type = "checkbox";
+    sw.appendChild(plusCheck); sw.appendChild(el("span", "", "Plus"));
+    const amtWrap = el("div", "tb-plus-amount");
+    plus.amt = inputBox("cash  ·  or 1m, 250k");
+    amtWrap.appendChild(plus.amt);
+    amtWrap.appendChild(el("small", "", "Empty = “plus cash”. Or an amount, e.g. “plus $1 Million”."));
+    plusCheck.addEventListener("change", function () { plus.on = plusCheck.checked; amtWrap.classList.toggle("on", plus.on); refresh(); });
+    plusBox.appendChild(sw); plusBox.appendChild(amtWrap);
+    mid.appendChild(plusBox);
+    grid.appendChild(give.root); grid.appendChild(mid); grid.appendChild(want.root);
+    plus.reset = function () { plusCheck.checked = false; plus.on = false; plus.amt.value = ""; amtWrap.classList.remove("on"); };
+
+    /* ---------- vehicle search popup ---------- */
+    const VEH_TABS = [["all", "All"], ["car", "Cars"], ["motorcycle", "Motorcycles"], ["helicopter", "Helicopters"], ["plane", "Planes"], ["boat", "Boats"]];
+    function vehList(tab, q) {
+        const db = (typeof MASTER_VEHICLE_DB !== "undefined") ? MASTER_VEHICLE_DB : {};
+        const seen = new Set(), out = [];
+        q = String(q || "").toLowerCase().trim();
+        const terms = q.split(/\s+/).filter(Boolean);
+        Object.keys(db).forEach(function (k) {
+            if (tab !== "all" && k !== tab) return;
+            (db[k] || []).forEach(function (n) {
+                const low = n.toLowerCase();
+                if (terms.length && !terms.every(t => low.indexOf(t) > -1)) return;
+                const key = k + "|" + low; if (seen.has(key)) return; seen.add(key);
+                out.push({ name: n, type: k, rank: !q ? 0 : (low === q ? 0 : low.indexOf(q) === 0 ? 1 : low.indexOf(q) > -1 ? 2 : 3) });
+            });
+        });
+        if (q) out.sort((a, b) => a.rank - b.rank);
+        return out;
+    }
+    const vp = el("div", "others-popup hidden"); vp.id = "tbVehPopup"; vp.setAttribute("aria-hidden", "true");
+    vp.innerHTML = '<div class="others-popup-backdrop"></div>' +
+        '<div class="others-popup-panel" role="dialog" aria-modal="true">' +
+        '<div class="others-popup-header"><div><strong id="tbvTitle">Select vehicle</strong><small>Search and choose a vehicle</small></div>' +
+        '<button type="button" class="others-popup-close" aria-label="Close">×</button></div>' +
+        '<input type="text" id="tbvSearch" class="form-control" placeholder="Search vehicles..." autocomplete="off">' +
+        '<div class="tbv-tabs" id="tbvTabs"></div>' +
+        '<div class="others-popup-list" id="tbvList"></div></div>';
+    document.body.appendChild(vp);
+    const vSearch = vp.querySelector("#tbvSearch"), vList = vp.querySelector("#tbvList"), vTabs = vp.querySelector("#tbvTabs");
+    let vSide = null, vTab = "all", vSel = 0, vHits = [];
+    VEH_TABS.forEach(function (t) {
+        const b = el("button", "tbv-tab", t[1]); b.type = "button"; b.dataset.tab = t[0];
+        b.addEventListener("click", function () { vTab = t[0]; renderVeh(); vSearch.focus(); });
+        vTabs.appendChild(b);
+    });
+    function renderVeh() {
+        Array.from(vTabs.children).forEach(b => b.classList.toggle("on", b.dataset.tab === vTab));
+        vHits = vehList(vTab, vSearch.value);
+        vSel = 0;
+        vList.innerHTML = "";
+        if (!vHits.length) { vList.appendChild(el("div", "others-popup-empty", "No vehicles found")); return; }
+        vHits.slice(0, 200).forEach(function (h, i) {
+            const b = el("button", "others-popup-item" + (i === 0 ? " tbv-sel" : ""), h.name); b.type = "button";
+            if (vTab === "all") b.appendChild(el("span", "tbv-tag", h.type));
+            b.addEventListener("click", function () { chooseVeh(h.name); });
+            vList.appendChild(b);
+        });
+    }
+    function moveSel(d) {
+        const items = vList.querySelectorAll(".others-popup-item"); if (!items.length) return;
+        items[vSel] && items[vSel].classList.remove("tbv-sel");
+        vSel = (vSel + d + items.length) % items.length;
+        items[vSel].classList.add("tbv-sel"); items[vSel].scrollIntoView({ block: "nearest" });
+    }
+    function chooseVeh(name) {
+        if (vSide) vSide.veh.value = name;
+        closeVeh(); refresh();
+    }
+    function closeVeh() {
+        vp.classList.add("hidden"); vp.setAttribute("aria-hidden", "true");
+        if (vSide && vSide.veh) vSide.veh.blur();
+    }
+    function openVehPopup(side, q) {
+        vSide = side; vTab = "all";
+        vp.querySelector("#tbvTitle").textContent = side.key === "give" ? "Select vehicle you give" : "Select vehicle you want";
+        vSearch.value = q || "";
+        vp.classList.remove("hidden"); vp.setAttribute("aria-hidden", "false");
+        renderVeh(); setTimeout(() => vSearch.focus(), 0);
+    }
+    vSearch.addEventListener("input", renderVeh);
+    vSearch.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); closeVeh(); }
+        else if (e.key === "ArrowDown") { e.preventDefault(); moveSel(1); }
+        else if (e.key === "ArrowUp") { e.preventDefault(); moveSel(-1); }
+        else if (e.key === "Enter") { e.preventDefault(); if (vHits[vSel]) chooseVeh(vHits[vSel].name); }
+    });
+    vp.querySelector(".others-popup-backdrop").addEventListener("click", closeVeh);
+    vp.querySelector(".others-popup-close").addEventListener("click", closeVeh);
+
+    /* ---------- move the Others item boxes into the trade boxes ---------- */
+    const cols = [
+        { node: document.querySelector(".others-item1-col"), side: give, label: 'label[for="othersCustomText"]', text: "Item (editable)" },
+        { node: document.querySelector(".others-item2-col"), side: want, label: "#othersItem2Label", text: "Item (editable)" }
+    ];
+    cols.forEach(function (c) {
+        if (!c.node) return;
+        c.anchor = document.createComment("trade-home");
+        c.node.parentNode.insertBefore(c.anchor, c.node);
+        const lb = c.node.querySelector(c.label);
+        c.origLabel = lb ? lb.textContent : "";
+    });
+    function placeColumns(on) {
+        cols.forEach(function (c) {
+            if (!c.node) return;
+            const lb = c.node.querySelector(c.label);
+            if (on && c.side.type === "item") {
+                if (c.node.parentNode !== c.side.slot) c.side.slot.appendChild(c.node);
+                if (lb) lb.textContent = c.text;
+            } else {
+                if (c.anchor.parentNode && c.node.parentNode !== c.anchor.parentNode) c.anchor.parentNode.insertBefore(c.node, c.anchor.nextSibling);
+                if (lb && c.origLabel) lb.textContent = c.origLabel;
+            }
+        });
+    }
+    function applyLabels(on) {
+        cols.forEach(function (c) {
+            if (!c.node || !on || c.side.type !== "item") return;
+            const lb = c.node.querySelector(c.label);
+            if (lb) lb.textContent = c.text;
+        });
+    }
+    function sync() {
+        const intent = document.querySelector('input[name="intent"]:checked');
+        const on = !!intent && intent.value === "Trading";
+        document.body.classList.toggle("trade-mode", on);
+        panel.classList.toggle("hidden", !on);
+        placeColumns(on);
+        return on;
+    }
+
+    /* ---------- build the text of each side ---------- */
+    function itemTexts() {
+        // Read the Others boxes, ignoring slots that this builder is not using.
+        const ids = { "1": "othersCustomText", "2": "othersCustomText2", "3": "othersCustomText3" };
+        const used = { "1": give.type === "item", "2": want.type === "item", "3": false };   // a trade is max 2 items
+        const saved = {}, out = {};
+        Object.keys(ids).forEach(function (k) {
+            const e = $(ids[k]); if (e && !used[k]) { saved[k] = e.value; e.value = ""; }
+        });
+        let bulk = false;
+        try {
+            const items = getOthersItems(), srcs = (getOthersItems.sources || []).slice();
+            bulk = getOthersItems.item1Bulk === true;
+            items.forEach(function (t, i) { out[String(srcs[i])] = t; });
+        } finally {
+            Object.keys(saved).forEach(k => { $(ids[k]).value = saved[k]; });
+        }
+        // Item 2 keeps its own quantity / bulk controls even when Item 1 is not used.
+        if (out["2"] && typeof isOthersQuantityItem === "function" && isOthersQuantityItem(($(ids["2"]).value || "").trim()) && !(out["1"])) {
+            try { out["2"] = getQuantitySubjectForSuffix("2"); } catch (e) {}
+        }
+        Object.keys(out).forEach(function (k) {
+            let t = String(out[k]).replace(/[.\s]+$/, "").trim();
+            if (typeof OTHERS_PET_ITEMS !== "undefined" && OTHERS_PET_ITEMS.has(t.toLowerCase())) t = "a pet " + t;
+            out[k] = t;
+        });
+        if (bulk && out["1"] && !/\sin bulk$/i.test(out["1"])) out["1"] += " in bulk";
+        return out;
+    }
+    function vehicleText(s) {
+        const name = s.veh.value.trim();
+        if (!name) return "";
+        const f = [];
+        if (s.vehCfg.value) f.push(s.vehCfg.value);
+        s.vehFeat.forEach(c => { if (c.input.checked) f.push(c.text); });
+        return formatCarName(name) + joinFeatures(f);
+    }
+    function propertyText(s) {
+        const apt = s.propKind === "apartment", num = s.noNumber ? "" : s.propNum.value.trim();
+        let core = num ? s.propKind + " №" + num : (apt ? "an apartment" : "a house");
+        const f = [];
+        s.propFeat.forEach(c => { if (c.input.checked && !(apt && c.houseOnly)) f.push(c.text); });
+        if (s.propGs.value) f.splice(Math.min(1, f.length), 0, s.propGs.value);   // keeps editor order: garden, G.S, ...
+        if (!apt && s.propView.value) f.push(s.propView.value);
+        let loc = "";
+        const l = s.propLoc.value;
+        if (l) loc = ["beach market", "Lifeinvader", "Postal"].indexOf(l) > -1 ? " near " + l : " in " + l;
+        return core + joinFeatures(f) + loc;
+    }
+    function businessText(s) {
+        const t = s.bizType.value, num = s.noNumber ? "" : s.bizNum.value.trim();
+        let title = t, suffix = num ? "" : " business";
+        if (t === "business") { title = "a business"; suffix = ""; }
+        else if (t === "private business" || t === "family business") { suffix = ""; }
+        else if (t === "Plantation") {
+            const crop = s.bizCrop.value.trim();
+            title = crop ? capitalizeWords(crop) + " Plantation" : "Plantation"; suffix = "";
+        }
+        return num && t !== "Plantation" ? title + " №" + num : title + suffix;
+    }
+    function plusText() {
+        if (!plus.on) return "";
+        const raw = plus.amt.value.trim();
+        if (!raw) return " plus cash";
+        const v = String(parsePriceRules(raw, "Trading").value || "").trim();
+        return !v || /^negotiable$/i.test(v) ? " plus cash" : " plus " + v;
+    }
+    function sideText(s, items) {
+        if (s.type === "item") {
+            return (s.key === "give" ? items["1"] : items["2"]) || "";
+        }
+        if (s.type === "vehicle") return vehicleText(s);
+        if (s.type === "property") return propertyText(s);
+        return businessText(s);
+    }
+    function compose() {
+        const items = itemTexts();
+        const g = sideText(give, items), w = sideText(want, items);
+        if (!g) return null;
+        let out = "Trading " + g + plusText();
+        if (w) out += " for " + w;
+        return out.replace(/\s+/g, " ").replace(/[.\s]+$/, "") + ".";
+    }
+
+    /* ---------- hook into the editor ---------- */
+    const prevUpdateAd = window.updateAd;
+    window.updateAd = function () {
+        const on = sync();
+        prevUpdateAd.apply(this, arguments);
+        if (!on) return;
+        applyLabels(true);
+        const preview = $("adPreview"), card = $("resultCard"), copyBtn = $("copyBtn");
+        const text = compose();
+        if (text === null) {
+            card.classList.add("error-box"); preview.classList.add("error-text");
+            copyBtn.classList.add("hidden");
+            preview.innerText = "Choose what you are trading (left box) — then what you want in return (right box).";
+        } else {
+            card.classList.remove("error-box"); preview.classList.remove("error-text");
+            copyBtn.classList.remove("hidden");
+            preview.innerText = text;
+        }
+    };
+    const prevReset = window.resetForm;
+    if (typeof prevReset === "function") {
+        window.resetForm = function () {
+            give.reset(); want.reset(); plus.reset();
+            return prevReset.apply(this, arguments);
+        };
+    }
+    document.querySelectorAll('input[name="intent"]').forEach(function (r) {
+        r.addEventListener("change", function () { window.updateAd(); });
+    });
+    window.updateAd();
+})();
+</script>
 </body>
 </html>
