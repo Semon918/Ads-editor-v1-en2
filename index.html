@@ -1402,6 +1402,7 @@ body.day-mode .others-quantity-two-boxes .bulk-box .others-bulk-check input[type
             <button class="copy-btn" id="copyBtn" onclick="copyText()">Copy</button>
         </div>
         <div id="adPreview">...</div>
+        <span id="copyCountValue" title="Ads copied">0</span>
     </div>
 </div>
 
@@ -1878,6 +1879,8 @@ function copyText() {
             clearTimeout(window.__othersCopyWarningTimer);
             window.__othersCopyWarningTimer = setTimeout(() => warning.classList.remove("show"), 30000);
         }
+        window.__adCopyCount = (window.__adCopyCount || 0) + 1;
+        var c = document.getElementById("copyCountValue"); if (c) c.textContent = window.__adCopyCount;
         btn.innerText = "Copied!";
         btn.classList.add("copied-state");setTimeout(() => {
             // After Copy: perform a full reset of every form field,
@@ -5995,5 +5998,10 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
     window.updateAd();
 })();
 </script>
+
+<style>
+#resultCard #copyCountValue{position:absolute;right:14px;bottom:8px;font-size:1.1rem;font-weight:800;line-height:1;color:var(--primary);font-variant-numeric:tabular-nums;pointer-events:none}
+body.dark-mode #resultCard #copyCountValue{color:#c7d2fe}
+</style>
 </body>
 </html>
