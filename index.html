@@ -878,7 +878,7 @@ body.day-mode .others-quantity-two-boxes .bulk-box .others-bulk-check input[type
     <div class="others-zoom-tip">
       
       <p class="zoom-tip">Use this website with 90% zoom for better experience.</p>
-      <div class="others-contact-warning"><strong>⚠ Check twice before posting.</strong> Some items need <strong>each</strong>; some don't. If you find a price/each issue, let us know.</div>
+      <div class="others-contact-warning others-strike-note">⚠️ 99% strike free if you are stupids then that 1% risk for you ⚠️<br>If you have any suggestion let us know we will try to upgrade</div>
       <a class="others-contact-us"
          href="https://discord.com/users/1067810657128415242"
          target="_blank"
@@ -919,6 +919,7 @@ body.day-mode .others-quantity-two-boxes .bulk-box .others-bulk-check input[type
 </script>
 <div class="container">
     <div id="quickLinksRow">
+        <button type="button" id="workDatingBtn" class="quick-link-btn" onclick="openCopyPage()">Work&amp;Dating</button>
         <a class="quick-link-btn" href="https://docs.google.com/document/d/18do2hEvGpVHJjMfOH5iK5K5-RrgPIaul_zBt2wABNGA/edit?tab=t.0" target="_blank" rel="noopener noreferrer">Policy</a>
         <a class="quick-link-btn" href="https://docs.google.com/spreadsheets/d/1gFMyVagMZyoj-7JP7zMFb02EzZFnd9yhQMFhzWh3aEo/edit?gid=1874456586#gid=1874456586" target="_blank" rel="noopener noreferrer">Cars&amp;Cloth_list</a>
     </div>
@@ -1372,9 +1373,6 @@ body.day-mode .others-quantity-two-boxes .bulk-box .others-bulk-check input[type
             </div>
         </div>
 
-        <div id="othersPriceWarning" class="others-price-warning">
-            <strong>⚠ Check twice before posting.</strong> Some items need <b>each</b>; some don't. If you find a price/each issue, let us know.
-        </div>
     
 
     <div class="grid-layout section" style="margin-top:20px;">
@@ -6002,6 +6000,184 @@ body.day-mode .tb-mid-cap{color:#6d28d9;}
 <style>
 #resultCard #copyCountValue{position:absolute;right:14px;bottom:8px;font-size:1.1rem;font-weight:800;line-height:1;color:var(--primary);font-variant-numeric:tabular-nums;pointer-events:none}
 body.dark-mode #resultCard #copyCountValue{color:#c7d2fe}
+</style>
+
+<style>
+/* ===== Work&Dating button (sits above Policy) ===== */
+#workDatingBtn{position:absolute;left:0;bottom:calc(100% + 8px);font-family:inherit;cursor:pointer}
+
+/* ===== Second page: copy commands ===== */
+body.copy-open{overflow:hidden}
+#copyPage{display:none;position:fixed;inset:0;z-index:9000;overflow-y:auto;color:#e5e7eb;
+  background:radial-gradient(900px 500px at 85% 70%,rgba(88,28,135,.35),transparent 60%),linear-gradient(160deg,#07040f,#0d0818 55%,#0a0614);
+  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+body.copy-open #copyPage{display:block}
+#copyPage .cp-wrap{max-width:900px;margin:0 auto;padding:18px 22px 60px}
+#copyPage .cp-top{position:sticky;top:0;z-index:5;display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+  padding:14px 0 16px;background:linear-gradient(180deg,#09050f 70%,rgba(9,5,15,0))}
+#copyPage .cp-back{padding:9px 16px;border-radius:999px;border:1px solid #6d28d9;background:#160d27;color:#c4b5fd;
+  font-weight:700;font-size:.8rem;cursor:pointer;font-family:inherit}
+#copyPage .cp-back:hover{background:#6d28d9;color:#fff}
+#copyPage .cp-title{font-size:1.15rem;font-weight:800;color:#fff;margin:0 auto 0 4px}
+#copyPage .cp-search{flex:1 1 220px;max-width:340px;padding:10px 14px;border-radius:10px;border:1px solid #3b2a63;
+  background:#120a22;color:#f3f4f6;font-size:.9rem;font-family:inherit;box-sizing:border-box}
+#copyPage .cp-search:focus{outline:none;border-color:#a855f7;box-shadow:0 0 0 3px rgba(168,85,247,.25)}
+#copyPage .cp-section{margin-top:26px}
+#copyPage .cp-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+#copyPage .cp-num{font:700 .68rem Consolas,'Courier New',monospace;color:#a855f7}
+#copyPage .cp-name{font-size:1.05rem;font-weight:700;color:#fff;white-space:nowrap}
+#copyPage .cp-line{flex:1;height:1px;background:rgba(255,255,255,.1)}
+#copyPage .cp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+#copyPage .cp-card{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;
+  border-radius:14px;border:1px solid rgba(255,255,255,.07);border-left:3px solid #7c3aed;background:rgba(18,10,32,.85)}
+#copyPage .cp-text{font:600 .82rem/1.55 'JetBrains Mono',Consolas,'Courier New',monospace;color:#e5e7eb;word-break:break-word}
+#copyPage .cp-pre{color:#e879f9;font-weight:700}
+#copyPage .cp-center .cp-grid{grid-template-columns:minmax(0,560px);justify-content:center}
+#copyPage .cp-center .cp-card{border-left:1px solid rgba(255,255,255,.07);border-top:3px solid #7c3aed;flex-direction:column;text-align:center}
+#copyPage .cp-center .cp-head{justify-content:center}
+#copyPage .cp-center .cp-line{display:none}
+#copyPage .cp-heading{text-align:center;margin:8px 0 6px}
+#copyPage .cp-h-title{font:700 1.05rem 'JetBrains Mono',Consolas,'Courier New',monospace;color:#fff;margin-bottom:8px}
+#copyPage .cp-h-link{font:700 .95rem 'JetBrains Mono',Consolas,'Courier New',monospace;color:#60a5fa;text-decoration:underline}
+#copyPage .cp-link{color:#60a5fa;text-decoration:underline}
+#copyPage .cp-copy{flex:0 0 auto;min-width:78px;padding:10px 14px;border-radius:10px;border:1px solid #2a6f9e;
+  background:#24143f;color:#c084fc;font-weight:800;font-size:.75rem;letter-spacing:.06em;cursor:pointer;font-family:inherit;transition:all .15s}
+#copyPage .cp-copy:hover{background:#3b1f6b;color:#fff}
+#copyPage .cp-copy.done{background:#065f46;border-color:#10b981;color:#d1fae5}
+#copyPage .cp-empty{display:none;margin-top:40px;text-align:center;color:#9ca3af}
+@media(max-width:700px){#copyPage .cp-grid{grid-template-columns:1fr}}
+</style>
+
+<div id="copyPage" aria-hidden="true">
+  <div class="cp-wrap">
+    <div class="cp-top">
+      <button type="button" class="cp-back" onclick="closeCopyPage()">&larr; Back</button>
+      <h2 class="cp-title" style="border:0;padding:0">Work&amp;Dating</h2>
+      <input type="text" id="cpSearch" class="cp-search" placeholder="Search" aria-label="Search" autocomplete="off" oninput="renderCopyPage()">
+    </div>
+    <div class="cp-heading">
+      <div class="cp-h-title">Visit Our Website for Admission</div>
+      <a class="cp-h-link" href="https://bootcampredux-create.github.io/nuet/" target="_blank" rel="noopener noreferrer">Nigatola University of Engineering &amp; Technology (NUET)</a>
+    </div>
+    <div id="cpList"></div>
+    <div id="cpEmpty" class="cp-empty">No commands found.</div>
+  </div>
+</div>
+
+<script id="copy-page-script">
+/* To add more items later, just add lines to this list. */
+var COPY_SECTIONS=[
+  {title:'Work Category',items:[
+    'Looking for a job. Salary: Negotiable.',
+    'Looking to work at construction site.',
+    'Hiring workers. Salary: Negotiable.',
+    'Hiring workers. Salary: $10.000',
+    'DJ looking for work.',
+    'Lawyer looking for work.',
+    'Looking to work as a professional dancer.',
+    'Looking to work as a bodyguard.',
+    'Hiring professional dancers. Salary: Negotiable.',
+    'Looking for a job at the construction site.',
+    'Hiring bodyguards. Salary: Negotiable.',
+    'Hiring a bodyguard. Salary: Negotiable.'
+  ]},
+  {title:'Solar Panel Plantation',items:[
+    'Hiring workers for solar panel plantations. Salary: Negotiable.',
+    'Hiring workers for solar panel plantations. Salary: $10.000',
+    'Looking for solar panel plantation work.'
+  ]},
+  {title:'Trucker',items:[
+    'Hiring a trucker. Salary: Negotiable.',
+    'Hiring a trucker with 3 years of experience. Salary: Negotiable.',
+    'Hiring a trucker with 3 years of experience. Awarding bonuses.'
+  ]},
+  {title:'Dating',items:[
+    'Looking for a friend.',
+    'Looking for friends.',
+    'Looking for a girlfriend.',
+    'Looking for a boyfriend.',
+    'Looking for a family.',
+    'Looking for family members.',
+    'Looking for a wife.',
+    'Looking for a husband.',
+    'Looking for a date.'
+  ]}
+];
+
+function openCopyPage(){
+  document.body.classList.add('copy-open');
+  document.getElementById('copyPage').setAttribute('aria-hidden','false');
+  document.getElementById('copyPage').scrollTop=0;
+  renderCopyPage();
+}
+function closeCopyPage(){
+  document.body.classList.remove('copy-open');
+  document.getElementById('copyPage').setAttribute('aria-hidden','true');
+}
+function copyCommand(text,btn){
+  function ok(){
+    btn.textContent='COPIED';btn.classList.add('done');
+    setTimeout(function(){btn.textContent='COPY';btn.classList.remove('done');},1100);
+  }
+  function fallback(){
+    var t=document.createElement('textarea');t.value=text;t.style.position='fixed';t.style.opacity='0';
+    document.body.appendChild(t);t.select();
+    try{document.execCommand('copy');}catch(e){}
+    document.body.removeChild(t);ok();
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(ok,fallback);
+  }else{fallback();}
+}
+function renderCopyPage(){
+  var q=(document.getElementById('cpSearch').value||'').trim().toLowerCase();
+  var list=document.getElementById('cpList');
+  list.innerHTML='';
+  var shown=0;
+  COPY_SECTIONS.forEach(function(sec,i){
+    var titleHit=sec.title.toLowerCase().indexOf(q)>-1;
+    var items=sec.items.filter(function(it){
+      var t=(typeof it==='string')?it:(it.text+' '+(it.linkText||''));
+      return !q||titleHit||t.toLowerCase().indexOf(q)>-1;
+    });
+    if(!items.length)return;
+    shown+=items.length;
+    var s=document.createElement('div');s.className='cp-section'+(sec.center?' cp-center':'');
+    var h=document.createElement('div');h.className='cp-head';
+    h.innerHTML='<span class="cp-num"></span><span class="cp-name"></span><span class="cp-line"></span>';
+    h.children[0].textContent=('0'+(i+1)).slice(-2);
+    h.children[1].textContent=sec.title;
+    s.appendChild(h);
+    var g=document.createElement('div');g.className='cp-grid';
+    items.forEach(function(it){
+      var obj=(typeof it==='string')?{text:it}:it;
+      var c=document.createElement('div');c.className='cp-card';
+      var txt=document.createElement('div');txt.className='cp-text';
+      if(obj.text.charAt(0)==='/'){
+        var sp=obj.text.indexOf(' ');
+        var p=document.createElement('span');p.className='cp-pre';p.textContent=sp>-1?obj.text.slice(0,sp):obj.text;
+        txt.appendChild(p);txt.appendChild(document.createTextNode(sp>-1?obj.text.slice(sp):''));
+      }else{
+        txt.textContent=obj.text;
+      }
+      if(obj.link){
+        txt.appendChild(document.createElement('br'));
+        var a=document.createElement('a');a.href=obj.link;a.target='_blank';a.rel='noopener noreferrer';
+        a.className='cp-link';a.textContent=obj.linkText||obj.link;
+        txt.appendChild(a);
+      }
+      var b=document.createElement('button');b.type='button';b.className='cp-copy';b.textContent='COPY';
+      b.addEventListener('click',function(){copyCommand(obj.copy||obj.text,b);});
+      c.appendChild(txt);c.appendChild(b);g.appendChild(c);
+    });
+    s.appendChild(g);list.appendChild(s);
+  });
+  document.getElementById('cpEmpty').style.display=shown?'none':'block';
+}
+</script>
+
+<style>
+.others-strike-note{margin-top:10px}
 </style>
 </body>
 </html>
