@@ -874,6 +874,21 @@ body.day-mode .others-quantity-two-boxes .bulk-box .others-bulk-check input[type
     <div class="row"><span>20.5m</span><b>= $20.5 Million.</b></div>
     <div class="row"><span>1.5k</span><b>= $1.500</b></div>
     <div class="row"><span>300k</span><b>= $300.000</b></div>
+
+    <div class="shortcut-help">
+      <h4>⌨️ Shortcut Keys</h4>
+      <div class="sc-note">Click outside any text box first, then press the key <b>twice</b> quickly.</div>
+      <div class="sc-grid">
+        <div class="sc-item"><kbd>bb</kbd><span>Buying</span></div>
+        <div class="sc-item"><kbd>ss</kbd><span>Selling</span></div>
+        <div class="sc-item"><kbd>cc</kbd><span>Copy ad</span></div>
+        <div class="sc-item"><kbd>pp</kbd><span>Select price box</span></div>
+      </div>
+      <div class="sc-note sc-top">After you pick an item, just type on the keyboard:</div>
+      <div class="sc-line"><span class="sc-label">Colour</span><span class="sc-val"><kbd>bl</kbd> = black &nbsp; <kbd>wh</kbd> = white &nbsp; <kbd>ye</kbd> = yellow <em>(type the first 2-3 letters)</em></span></div>
+      <div class="sc-line"><span class="sc-label">Type / Quantity</span><span class="sc-val">just type the number</span></div>
+      <div class="sc-line"><span class="sc-label">Gender</span><span class="sc-val"><kbd>m</kbd> = men &nbsp; <kbd>w</kbd> = women</span></div>
+    </div>
     
     <div class="others-zoom-tip">
       
@@ -4270,6 +4285,7 @@ function parsePriceRules(rawPrice, intent, allowEach = false) {
     clean = clean.replace(/\s+e\s*$/i, '').trim();
 
     clean = clean.replace(/\$/g, '').replace(/,/g, '.');
+    clean = clean.replace(/(\d)\s+([mMkK])\b/g, '$1$2');   // "5 k" / "5 m" -> "5k" / "5m"
 
     if (/^[0-9.]+\s*[mM]$/.test(clean)) {
         let numPart = clean.match(/[0-9.]+/)[0];
@@ -4294,7 +4310,10 @@ function parsePriceRules(rawPrice, intent, allowEach = false) {
 
     if (/^[0-9.]+$/.test(clean)) {
         let structuralCheck = clean.replace(/\./g, '');
+        if (structuralCheck === "") return { value: "Negotiable", isNumeric: false, each: false };
         if (parseFloat(structuralCheck) > 500000000) return { value: "Negotiable", isNumeric: false, each };
+        // Plain whole number with no K/M (e.g. 350000) -> group thousands with dots: $350.000
+        if (/^[0-9]{4,}$/.test(clean)) clean = clean.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         return { value: "$" + clean, isNumeric: true, each };
     }
 
@@ -4695,7 +4714,7 @@ function updateAd() {
             const negotiableSuffix = !priceObj.each && /^Negotiable$/i.test(parsedPriceText.trim()) ? "." : "";
             // A plain Million amount ends with a period too (e.g. "$3 Million.").
             // Non-Million numeric prices do not get this extra period.
-            const millionPriceSuffix = !priceObj.each && !negotiableSuffix && /\bMillion$/i.test(parsedPriceText.trim()) ? "." : "";
+            const millionPriceSuffix = !priceObj.each && !eachSuffix && !negotiableSuffix && /\bMillion$/i.test(parsedPriceText.trim()) ? "." : "";
             outputAdSentence = multiPriceSentence !== null
                 ? `${firstHalfDescription}${baseSentenceDot} ${labelHeader}: ${multiPriceSentence}`
                 : `${firstHalfDescription}${baseSentenceDot} ${labelHeader}: ${parsedPriceText}${eachSuffix}${negotiableSuffix}${millionPriceSuffix}`;
@@ -6180,8 +6199,102 @@ function renderCopyPage(){
 }
 </script>
 
+
+<script id="quickCommandsAndPriceFilter">
+(function () {
+  "use strict";
+
+  /* ---------- 1) Price boxes: numbers only + M/m + K/k ---------- */
+  var PRICE_IDS = ["price", "price2", "price3"];
+
+  function cleanPrice(raw) {
+    var v = String(raw || "").replace(/[^0-9.,a-zA-Z\s]/g, "");
+    // number, optional space, optional M / K / "million" (typed letter by letter), optional "E" (each)
+    var m = v.match(/^\s*([0-9.,]*)(\s*)(m(?:illion|illio|illi|ill|il|i)?|k)?(\s*)([eE]?)/i);
+    if (!m || !m[1]) return v.replace(/[^0-9.,]/g, "");   // letters need a number before them
+    var out = m[1];
+    if (m[3]) out += (m[2] ? " " : "") + m[3];
+    if (m[5]) out += " " + m[5];
+    else if (m[4] || (!m[3] && m[2])) out += " ";
+    return out;
+  }
+
+  document.addEventListener("input", function (e) {
+    var t = e.target;
+    if (!t || PRICE_IDS.indexOf(t.id) === -1) return;
+    var cleaned = cleanPrice(t.value);
+    if (cleaned !== t.value) {
+      t.value = cleaned;
+      try { t.setSelectionRange(cleaned.length, cleaned.length); } catch (err) {}
+    }
+  }, true);   // capture: runs before the field's own oninput="updateAd()"
+
+  document.addEventListener("keydown", function (e) {
+    var t = e.target;
+    if (!t || PRICE_IDS.indexOf(t.id) === -1) return;
+    if (e.ctrlKey || e.metaKey || e.altKey || e.key.length !== 1) return;
+    if (!/[0-9.,\smkeilonMKEILON]/.test(e.key)) e.preventDefault();   // block every other letter/symbol
+  }, true);
+
+  /* ---------- 2) Double-key commands: cc / bb / ss / pp ---------- */
+  var COMMANDS = {
+    c: function () { if (typeof copyText === "function") copyText(); },
+    b: function () { var r = document.getElementById("intent_buying");  if (r) r.click(); },
+    s: function () { var r = document.getElementById("intent_selling"); if (r) r.click(); },
+    p: function () {
+      var order = ["price", "price2", "price3"];
+      for (var i = 0; i < order.length; i++) {
+        var el = document.getElementById(order[i]);
+        if (el && el.offsetParent !== null) { el.focus(); el.select(); return; }
+      }
+    }
+  };
+  var DOUBLE_MS = 450, lastKey = "", lastTime = 0;
+
+  function inTextBox(el) {
+    if (!el) return false;
+    if (PRICE_IDS.indexOf(el.id) !== -1) return false;   // price boxes are fine (letters are blocked there)
+    if (el.isContentEditable || el.tagName === "TEXTAREA") return true;
+    if (el.tagName === "INPUT") return !/^(radio|checkbox|button|submit|range)$/i.test(el.type);
+    return false;   // SELECT, buttons, page body: commands allowed
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey || e.metaKey || e.altKey || e.isComposing || e.repeat) return;
+    var k = (e.key || "").toLowerCase();
+    if (!COMMANDS[k] || inTextBox(e.target)) { lastKey = ""; return; }
+    var now = Date.now();
+    if (lastKey === k && now - lastTime < DOUBLE_MS) {
+      e.preventDefault();
+      e.stopImmediatePropagation();   // 2nd press never reaches the dropdown type-ahead
+      lastKey = "";
+      COMMANDS[k]();
+      return;
+    }
+    lastKey = k; lastTime = now;
+  }, true);
+})();
+</script>
 <style>
 .others-strike-note{margin-top:10px}
+.others-price-guide-popup{max-height:92vh;overflow-y:auto;}
+.shortcut-help{margin-top:14px;padding:12px 14px;border-radius:10px;background:rgba(99,102,241,.08);border:1px solid rgba(129,140,248,.28);}
+.shortcut-help h4{margin:0 0 6px;font-size:16px;color:#fff;}
+.shortcut-help .sc-note{font-size:12px;color:#94a3b8;margin:0 0 8px;}
+.shortcut-help .sc-note b{color:#cbd5e1;}
+.shortcut-help .sc-top{margin-top:12px;}
+.shortcut-help .sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.shortcut-help .sc-item{display:flex;align-items:center;gap:10px;font-size:14px;color:#e5e7eb;}
+.shortcut-help .sc-line{display:flex;gap:12px;padding:7px 0;border-top:1px solid rgba(148,163,184,.15);font-size:14px;color:#e5e7eb;}
+.shortcut-help .sc-label{flex:0 0 112px;font-weight:700;color:#cbd5e1;}
+.shortcut-help .sc-val em{color:#94a3b8;font-size:12px;font-style:normal;}
+.shortcut-help kbd{display:inline-block;min-width:26px;padding:2px 7px;border-radius:6px;background:#1f2937;border:1px solid #475569;border-bottom-width:2px;color:#fff;font:700 12px/1.4 ui-monospace,Consolas,monospace;text-align:center;}
+body.day-mode .shortcut-help{background:#f5f3ff;border-color:#c4b5fd;}
+body.day-mode .shortcut-help h4{color:#1e1b4b;}
+body.day-mode .shortcut-help .sc-item,body.day-mode .shortcut-help .sc-line{color:#1e293b;}
+body.day-mode .shortcut-help .sc-label{color:#4c1d95;}
+body.day-mode .shortcut-help kbd{background:#fff;border-color:#a78bfa;color:#4c1d95;}
+@media(max-width:480px){.shortcut-help .sc-grid{grid-template-columns:1fr;}.shortcut-help .sc-line{flex-direction:column;gap:2px;}}
 </style>
 </body>
 </html>
